@@ -1,8 +1,3 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import { getPayload } from 'payload'
-import React from 'react'
-import { fileURLToPath } from 'url'
 import { AnnouncementBadge } from '@/app/(frontend)/components/elements/announcement-badge'
 import {
   ButtonLink,
@@ -10,14 +5,10 @@ import {
   SoftButtonLink,
 } from '@/app/(frontend)/components/elements/button'
 import { Link } from '@/app/(frontend)/components/elements/link'
-import { Logo, LogoGrid } from '@/app/(frontend)/components/elements/logo-grid'
 import { Main } from '@/app/(frontend)/components/elements/main'
 import { Screenshot } from '@/app/(frontend)/components/elements/screenshot'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
 import { ChevronIcon } from '@/app/(frontend)/components/icons/chevron-icon'
-import { GitHubIcon } from '@/app/(frontend)/components/icons/social/github-icon'
-import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
-import { YouTubeIcon } from '@/app/(frontend)/components/icons/social/youtube-icon'
 import { CallToActionSimple } from '@/app/(frontend)/components/sections/call-to-action-simple'
 import {
   FAQsTwoColumnAccordion,
@@ -27,19 +18,7 @@ import {
   Feature,
   FeaturesTwoColumnWithDemos,
 } from '@/app/(frontend)/components/sections/features-two-column-with-demos'
-import {
-  FooterCategory,
-  FooterLink,
-  FooterWithNewsletterFormCategoriesAndSocialIcons,
-  NewsletterForm,
-  SocialLink,
-} from '@/app/(frontend)/components/sections/footer-with-newsletter-form-categories-and-social-icons'
 import { HeroLeftAlignedWithDemo } from '@/app/(frontend)/components/sections/hero-left-aligned-with-demo'
-import {
-  NavbarLink,
-  NavbarLogo,
-  NavbarWithLinksActionsAndCenteredLogo,
-} from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
 import { Plan, PricingMultiTier } from '@/app/(frontend)/components/sections/pricing-multi-tier'
 import { Stat, StatsWithGraph } from '@/app/(frontend)/components/sections/stats-with-graph'
 import {
@@ -47,8 +26,9 @@ import {
   TestimonialThreeColumnGrid,
 } from '@/app/(frontend)/components/sections/testimonials-three-column-grid'
 import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
-import { TeamFourColumnGrid } from '@/app/(frontend)/components/sections/team-four-column-grid'
 import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
+import { fetchAllUpcomingEvents } from './utils/tickettailor'
+import { Suspense } from 'react'
 
 export default async function HomePage() {
   return (
@@ -90,173 +70,20 @@ export default async function HomePage() {
         {/* Team */}
         <TeamImageShortParagraph />
 
-        {/* Features */}
-        <FeaturesTwoColumnWithDemos
-          id="features"
-          eyebrow="Powerful features"
-          headline="Everything you need to deliver personal, organized, and delightful support."
-          subheadline={
-            <p>
-              Work smarter, reply faster, and keep every customer conversation right where it
-              belongs — in one simple inbox.
-            </p>
+        {/* Features / Events */}
+        <Suspense
+          fallback={
+            <FeaturesTwoColumnWithDemos
+              id="features"
+              eyebrow="Unsere Angebote"
+              headline="Workshops, Kurse und Projekte"
+              subheadline={<p>Lade Veranstaltungen...</p>}
+              features={<></>}
+            />
           }
-          features={
-            <>
-              <Feature
-                demo={
-                  <Screenshot wallpaper="purple" placement="bottom-right">
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1000&top=800"
-                      alt=""
-                      className="bg-white/75 sm:hidden dark:hidden"
-                      width={1000}
-                      height={800}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1000&top=800&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden sm:hidden"
-                      width={1000}
-                      height={800}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=660"
-                      alt=""
-                      className="bg-white/75 max-sm:hidden lg:hidden dark:hidden"
-                      width={1800}
-                      height={660}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=660&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-sm:hidden lg:hidden"
-                      width={1800}
-                      height={660}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1300&top=1300"
-                      alt=""
-                      className="bg-white/75 max-lg:hidden xl:hidden dark:hidden"
-                      width={1300}
-                      height={1300}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1300&top=1300&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-lg:hidden xl:hidden"
-                      width={1300}
-                      height={1300}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=1250"
-                      alt=""
-                      className="bg-white/75 max-xl:hidden dark:hidden"
-                      width={1800}
-                      height={1250}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?left=1800&top=1250&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-xl:hidden"
-                      width={1800}
-                      height={1250}
-                    />
-                  </Screenshot>
-                }
-                headline="Sozialtraining, Mobbing-Prävention & INTERVENTION - für SCHULE, Kindergarten, Verein, Institutionen..."
-                subheadline={
-                  <p>
-                    Stärkt eure Konfliktkultur und stoppt Mobbing! Dieses Angebot bietet
-                    Sozialtrainings und Präventionsstrategien, um das soziale Miteinander in
-                    Schulen, Vereinen und Kindergärten zu fördern. Erfahrene Sozialtrainer:innen
-                    unterstützen bei der Stärkung der Klassengemeinschaft und aktiver
-                    Mobbing-Intervention.
-                  </p>
-                }
-                cta={
-                  <Link href="#">
-                    See how it works <ArrowNarrowRightIcon />
-                  </Link>
-                }
-              />
-              <Feature
-                demo={
-                  <Screenshot wallpaper="blue" placement="bottom-left">
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1000&top=800"
-                      alt=""
-                      className="bg-white/75 sm:hidden dark:hidden"
-                      width={1000}
-                      height={800}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1000&top=800&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden sm:hidden"
-                      width={1000}
-                      height={800}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1800&top=660"
-                      alt=""
-                      className="bg-white/75 max-sm:hidden lg:hidden dark:hidden"
-                      width={1800}
-                      height={660}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1800&top=660&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-sm:hidden lg:hidden"
-                      width={1800}
-                      height={660}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1300&top=1300"
-                      alt=""
-                      className="bg-white/75 max-lg:hidden xl:hidden dark:hidden"
-                      width={1300}
-                      height={1300}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1300&top=1300&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-lg:hidden xl:hidden"
-                      width={1300}
-                      height={1300}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1800&top=1250"
-                      alt=""
-                      className="bg-white/75 max-xl:hidden dark:hidden"
-                      width={1800}
-                      height={1250}
-                    />
-                    <img
-                      src="https://assets.tailwindplus.com/screenshots/1.webp?right=1800&top=1250&color=olive"
-                      alt=""
-                      className="bg-black/75 not-dark:hidden max-xl:hidden"
-                      width={1800}
-                      height={1250}
-                    />
-                  </Screenshot>
-                }
-                headline="Inbox Agent"
-                subheadline={
-                  <p>
-                    Get valuable context without having to read through your customer's long, angry
-                    email thread.
-                  </p>
-                }
-                cta={
-                  <Link href="#">
-                    See how it works <ArrowNarrowRightIcon />
-                  </Link>
-                }
-              />
-            </>
-          }
-        />
+        >
+          <EventsFeatureSection />
+        </Suspense>
 
         {/* Stats */}
         <StatsWithGraph
@@ -519,5 +346,89 @@ export default async function HomePage() {
         />
       </Main>
     </>
+  )
+}
+
+async function EventsFeatureSection() {
+  const events = await fetchAllUpcomingEvents()
+  console.log('Events fetched from TicketTailor:')
+  console.log(events)
+
+  if (!events || events.length === 0) {
+    return (
+      <FeaturesTwoColumnWithDemos
+        id="features"
+        eyebrow="Unsere Angebote"
+        headline="Workshops, Kurse und Projekte"
+        subheadline={<p>Aktuell sind keine Veranstaltungen verfügbar.</p>}
+        features={<></>}
+      />
+    )
+  }
+
+  const wallpapers = ['purple', 'blue', 'green', 'brown'] as const
+  const placements = ['bottom-right', 'bottom-left'] as const
+
+  return (
+    <FeaturesTwoColumnWithDemos
+      id="features"
+      eyebrow="Unsere Angebote"
+      headline="Workshops, Kurse und Projekte"
+      subheadline={
+        <p>
+          Entdecke unsere aktuellen Veranstaltungen und finde das passende Angebot für dich und
+          deine Gruppe.
+        </p>
+      }
+      features={
+        <>
+          {events.map((event, index) => {
+            const imageUrl =
+              event.images?.header ||
+              'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop'
+            const wallpaper = wallpapers[index % wallpapers.length]
+            const placement = placements[index % placements.length]
+            const startDate = new Date(event.start.iso)
+            const formattedDate = startDate.toLocaleDateString('de-DE', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })
+
+            return (
+              <Feature
+                key={event.id}
+                demo={
+                  <img
+                    src={imageUrl}
+                    alt={event.name}
+                    className="aspect-video w-full rounded-lg object-cover"
+                    width={1800}
+                    height={1012}
+                  />
+                }
+                headline={event.name}
+                subheadline={
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-400">
+                      {formattedDate}
+                      {event.venue?.name && ` • ${event.venue.name}`}
+                    </p>
+                    {event.description && <p>{event.description}</p>}
+                  </div>
+                }
+                cta={
+                  event.url ? (
+                    <Link href={event.url} target="_blank" rel="noopener noreferrer">
+                      Tickets buchen <ArrowNarrowRightIcon />
+                    </Link>
+                  ) : undefined
+                }
+              />
+            )
+          })}
+        </>
+      }
+    />
   )
 }

@@ -1,35 +1,7 @@
 import { z } from 'zod'
+import { TTEventsResponseSchema, TTEventSchema, type TTEvent } from '../types/tickettailor' // adjust path
 
-const TicketTailorEventSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  description: z.string().optional(),
-  start_at: z.number(),
-  end_at: z.number(),
-  status: z.enum(['published', 'draft', 'sales_closed']),
-  venue: z
-    .object({
-      name: z.string(),
-      postal_code: z.string().optional(),
-    })
-    .optional(),
-  images: z
-    .object({
-      header: z.string().optional(),
-    })
-    .optional(),
-  url: z.string().optional(),
-})
-
-const TicketTailorResponseSchema = z.object({
-  data: z.array(TicketTailorEventSchema),
-  links: z.object({
-    next: z.string().optional(),
-    previous: z.string().optional(),
-  }),
-})
-
-export type TicketTailorEvent = z.infer<typeof TicketTailorEventSchema>
+export type TicketTailorEvent = z.infer<typeof TTEventSchema>
 
 interface FetchEventsOptions {
   status?: 'published' | 'draft' | 'sales_closed' | string
@@ -37,6 +9,14 @@ interface FetchEventsOptions {
   startingAfter?: string
 }
 
+/**
+ * Fetch one page of upcoming events.
+ * Uses updated schemas:
+ * - TTEventsResponseSchema (root)
+ * - TTEventSchema (event)
+ *
+ * Ticket Tailor supports `start_at.gte` (unix seconds).
+ */
 export async function fetchUpcomingEvents(
   options: FetchEventsOptions = {},
 ): Promise<TicketTailorEvent[]> {
@@ -46,68 +26,72 @@ export async function fetchUpcomingEvents(
     throw new Error('TICKETTAILOR_API_KEY is not configured')
   }
 
-  // Get current Unix timestamp
   const now = Math.floor(Date.now() / 1000)
 
-  // Build query parameters
   const params = new URLSearchParams({
-    'start_at.gte': now.toString(), // Only events starting now or in the future
+    'start_at.gte': now.toString(),
     status: options.status || 'published',
-    limit: (options.limit || 100).toString(),
+    limit: String(options.limit ?? 100),
   })
 
   if (options.startingAfter) {
-    params.append('starting_after', options.startingAfter)
+    params.set('starting_after', options.startingAfter)
   }
 
-  const url = `https://api.tickettailor.com/v1/events?${params.toString()}`
+  const url = `https://api.tickettailor.com/v1/events?status=published}`
 
-  try {
-    const response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`,
-      },
-      next: { revalidate: 300 }, // Cache for 5 minutes
-    })
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`,
+    },
+    // Next.js (optional). Remove if not in Next.
+    next: { revalidate: 300 },
+  })
 
-    if (!response.ok) {
-      throw new Error(`TicketTailor API error: ${response.status} ${response.statusText}`)
-    }
-
-    const data = await response.json()
-    const validated = TicketTailorResponseSchema.parse(data)
-
-    return validated.data
-  } catch (error) {
-    console.error('Error fetching TicketTailor events:', error)
-    throw error
+  if (!response.ok) {
+    throw new Error(`TicketTailor API error: ${response.status} ${response.statusText}`)
   }
+
+  const data: unknown = await response.json()
+  const validated = TTEventsResponseSchema.parse(data)
+
+  return validated.data
 }
 
+/**
+ * Fetch all pages of upcoming events.
+ * Safer pagination than "events.length < limit":
+ * - If the API returns less than limit, likely end.
+ * - Otherwise, continue using the last event id as cursor.
+ * - Also stop if the cursor doesn't advance (prevents infinite loops).
+ */
 export async function fetchAllUpcomingEvents(
   options: FetchEventsOptions = {},
 ): Promise<TicketTailorEvent[]> {
-  let allEvents: TicketTailorEvent[] = []
+  const limit = options.limit ?? 100
+
+  const all: TicketTailorEvent[] = []
   let startingAfter: string | undefined
+  let lastCursor: string | undefined
 
-  // Fetch all pages
   while (true) {
-    const events = await fetchUpcomingEvents({
-      ...options,
-      startingAfter,
-    })
+    const page = await fetchUpcomingEvents({ ...options, limit, startingAfter })
 
-    if (events.length === 0) break
+    if (page.length === 0) break
 
-    allEvents = [...allEvents, ...events]
+    all.push(...page)
 
-    // If we got less than the limit, we're done
-    if (events.length < (options.limit || 100)) break
+    // End if this is the last page
+    if (page.length < limit) break
 
-    // Set cursor for next page
-    startingAfter = events[events.length - 1].id
+    // Advance cursor
+    startingAfter = page[page.length - 1]?.id
+
+    // Guard against non-advancing cursor
+    if (!startingAfter || startingAfter === lastCursor) break
+    lastCursor = startingAfter
   }
 
-  return allEvents
+  return all
 }
