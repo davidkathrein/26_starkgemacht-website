@@ -1,6 +1,7 @@
 import { ElDialog, ElDialogPanel } from '@tailwindplus/elements/react'
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
+import { Link } from '../elements/link'
 
 export function NavbarLink({
   children,
@@ -41,7 +42,13 @@ export function NavbarLogo({
   href,
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
-  return <a href={href} {...props} className={clsx('inline-flex items-stretch', className)} />
+  return (
+    <Link
+      href={href}
+      {...props}
+      className={clsx('inline-flex items-stretch justify-center', className)}
+    />
+  )
 }
 
 export function NavbarWithLinksActionsAndCenteredLogo({
@@ -63,8 +70,8 @@ export function NavbarWithLinksActionsAndCenteredLogo({
       <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
       <nav>
         <div className="mx-auto flex h-(--scroll-padding-top) max-w-7xl items-center gap-4 px-6 lg:px-10">
-          <div className="flex flex-1 gap-8 max-lg:hidden">{links}</div>
-          <div className="flex items-center">{logo}</div>
+          <div className="flex flex-1 items-center">{logo}</div>
+          <div className="flex gap-8 max-lg:hidden">{links}</div>
           <div className="flex flex-1 items-center justify-end gap-4">
             <div className="flex shrink-0 items-center gap-5">{actions}</div>
 

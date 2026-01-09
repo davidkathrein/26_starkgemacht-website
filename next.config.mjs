@@ -12,6 +12,9 @@ const nextConfig = {
 
     return webpackConfig
   },
+  images: {
+    remotePatterns: [new URL('https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/**')],
+  },
 }
 
 export default withPayload(nextConfig, { devBundleServerPackages: false })

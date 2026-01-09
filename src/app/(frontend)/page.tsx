@@ -3,86 +3,56 @@ import Image from 'next/image'
 import { getPayload } from 'payload'
 import React from 'react'
 import { fileURLToPath } from 'url'
-import { AnnouncementBadge } from '@/components/elements/announcement-badge'
-import { ButtonLink, PlainButtonLink, SoftButtonLink } from '@/components/elements/button'
-import { Link } from '@/components/elements/link'
-import { Logo, LogoGrid } from '@/components/elements/logo-grid'
-import { Main } from '@/components/elements/main'
-import { Screenshot } from '@/components/elements/screenshot'
-import { ArrowNarrowRightIcon } from '@/components/icons/arrow-narrow-right-icon'
-import { ChevronIcon } from '@/components/icons/chevron-icon'
-import { GitHubIcon } from '@/components/icons/social/github-icon'
-import { XIcon } from '@/components/icons/social/x-icon'
-import { YouTubeIcon } from '@/components/icons/social/youtube-icon'
-import { CallToActionSimple } from '@/components/sections/call-to-action-simple'
-import { FAQsTwoColumnAccordion, Faq } from '@/components/sections/faqs-two-column-accordion'
+import { AnnouncementBadge } from '@/app/(frontend)/components/elements/announcement-badge'
+import {
+  ButtonLink,
+  PlainButtonLink,
+  SoftButtonLink,
+} from '@/app/(frontend)/components/elements/button'
+import { Link } from '@/app/(frontend)/components/elements/link'
+import { Logo, LogoGrid } from '@/app/(frontend)/components/elements/logo-grid'
+import { Main } from '@/app/(frontend)/components/elements/main'
+import { Screenshot } from '@/app/(frontend)/components/elements/screenshot'
+import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
+import { ChevronIcon } from '@/app/(frontend)/components/icons/chevron-icon'
+import { GitHubIcon } from '@/app/(frontend)/components/icons/social/github-icon'
+import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
+import { YouTubeIcon } from '@/app/(frontend)/components/icons/social/youtube-icon'
+import { CallToActionSimple } from '@/app/(frontend)/components/sections/call-to-action-simple'
+import {
+  FAQsTwoColumnAccordion,
+  Faq,
+} from '@/app/(frontend)/components/sections/faqs-two-column-accordion'
 import {
   Feature,
   FeaturesTwoColumnWithDemos,
-} from '@/components/sections/features-two-column-with-demos'
+} from '@/app/(frontend)/components/sections/features-two-column-with-demos'
 import {
   FooterCategory,
   FooterLink,
   FooterWithNewsletterFormCategoriesAndSocialIcons,
   NewsletterForm,
   SocialLink,
-} from '@/components/sections/footer-with-newsletter-form-categories-and-social-icons'
-import { HeroLeftAlignedWithDemo } from '@/components/sections/hero-left-aligned-with-demo'
+} from '@/app/(frontend)/components/sections/footer-with-newsletter-form-categories-and-social-icons'
+import { HeroLeftAlignedWithDemo } from '@/app/(frontend)/components/sections/hero-left-aligned-with-demo'
 import {
   NavbarLink,
   NavbarLogo,
   NavbarWithLinksActionsAndCenteredLogo,
-} from '@/components/sections/navbar-with-links-actions-and-centered-logo'
-import { Plan, PricingMultiTier } from '@/components/sections/pricing-multi-tier'
-import { Stat, StatsWithGraph } from '@/components/sections/stats-with-graph'
+} from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
+import { Plan, PricingMultiTier } from '@/app/(frontend)/components/sections/pricing-multi-tier'
+import { Stat, StatsWithGraph } from '@/app/(frontend)/components/sections/stats-with-graph'
 import {
   Testimonial,
   TestimonialThreeColumnGrid,
-} from '@/components/sections/testimonials-three-column-grid'
+} from '@/app/(frontend)/components/sections/testimonials-three-column-grid'
+import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
+import { TeamFourColumnGrid } from '@/app/(frontend)/components/sections/team-four-column-grid'
+import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
 
 export default async function HomePage() {
   return (
     <>
-      <NavbarWithLinksActionsAndCenteredLogo
-        id="navbar"
-        links={
-          <>
-            <NavbarLink href="#">Pricing</NavbarLink>
-            <NavbarLink href="#">About</NavbarLink>
-            <NavbarLink href="#">Docs</NavbarLink>
-            <NavbarLink href="#" className="sm:hidden">
-              Log in
-            </NavbarLink>
-          </>
-        }
-        logo={
-          <NavbarLogo href="#">
-            <img
-              src="https://assets.tailwindplus.com/logos/oatmeal-familjen.svg?color=olive-950"
-              alt="Oatmeal"
-              className="dark:hidden"
-              width={96}
-              height={28}
-            />
-            <img
-              src="https://assets.tailwindplus.com/logos/oatmeal-familjen.svg?color=white"
-              alt="Oatmeal"
-              className="not-dark:hidden"
-              width={96}
-              height={28}
-            />
-          </NavbarLogo>
-        }
-        actions={
-          <>
-            <PlainButtonLink href="#" className="max-sm:hidden">
-              Log in
-            </PlainButtonLink>
-            <ButtonLink href="#">Get started</ButtonLink>
-          </>
-        }
-      />
-
       <Main>
         {/* Hero */}
         <HeroLeftAlignedWithDemo
@@ -90,15 +60,15 @@ export default async function HomePage() {
           eyebrow={
             <AnnouncementBadge
               href="#"
-              text="Oatmeal raises 80M Series A funding"
-              cta="Learn more"
+              text="Du willst ein Angebot für deine Schule/Organisation?"
+              cta="Jetzt anfragen"
             />
           }
-          headline="Customer support that feels like a conversation."
+          headline="Stark gemacht: Empowerment, Gesundheit und Selbstschutz."
           subheadline={
             <p>
-              Simplify your shared inbox, collaborate effortlessly, and give every customer a reply
-              that feels personal — even if it was generated by a bot.
+              Workshops, Kurse und Projekte für mehr Selbstvertrauen, Wissen und
+              Handlungssicherheit.
             </p>
           }
           cta={
@@ -112,161 +82,13 @@ export default async function HomePage() {
               </PlainButtonLink>
             </div>
           }
-          demo={
-            <>
-              <Screenshot
-                className="rounded-md lg:hidden"
-                wallpaper="green"
-                placement="bottom-right"
-              >
-                <img
-                  src="https://assets.tailwindplus.com/screenshots/1.webp?left=1670&top=1408"
-                  alt=""
-                  width={1670}
-                  height={1408}
-                  className="bg-white/75 md:hidden dark:hidden"
-                />
-                <img
-                  src="https://assets.tailwindplus.com/screenshots/1.webp?left=1670&top=1408&color=olive"
-                  alt=""
-                  width={1670}
-                  height={1408}
-                  className="bg-black/75 not-dark:hidden md:hidden"
-                />
-                <img
-                  src="https://assets.tailwindplus.com/screenshots/1.webp?left=2000&top=1408"
-                  alt=""
-                  width={2000}
-                  height={1408}
-                  className="bg-white/75 max-md:hidden dark:hidden"
-                />
-                <img
-                  src="https://assets.tailwindplus.com/screenshots/1.webp?left=2000&top=1408&color=olive"
-                  alt=""
-                  width={2000}
-                  height={1408}
-                  className="bg-black/75 not-dark:hidden max-md:hidden"
-                />
-              </Screenshot>
-              <Screenshot className="rounded-lg max-lg:hidden" wallpaper="green" placement="bottom">
-                <img
-                  src="https://assets.tailwindplus.com/screenshots/1.webp"
-                  alt=""
-                  className="bg-white/75 dark:hidden"
-                  width={3440}
-                  height={1990}
-                />
-                <img
-                  className="bg-black/75 not-dark:hidden"
-                  src="https://assets.tailwindplus.com/screenshots/1.webp?color=olive"
-                  alt=""
-                  width={3440}
-                  height={1990}
-                />
-              </Screenshot>
-            </>
-          }
-          footer={
-            <LogoGrid>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/9.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={51}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/9.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={51}
-                  height={32}
-                />
-              </Logo>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/10.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={70}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/10.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={70}
-                  height={32}
-                />
-              </Logo>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/11.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={100}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/11.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={100}
-                  height={32}
-                />
-              </Logo>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/12.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={85}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/12.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={85}
-                  height={32}
-                />
-              </Logo>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/13.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={75}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/13.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={75}
-                  height={32}
-                />
-              </Logo>
-              <Logo>
-                <img
-                  src="https://assets.tailwindplus.com/logos/8.svg?color=black&height=32"
-                  className="dark:hidden"
-                  alt=""
-                  width={85}
-                  height={32}
-                />
-                <img
-                  src="https://assets.tailwindplus.com/logos/8.svg?color=white&height=32"
-                  className="bg-black/75 not-dark:hidden"
-                  alt=""
-                  width={85}
-                  height={32}
-                />
-              </Logo>
-            </LogoGrid>
-          }
         />
+
+        {/* About */}
+        <CTAWithImageTiles />
+
+        {/* Team */}
+        <TeamImageShortParagraph />
 
         {/* Features */}
         <FeaturesTwoColumnWithDemos
@@ -342,11 +164,14 @@ export default async function HomePage() {
                     />
                   </Screenshot>
                 }
-                headline="Shared Inbox"
+                headline="Sozialtraining, Mobbing-Prävention & INTERVENTION - für SCHULE, Kindergarten, Verein, Institutionen..."
                 subheadline={
                   <p>
-                    Keep every customer conversation in one clean, collaborative inbox. A single
-                    source of truth is much easier to ignore.
+                    Stärkt eure Konfliktkultur und stoppt Mobbing! Dieses Angebot bietet
+                    Sozialtrainings und Präventionsstrategien, um das soziale Miteinander in
+                    Schulen, Vereinen und Kindergärten zu fördern. Erfahrene Sozialtrainer:innen
+                    unterstützen bei der Stärkung der Klassengemeinschaft und aktiver
+                    Mobbing-Intervention.
                   </p>
                 }
                 cta={
@@ -693,62 +518,6 @@ export default async function HomePage() {
           }
         />
       </Main>
-
-      <FooterWithNewsletterFormCategoriesAndSocialIcons
-        id="footer"
-        cta={
-          <NewsletterForm
-            headline="Stay in the loop"
-            subheadline={
-              <p>
-                Get customer support tips, product updates and customer stories that you can archive
-                as soon as they arrive.
-              </p>
-            }
-            action="#"
-          />
-        }
-        links={
-          <>
-            <FooterCategory title="Product">
-              <FooterLink href="#">Features</FooterLink>
-              <FooterLink href="#">Pricing</FooterLink>
-              <FooterLink href="#">Integrations</FooterLink>
-            </FooterCategory>
-            <FooterCategory title="Company">
-              <FooterLink href="#">About</FooterLink>
-              <FooterLink href="#">Careers</FooterLink>
-              <FooterLink href="#">Blog</FooterLink>
-              <FooterLink href="#">Press Kit</FooterLink>
-            </FooterCategory>
-            <FooterCategory title="Resources">
-              <FooterLink href="#">Help Center</FooterLink>
-              <FooterLink href="#">API Docs</FooterLink>
-              <FooterLink href="#">Status</FooterLink>
-              <FooterLink href="#">Contact</FooterLink>
-            </FooterCategory>
-            <FooterCategory title="Legal">
-              <FooterLink href="#">Privacy Policy</FooterLink>
-              <FooterLink href="#">Terms of Service</FooterLink>
-              <FooterLink href="#">Security</FooterLink>
-            </FooterCategory>
-          </>
-        }
-        fineprint="© 2025 Oatmeal, Inc."
-        socialLinks={
-          <>
-            <SocialLink href="https://x.com" name="X">
-              <XIcon />
-            </SocialLink>
-            <SocialLink href="https://github.com" name="GitHub">
-              <GitHubIcon />
-            </SocialLink>
-            <SocialLink href="https://www.youtube.com" name="YouTube">
-              <YouTubeIcon />
-            </SocialLink>
-          </>
-        }
-      />
     </>
   )
 }
