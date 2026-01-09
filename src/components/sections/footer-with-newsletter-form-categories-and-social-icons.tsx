@@ -3,7 +3,11 @@ import type { ComponentProps, ReactNode } from 'react'
 import { Container } from '../elements/container'
 import { ArrowNarrowRightIcon } from '../icons/arrow-narrow-right-icon'
 
-export function FooterCategory({ title, children, ...props }: { title: ReactNode } & ComponentProps<'div'>) {
+export function FooterCategory({
+  title,
+  children,
+  ...props
+}: { title: ReactNode } & ComponentProps<'div'>) {
   return (
     <div {...props}>
       <h3>{title}</h3>
@@ -14,7 +18,11 @@ export function FooterCategory({ title, children, ...props }: { title: ReactNode
   )
 }
 
-export function FooterLink({ href, className, ...props }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
+export function FooterLink({
+  href,
+  className,
+  ...props
+}: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
     <li className={clsx('text-olive-700 dark:text-olive-400', className)}>
       <a href={href} {...props} />

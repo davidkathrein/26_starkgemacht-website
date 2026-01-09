@@ -9,7 +9,10 @@ export function Stat({
   ...props
 }: { stat: ReactNode; text: ReactNode } & ComponentProps<'div'>) {
   return (
-    <div className={clsx('border-l border-olive-950/20 pl-6 dark:border-white/20', className)} {...props}>
+    <div
+      className={clsx('border-l border-olive-950/20 pl-6 dark:border-white/20', className)}
+      {...props}
+    >
       <div className="text-2xl/10 tracking-tight text-olive-950 dark:text-white">{stat}</div>
       <p className="mt-2 text-sm/7 text-olive-700 dark:text-olive-400">{text}</p>
     </div>
@@ -44,18 +47,90 @@ export function StatsWithGraph({ children, ...props }: ComponentProps<typeof Sec
             />
             <g strokeWidth="1" strokeDasharray="4 3" clipPath={`url(#${pathId})`}>
               <line x1="0.5" y1="400" x2="0.5" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="92.3076923076923" y1="400" x2="92.3076923076923" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="184.6153846153846" y1="400" x2="184.6153846153846" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="276.9230769230769" y1="400" x2="276.9230769230769" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="369.2307692307692" y1="400" x2="369.2307692307692" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="461.53846153846155" y1="400" x2="461.53846153846155" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="553.8461538461538" y1="400" x2="553.8461538461538" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="646.1538461538462" y1="400" x2="646.1538461538462" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="738.4615384615385" y1="400" x2="738.4615384615385" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="830.7692307692307" y1="400" x2="830.7692307692307" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="923.0769230769231" y1="400" x2="923.0769230769231" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="1015.3846153846154" y1="400" x2="1015.3846153846154" y2="0" vectorEffect="non-scaling-stroke" />
-              <line x1="1107.6923076923076" y1="400" x2="1107.6923076923076" y2="0" vectorEffect="non-scaling-stroke" />
+              <line
+                x1="92.3076923076923"
+                y1="400"
+                x2="92.3076923076923"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="184.6153846153846"
+                y1="400"
+                x2="184.6153846153846"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="276.9230769230769"
+                y1="400"
+                x2="276.9230769230769"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="369.2307692307692"
+                y1="400"
+                x2="369.2307692307692"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="461.53846153846155"
+                y1="400"
+                x2="461.53846153846155"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="553.8461538461538"
+                y1="400"
+                x2="553.8461538461538"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="646.1538461538462"
+                y1="400"
+                x2="646.1538461538462"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="738.4615384615385"
+                y1="400"
+                x2="738.4615384615385"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="830.7692307692307"
+                y1="400"
+                x2="830.7692307692307"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="923.0769230769231"
+                y1="400"
+                x2="923.0769230769231"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="1015.3846153846154"
+                y1="400"
+                x2="1015.3846153846154"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="1107.6923076923076"
+                y1="400"
+                x2="1107.6923076923076"
+                y2="0"
+                vectorEffect="non-scaling-stroke"
+              />
               <line x1="1199.5" y1="400" x2="1199.5" y2="0" vectorEffect="non-scaling-stroke" />
             </g>
             <path

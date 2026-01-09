@@ -20,7 +20,9 @@ export function FeatureThreeColumnWithDemos({
       </div>
       <div className="p-6 sm:p-10 lg:p-6">
         <h3 className="text-base/8 font-medium text-olive-950 dark:text-white">{headline}</h3>
-        <div className="mt-2 flex flex-col gap-4 text-sm/7 text-olive-700 dark:text-olive-400">{subheadline}</div>
+        <div className="mt-2 flex flex-col gap-4 text-sm/7 text-olive-700 dark:text-olive-400">
+          {subheadline}
+        </div>
       </div>
     </div>
   )

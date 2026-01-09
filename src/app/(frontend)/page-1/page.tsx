@@ -89,7 +89,6 @@ export default function Page() {
               cta="Learn more"
             />
           }
-          className="dark:bg-orange-700"
           headline="Customer support that feels like a conversation."
           subheadline={
             <p>
