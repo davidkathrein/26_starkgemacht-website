@@ -3,6 +3,7 @@ import { JSXConvertersFunction, LinkJSXConverter } from '@payloadcms/richtext-le
 
 import { internalDocToHref } from './internalLink'
 import { headingConverter } from './headingConverter'
+import { uploadConverter } from './uploadConverter'
 
 type NodeTypes = DefaultNodeTypes
 
@@ -10,4 +11,5 @@ export const jsxConverter: JSXConvertersFunction<NodeTypes> = ({ defaultConverte
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
   ...headingConverter,
+  ...uploadConverter,
 })

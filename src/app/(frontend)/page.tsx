@@ -31,6 +31,8 @@ import { Suspense } from 'react'
 import { Wallpaper } from './components/elements/wallpaper'
 import { ArrowUpRight, MoveRight } from 'lucide-react'
 import { Link } from './components/elements/link'
+import BlogThreeColumns from './components/sections/blog-three-columns'
+import { ImageWithCaption } from './components/elements/image-with-caption'
 
 export default async function HomePage() {
   return (
@@ -86,6 +88,9 @@ export default async function HomePage() {
         >
           <EventsFeatureSection />
         </Suspense>
+
+        {/* Blog Posts */}
+        <BlogThreeColumns />
 
         {/* Stats */}
         <StatsWithGraph
@@ -405,7 +410,20 @@ async function EventsFeatureSection() {
                 link={'/angebot/' + event.slug}
                 demo={
                   <Link href={'/angebot/' + event.slug}>
-                    {imageUrl ? (
+                    {event.customImage &&
+                    typeof event.customImage === 'object' &&
+                    'url' in event.customImage &&
+                    event.customImage.url ? (
+                      <ImageWithCaption
+                        src={event.customImage.url}
+                        alt={event.name}
+                        caption={event.customImage.caption}
+                        captionVariant="overlay"
+                        width={1800}
+                        height={1012}
+                        className="aspect-video w-full"
+                      />
+                    ) : imageUrl ? (
                       <Image
                         src={imageUrl}
                         alt={event.name}
@@ -414,19 +432,6 @@ async function EventsFeatureSection() {
                         height={1012}
                       />
                     ) : (
-                      // <Screenshot
-                      //   className="aspect-video w-full rouned-lg object-cover"
-                      //   wallpaper={wallpaper}
-                      //   placement={'bottom'}
-                      // >
-                      //   <Image
-                      //     src={imageUrl}
-                      //     alt={event.name}
-                      //     className="aspect-video w-full object-cover"
-                      //     width={1800}
-                      //     height={1012}
-                      //   />
-                      // </Screenshot>
                       <Wallpaper color={wallpaper} className="aspect-video w-full object-cover" />
                     )}
                   </Link>

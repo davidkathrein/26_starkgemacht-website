@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { slugField } from 'payload'
 
 export const Event: CollectionConfig = {
   slug: 'event',
@@ -25,13 +26,7 @@ export const Event: CollectionConfig = {
       type: 'text',
       required: true,
     },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-      defaultValue: () => Math.floor(Math.random() * 1000000).toString(),
-    },
+    slugField({ fieldToUse: 'name' }),
     {
       name: 'previewDescription',
       type: 'text',
@@ -45,6 +40,14 @@ export const Event: CollectionConfig = {
       type: 'text',
       admin: {
         description: 'Event image URL (header or thumbnail)',
+      },
+    },
+    {
+      name: 'customImage',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Optional custom image to override the default event image from TicketTailor',
       },
     },
     {

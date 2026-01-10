@@ -4,6 +4,7 @@ import { Heading } from '@/app/(frontend)/components/elements/heading'
 import { Text } from '@/app/(frontend)/components/elements/text'
 import { ButtonLink } from '@/app/(frontend)/components/elements/button'
 import { RichText } from '@/app/(frontend)/components/elements/rich-text'
+import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-with-caption'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
@@ -23,6 +24,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
       },
     },
     limit: 1,
+    depth: 2, // Populate relationships including customImage
   })
 
   const event = events.docs[0] as Event | undefined
@@ -30,6 +32,9 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   if (!event) {
     notFound()
   }
+
+  // Get custom image with caption or fallback to event.image
+  const customImage = typeof event.customImage !== 'number' ? event.customImage : null
 
   // Format date
   const startDate = new Date(event.startsAtIso)
@@ -91,14 +96,16 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             {event.ctaText || 'Jetzt anmelden'}
           </ButtonLink>
 
-          {event.image && (
-            <figure className="mt-10">
-              <img
-                alt={event.name}
-                src={event.image}
-                className="aspect-video w-full rounded-xl bg-olive-200 object-cover dark:bg-olive-800"
-              />
-            </figure>
+          {(customImage?.url || event.image) && (
+            <ImageWithCaption
+              src={
+                customImage?.url ||
+                (typeof event.image === 'string' ? event.image : (event.image as any)?.url || '')
+              }
+              alt={event.name}
+              caption={customImage?.caption}
+              className="mt-10"
+            />
           )}
 
           {event.content && (

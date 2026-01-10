@@ -5,11 +5,39 @@ export const Media: CollectionConfig = {
   access: {
     read: () => true,
   },
+  hooks: {
+    beforeChange: [
+      ({ data }) => {
+        // Check if filename exists and is too long (macOS limit is 255 chars)
+        if (data.filename && data.filename.length > 100) {
+          // Extract file extension
+          const lastDotIndex = data.filename.lastIndexOf('.')
+          const extension = lastDotIndex > -1 ? data.filename.substring(lastDotIndex) : ''
+
+          // Generate a random short filename
+          const randomId = Math.random().toString(36).substring(2, 15)
+          const timestamp = Date.now().toString(36)
+          const newFilename = `${randomId}-${timestamp}${extension}`
+
+          data.filename = newFilename
+        }
+        return data
+      },
+    ],
+  },
   fields: [
     {
       name: 'alt',
       type: 'text',
       required: true,
+    },
+    {
+      name: 'caption',
+      type: 'text',
+      admin: {
+        description:
+          'Optional caption displayed below the image (fully supported in rich text fields)',
+      },
     },
   ],
   upload: {
