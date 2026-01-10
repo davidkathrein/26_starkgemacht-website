@@ -13,8 +13,18 @@ export function ArrowDownArrowUpIcon({ className, ...props }: ComponentProps<'sv
       className={clsx('inline-block', className)}
       {...props}
     >
-      <path d="M3.50977 12.5L3.50977 0.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9.5 0.5L9.5 12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M3.50977 12.5L3.50977 0.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 0.5L9.5 12.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         d="M0.504883 9.49512L3.50488 12.4951L6.50488 9.49512"
         stroke="currentColor"

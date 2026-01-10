@@ -10,11 +10,11 @@ export function Stat({
 }: { stat: ReactNode; text: ReactNode } & ComponentProps<'div'>) {
   return (
     <div
-      className={clsx('border-l border-olive-950/20 pl-6 dark:border-white/20', className)}
+      className={clsx('border-olive-950/20 border-l pl-6 dark:border-white/20', className)}
       {...props}
     >
-      <div className="text-2xl/10 tracking-tight text-olive-950 dark:text-white">{stat}</div>
-      <p className="mt-2 text-sm/7 text-olive-700 dark:text-olive-400">{text}</p>
+      <div className="text-olive-950 text-2xl/10 tracking-tight dark:text-white">{stat}</div>
+      <p className="text-olive-700 dark:text-olive-400 mt-2 text-sm/7">{text}</p>
     </div>
   )
 }
@@ -32,7 +32,7 @@ export function StatsWithGraph({ children, ...props }: ComponentProps<typeof Sec
       <div className="pointer-events-none relative h-48 sm:h-64 lg:h-36">
         <div className="absolute bottom-0 left-1/2 w-[150vw] max-w-[calc(var(--container-7xl)-(--spacing(10)*2))] -translate-x-1/2">
           <svg
-            className="h-100 w-full fill-olive-950/2.5 stroke-olive-950/40 dark:fill-white/2.5 dark:stroke-white/40"
+            className="fill-olive-950/2.5 stroke-olive-950/40 h-100 w-full dark:fill-white/2.5 dark:stroke-white/40"
             viewBox="0 0 1200 400"
             preserveAspectRatio="none"
           >

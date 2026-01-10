@@ -138,10 +138,6 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  /**
-   * wird bei Blog-Beiträgen als Autor angezeigt
-   */
-  fullName: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -353,7 +349,7 @@ export interface Blog {
   /**
    * Autor des Blog Posts
    */
-  author: number | User;
+  author: number | Team;
   /**
    * Kategorien des Blog Posts
    */
@@ -558,7 +554,6 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  fullName?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

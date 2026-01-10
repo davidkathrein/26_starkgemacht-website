@@ -20,7 +20,12 @@ export function ShieldExclamationIcon({ className, ...props }: ComponentProps<'s
         strokeLinejoin="round"
       />
       <path d="M6.5 4.5V6.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6.5 8.5L6.5 8.51" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M6.5 8.5L6.5 8.51"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

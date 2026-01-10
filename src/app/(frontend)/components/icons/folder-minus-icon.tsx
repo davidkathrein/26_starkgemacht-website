@@ -30,7 +30,12 @@ export function FolderMinusIcon({ className, ...props }: ComponentProps<'svg'>) 
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M12.505 10.495L8.505 10.495" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M12.505 10.495L8.505 10.495"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

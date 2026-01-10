@@ -31,7 +31,12 @@ export function FolderPlusIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinejoin="round"
       />
       <path d="M10.5 8.5V12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12.505 10.495L8.505 10.495" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M12.505 10.495L8.505 10.495"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

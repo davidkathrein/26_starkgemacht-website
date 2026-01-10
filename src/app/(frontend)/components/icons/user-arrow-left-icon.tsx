@@ -28,7 +28,12 @@ export function UserArrowLeftIcon({ className, ...props }: ComponentProps<'svg'>
         strokeLinejoin="round"
       />
       <path d="M12.5 11H7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9 9.5L7.5 11L9 12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M9 9.5L7.5 11L9 12.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

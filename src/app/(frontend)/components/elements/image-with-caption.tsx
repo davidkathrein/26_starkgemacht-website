@@ -34,11 +34,11 @@ export function ImageWithCaption({
           width={width}
           height={height}
           priority={priority}
-          className="h-full w-full bg-olive-200 object-cover dark:bg-olive-800"
+          className="bg-olive-200 dark:bg-olive-800 h-full w-full object-cover"
         />
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-linear-to-t from-olive/80 via-olive/40 to-transparent" />
+        <div className="from-olive/80 via-olive/40 absolute inset-x-0 bottom-0 h-32 bg-linear-to-t to-transparent" />
         <figcaption>
-          <p className="absolute bottom-4 left-4 right-4 text-sm font-medium text-white">
+          <p className="absolute right-4 bottom-4 left-4 text-sm font-medium text-white">
             {caption}
           </p>
         </figcaption>
@@ -54,13 +54,13 @@ export function ImageWithCaption({
         width={width}
         height={height}
         priority={priority}
-        className="w-full rounded-xl bg-olive-200 object-cover dark:bg-olive-800"
+        className="bg-olive-200 dark:bg-olive-800 w-full rounded-xl object-cover"
       />
       {caption && captionVariant === 'below' && (
-        <figcaption className="mt-4 flex gap-x-2 text-sm/6 text-olive-600 dark:text-olive-500">
+        <figcaption className="text-olive-600 dark:text-olive-500 mt-4 flex gap-x-2 text-sm/6">
           <BadgeInfoIcon
             aria-hidden="true"
-            className="mt-0.5 size-5 flex-none text-olive-400 dark:text-olive-600"
+            className="text-olive-400 dark:text-olive-600 mt-0.5 size-5 flex-none"
           />
           {caption}
         </figcaption>

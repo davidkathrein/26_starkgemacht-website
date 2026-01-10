@@ -64,7 +64,7 @@ export const Blog: CollectionConfig = {
     {
       name: 'author',
       type: 'relationship',
-      relationTo: 'users',
+      relationTo: 'team',
       required: true,
       label: 'Autor',
       admin: {

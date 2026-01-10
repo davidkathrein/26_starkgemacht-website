@@ -19,7 +19,12 @@ export function TerminalIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M2.5 2.50019L4 4L2.5 5.50019" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M2.5 2.50019L4 4L2.5 5.50019"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path d="M5.5 5.5H7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )

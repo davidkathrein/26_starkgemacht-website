@@ -1,6 +1,7 @@
 import { ElDialog, ElDialogPanel } from '@tailwindplus/elements/react'
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
+import Link from 'next/link'
 
 export function NavbarLink({
   children,
@@ -9,10 +10,10 @@ export function NavbarLink({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <a
+    <Link
       href={href}
       className={clsx(
-        'group inline-flex items-center justify-between gap-2 text-3xl/10 font-medium text-olive-950 lg:text-sm/7 dark:text-white',
+        'group text-olive-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
         className,
       )}
       {...props}
@@ -32,7 +33,7 @@ export function NavbarLink({
           <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
       </span>
-    </a>
+    </Link>
   )
 }
 
@@ -41,7 +42,7 @@ export function NavbarLogo({
   href,
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
-  return <a href={href} {...props} className={clsx('inline-flex items-stretch', className)} />
+  return <Link href={href} {...props} className={clsx('inline-flex items-stretch', className)} />
 }
 
 export function NavbarWithLogoActionsAndLeftAlignedLinks({
@@ -57,7 +58,7 @@ export function NavbarWithLogoActionsAndLeftAlignedLinks({
 } & ComponentProps<'header'>) {
   return (
     <header
-      className={clsx('sticky top-0 z-10 bg-olive-100 dark:bg-olive-950', className)}
+      className={clsx('bg-olive-100 dark:bg-olive-950 sticky top-0 z-10', className)}
       {...props}
     >
       <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
@@ -74,7 +75,7 @@ export function NavbarWithLogoActionsAndLeftAlignedLinks({
               command="show-modal"
               commandfor="mobile-menu"
               aria-label="Toggle menu"
-              className="inline-flex rounded-full p-1.5 text-olive-950 hover:bg-olive-950/10 lg:hidden dark:text-white dark:hover:bg-white/10"
+              className="text-olive-950 hover:bg-olive-950/10 inline-flex rounded-full p-1.5 lg:hidden dark:text-white dark:hover:bg-white/10"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path
@@ -89,13 +90,13 @@ export function NavbarWithLogoActionsAndLeftAlignedLinks({
 
         <ElDialog className="lg:hidden">
           <dialog id="mobile-menu" className="backdrop:bg-transparent">
-            <ElDialogPanel className="fixed inset-0 bg-olive-100 px-6 py-6 lg:px-10 dark:bg-olive-950">
+            <ElDialogPanel className="bg-olive-100 dark:bg-olive-950 fixed inset-0 px-6 py-6 lg:px-10">
               <div className="flex justify-end">
                 <button
                   command="close"
                   commandfor="mobile-menu"
                   aria-label="Toggle menu"
-                  className="inline-flex rounded-full p-1.5 text-olive-950 hover:bg-olive-950/10 dark:text-white dark:hover:bg-white/10"
+                  className="text-olive-950 hover:bg-olive-950/10 inline-flex rounded-full p-1.5 dark:text-white dark:hover:bg-white/10"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

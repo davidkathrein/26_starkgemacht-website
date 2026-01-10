@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const featuredImage = typeof post.featuredImage !== 'number' ? post.featuredImage : null
 
   return (
-    <div className="bg-olive-100 px-6 py-32 lg:px-8 dark:bg-olive-950">
+    <div className="bg-olive-50 dark:bg-olive-900 px-6 py-32 lg:px-8">
       <Container>
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center gap-x-4 text-xs">
@@ -58,7 +58,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {categories.map((cat) => (
               <span
                 key={cat.id}
-                className="relative z-10 rounded-full bg-white px-3 py-1.5 font-medium text-olive-700 dark:bg-olive-900 dark:text-olive-400"
+                className="bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-300 relative z-10 rounded-full px-3 py-1.5 font-medium"
               >
                 {cat.item && typeof cat.item !== 'number' ? cat.item.name : 'Unkategorisiert'}
               </span>
@@ -74,8 +74,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           )}
 
           {/* Author info */}
-          <div className="mt-6 flex items-center gap-x-4 text-sm text-olive-700 dark:text-olive-400">
-            <span className="font-semibold text-olive-950 dark:text-white">Von {authorName}</span>
+          <div className="text-olive-600 dark:text-olive-300 mt-6 flex items-center gap-x-4 text-sm">
+            <span className="text-olive-800 font-semibold dark:text-white">Von {authorName}</span>
           </div>
 
           {featuredImage?.url && (
@@ -90,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.content && (
             <RichText
               data={post.content}
-              className="mt-10 max-w-2xl space-y-6 text-base/7 text-olive-700 dark:text-olive-400"
+              className="text-olive-600 dark:text-olive-300 mt-10 max-w-2xl space-y-6 text-base/7"
             />
           )}
 
@@ -102,7 +102,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 return cat ? (
                   <span
                     key={index}
-                    className="rounded-full bg-white px-3 py-1 text-sm font-medium text-olive-700 dark:bg-olive-900 dark:text-olive-400"
+                    className="bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-300 rounded-full px-3 py-1 text-sm font-medium"
                   >
                     {cat.name}
                   </span>
@@ -113,12 +113,12 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           {/* Author card */}
           {author && (
-            <div className="mt-16 rounded-xl border border-olive-950/20 bg-white p-6 dark:border-white/20 dark:bg-olive-900">
-              <h3 className="font-display text-xl font-semibold text-olive-950 dark:text-white">
+            <div className="border-olive-950/20 dark:bg-olive-900 mt-16 rounded-xl border bg-white p-6 dark:border-white/20">
+              <h3 className="font-display text-olive-800 text-xl font-semibold dark:text-white">
                 Über den Autor
               </h3>
-              <div className="mt-4 space-y-2 text-olive-700 dark:text-olive-400">
-                <p className="font-semibold text-olive-950 dark:text-white">{authorName}</p>
+              <div className="text-olive-600 dark:text-olive-300 mt-4 space-y-2">
+                <p className="text-olive-800 font-semibold dark:text-white">{authorName}</p>
               </div>
             </div>
           )}

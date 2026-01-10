@@ -27,8 +27,18 @@ export function HardDriveIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M10.5 8.5L10.5 8.51" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M8.5 8.5L8.5 8.51" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M10.5 8.5L10.5 8.51"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 8.5L8.5 8.51"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

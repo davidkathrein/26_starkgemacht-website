@@ -24,8 +24,18 @@ export function PhotoIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M0.5 7.5L4.5 3.5L8.5 7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M7.5 8.5L10.5 5.5L12.5 7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M0.5 7.5L4.5 3.5L8.5 7.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7.5 8.5L10.5 5.5L12.5 7.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         d="M8.5 3C8.5 3.27614 8.27614 3.5 8 3.5C7.72386 3.5 7.5 3.27614 7.5 3C7.5 2.72386 7.72386 2.5 8 2.5C8.27614 2.5 8.5 2.72386 8.5 3Z"
         stroke="currentColor"

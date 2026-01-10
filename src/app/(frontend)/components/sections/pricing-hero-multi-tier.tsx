@@ -27,31 +27,31 @@ export function Plan({
   return (
     <div
       className={clsx(
-        'flex flex-col justify-between gap-6 rounded-xl bg-olive-950/2.5 p-6 sm:items-start dark:bg-white/5',
+        'bg-olive-950/2.5 flex flex-col justify-between gap-6 rounded-xl p-6 sm:items-start dark:bg-white/5',
         className,
       )}
     >
       <div className="self-stretch">
         <div className="flex items-center justify-between">
           {badge && (
-            <div className="order-last inline-flex rounded-full bg-olive-950/10 px-2 text-xs/6 font-medium text-olive-950 dark:bg-white/10 dark:text-white">
+            <div className="bg-olive-950/10 text-olive-950 order-last inline-flex rounded-full px-2 text-xs/6 font-medium dark:bg-white/10 dark:text-white">
               {badge}
             </div>
           )}
 
-          <h3 className="text-2xl/8 tracking-tight text-olive-950 dark:text-white">{name}</h3>
+          <h3 className="text-olive-950 text-2xl/8 tracking-tight dark:text-white">{name}</h3>
         </div>
         <p className="mt-1 inline-flex gap-1 text-base/7">
           <span className="text-olive-950 dark:text-white">{price}</span>
           {period && <span className="text-olive-500 dark:text-olive-500">{period}</span>}
         </p>
-        <div className="mt-4 flex flex-col gap-4 text-sm/6 text-olive-700 dark:text-olive-400">
+        <div className="text-olive-700 dark:text-olive-400 mt-4 flex flex-col gap-4 text-sm/6">
           {subheadline}
         </div>
-        <ul className="mt-4 space-y-2 text-sm/6 text-olive-700 dark:text-olive-400">
+        <ul className="text-olive-700 dark:text-olive-400 mt-4 space-y-2 text-sm/6">
           {features.map((feature, index) => (
             <li key={index} className="flex gap-4">
-              <CheckmarkIcon className="h-lh shrink-0 stroke-olive-950 dark:stroke-white" />
+              <CheckmarkIcon className="stroke-olive-950 h-lh shrink-0 dark:stroke-white" />
               <p>{feature}</p>
             </li>
           ))}
@@ -89,12 +89,12 @@ export function PricingHeroMultiTier<T extends string>({
             <Text size="lg" className="flex max-w-xl flex-col gap-4 text-center">
               {subheadline}
             </Text>
-            <ElTabList className="flex items-center gap-1 rounded-full bg-olive-950/5 p-1 dark:bg-white/5">
+            <ElTabList className="bg-olive-950/5 flex items-center gap-1 rounded-full p-1 dark:bg-white/5">
               {options.map((option) => (
                 <button
                   key={option}
                   type="button"
-                  className="rounded-full px-4 py-1 text-sm/7 font-medium text-olive-950 aria-selected:bg-olive-950 aria-selected:text-white dark:text-white dark:aria-selected:bg-white/10 dark:aria-selected:text-white"
+                  className="text-olive-950 aria-selected:bg-olive-950 rounded-full px-4 py-1 text-sm/7 font-medium aria-selected:text-white dark:text-white dark:aria-selected:bg-white/10 dark:aria-selected:text-white"
                 >
                   {option}
                 </button>

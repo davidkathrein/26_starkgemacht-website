@@ -26,7 +26,9 @@ export function CallToActionSimple({
             {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
             <Subheading>{headline}</Subheading>
           </div>
-          {subheadline && <Text className="flex max-w-3xl flex-col gap-4 text-pretty">{subheadline}</Text>}
+          {subheadline && (
+            <Text className="flex max-w-3xl flex-col gap-4 text-pretty">{subheadline}</Text>
+          )}
         </div>
         {cta}
       </Container>

@@ -22,9 +22,9 @@ export function Button({
       className={clsx(
         'inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium',
         color === 'dark/light' &&
-          'bg-olive-950 text-white hover:bg-olive-800 dark:bg-olive-300 dark:text-olive-950 dark:hover:bg-olive-200',
+          'bg-olive-700 hover:bg-olive-600 dark:bg-olive-400 dark:text-olive-950 dark:hover:bg-olive-300 text-white',
         color === 'light' &&
-          'hover bg-white text-olive-950 hover:bg-olive-100 dark:bg-olive-100 dark:hover:bg-white',
+          'hover bg-olive-50 text-olive-800 hover:bg-olive-100 dark:bg-olive-200 dark:hover:bg-olive-100',
         sizes[size],
         className,
       )}
@@ -50,9 +50,9 @@ export function ButtonLink({
       className={clsx(
         'inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium',
         color === 'dark/light' &&
-          'bg-olive-950 text-white hover:bg-olive-800 dark:bg-olive-300 dark:text-olive-950 dark:hover:bg-olive-200',
+          'bg-olive-700 hover:bg-olive-600 dark:bg-olive-400 dark:text-olive-950 dark:hover:bg-olive-300 text-white',
         color === 'light' &&
-          'hover bg-white text-olive-950 hover:bg-olive-100 dark:bg-olive-100 dark:hover:bg-white',
+          'hover bg-olive-50 text-olive-800 hover:bg-olive-100 dark:bg-olive-200 dark:hover:bg-olive-100',
         sizes[size],
         className,
       )}
@@ -73,7 +73,7 @@ export function SoftButton({
     <button
       type={type}
       className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-1 rounded-full bg-olive-950/10 text-sm/7 font-medium text-olive-950 hover:bg-olive-950/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
+        'bg-olive-950/10 text-olive-950 hover:bg-olive-950/15 inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
         sizes[size],
         className,
       )}
@@ -95,7 +95,7 @@ export function SoftButtonLink({
     <a
       href={href}
       className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-1 rounded-full bg-olive-950/10 text-sm/7 font-medium text-olive-950 hover:bg-olive-950/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
+        'bg-olive-950/10 text-olive-950 hover:bg-olive-950/15 inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
         sizes[size],
         className,
       )}

@@ -25,8 +25,18 @@ export function RepeatIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M2.5 0.5L0.5 2.5L2.5 4.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M10.5 12.5L12.5 10.5L10.5 8.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M2.5 0.5L0.5 2.5L2.5 4.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10.5 12.5L12.5 10.5L10.5 8.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

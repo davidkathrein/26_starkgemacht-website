@@ -71,7 +71,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <div className="bg-olive-100 px-6 py-32 lg:px-8 dark:bg-olive-950">
+    <div className="bg-olive-50 dark:bg-olive-900 px-6 py-32 lg:px-8">
       <Container>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>
@@ -111,17 +111,17 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           {event.content && (
             <RichText
               data={event.content}
-              className="mt-10 max-w-2xl space-y-6 text-base/7 text-olive-700 dark:text-olive-400"
+              className="text-olive-600 dark:text-olive-300 mt-10 max-w-2xl space-y-6 text-base/7"
             />
           )}
 
           {event.venueName && (
-            <div className="mt-10 rounded-xl border border-olive-950/20 bg-white p-6 dark:border-white/20 dark:bg-olive-900">
-              <h3 className="font-display text-xl font-semibold text-olive-950 dark:text-white">
+            <div className="border-olive-950/20 dark:bg-olive-900 mt-10 rounded-xl border bg-white p-6 dark:border-white/20">
+              <h3 className="font-display text-olive-800 text-xl font-semibold dark:text-white">
                 Veranstaltungsort
               </h3>
-              <div className="mt-4 space-y-1 text-olive-700 dark:text-olive-400">
-                <p className="font-semibold text-olive-950 dark:text-white">{event.venueName}</p>
+              <div className="text-olive-600 dark:text-olive-300 mt-4 space-y-1">
+                <p className="text-olive-800 font-semibold dark:text-white">{event.venueName}</p>
                 {event.venuePostalCode && <p>{event.venuePostalCode}</p>}
                 {event.venueCountry && <p>{event.venueCountry}</p>}
               </div>

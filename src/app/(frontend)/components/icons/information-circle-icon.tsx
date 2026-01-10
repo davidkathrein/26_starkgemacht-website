@@ -13,7 +13,14 @@ export function InformationCircleIcon({ className, ...props }: ComponentProps<'s
       className={clsx('inline-block', className)}
       {...props}
     >
-      <circle cx="6.5" cy="6.5" r="6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <circle
+        cx="6.5"
+        cy="6.5"
+        r="6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         stroke="currentColor"
         strokeLinecap="round"

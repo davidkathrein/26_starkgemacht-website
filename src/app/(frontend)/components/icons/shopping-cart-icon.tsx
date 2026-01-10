@@ -13,7 +13,12 @@ export function ShoppingCartIcon({ className, ...props }: ComponentProps<'svg'>)
       className={clsx('inline-block', className)}
       {...props}
     >
-      <path d="M0.5 0.5H2.5L3.5 9.5H11.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M0.5 0.5H2.5L3.5 9.5H11.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         d="M3.50005 7.5H11.7222L12.3889 1.5H3.00005"
         stroke="currentColor"

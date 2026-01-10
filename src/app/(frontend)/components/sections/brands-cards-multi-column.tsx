@@ -16,16 +16,16 @@ export function BrandCard({
   return (
     <div
       className={clsx(
-        'flex flex-col justify-between gap-6 rounded-xl bg-olive-950/2.5 p-6 dark:bg-white/5',
+        'bg-olive-950/2.5 flex flex-col justify-between gap-6 rounded-xl p-6 dark:bg-white/5',
         className,
       )}
       {...props}
     >
       <div className="flex flex-col items-start gap-2">
         <div className="flex h-8 shrink-0">{logo}</div>
-        <p className="text-sm/7 text-olive-700 dark:text-olive-400">{text}</p>
+        <p className="text-olive-700 dark:text-olive-400 text-sm/7">{text}</p>
       </div>
-      <p className="text-xs/6 text-olive-700 dark:text-olive-400">{footnote}</p>
+      <p className="text-olive-700 dark:text-olive-400 text-xs/6">{footnote}</p>
     </div>
   )
 }

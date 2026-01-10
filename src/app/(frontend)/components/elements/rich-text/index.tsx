@@ -15,7 +15,7 @@ export function RichText(props: Props) {
       {...rest}
       data={data}
       className={clsx(
-        '[&_a]:underline [&_a]:decoration-olive-600 dark:[&_a]:decoration-olive-500',
+        '[&_a]:decoration-olive-600 dark:[&_a]:decoration-olive-500 [&_a]:underline',
         className,
       )}
       converters={jsxConverter}

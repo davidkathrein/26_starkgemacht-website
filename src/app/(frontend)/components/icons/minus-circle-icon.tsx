@@ -13,7 +13,14 @@ export function MinusCircleIcon({ className, ...props }: ComponentProps<'svg'>) 
       className={clsx('inline-block', className)}
       {...props}
     >
-      <circle cx="6.5" cy="6.5" r="6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <circle
+        cx="6.5"
+        cy="6.5"
+        r="6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M4.5 6.5h4" />
     </svg>
   )

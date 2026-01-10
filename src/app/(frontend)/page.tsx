@@ -439,7 +439,7 @@ async function EventsFeatureSection() {
                 headline={event.name}
                 subheadline={
                   <div>
-                    <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-400">
+                    <p className="text-olive-600 dark:text-olive-300 mb-2 text-sm font-medium">
                       {dateDisplay}
 
                       {event.venueName && ` - ${event.venueName}`}

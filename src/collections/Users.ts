@@ -7,14 +7,6 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   fields: [
-    {
-      name: 'fullName',
-      type: 'text',
-      required: true,
-      admin: {
-        description: 'wird bei Blog-Beiträgen als Autor angezeigt',
-      },
-    },
     // Email added by default
     // Add more fields as needed
   ],

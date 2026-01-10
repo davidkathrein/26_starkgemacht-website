@@ -25,7 +25,7 @@ export function AnnouncementBadge({
         variant === 'normal' &&
           'bg-olive-950/5 text-olive-950 hover:bg-olive-950/10 dark:bg-white/5 dark:text-white dark:inset-ring-1 dark:inset-ring-white/5 dark:hover:bg-white/10',
         variant === 'overlay' &&
-          'bg-olive-950/15 text-white hover:bg-olive-950/20 dark:bg-olive-950/20 dark:hover:bg-olive-950/25',
+          'bg-olive-950/15 hover:bg-olive-950/20 dark:bg-olive-950/20 dark:hover:bg-olive-950/25 text-white',
         className,
       )}
     >

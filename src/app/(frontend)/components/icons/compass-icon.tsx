@@ -13,7 +13,14 @@ export function CompassIcon({ className, ...props }: ComponentProps<'svg'>) {
       className={clsx('inline-block', className)}
       {...props}
     >
-      <circle cx="6.5" cy="6.5" r="6" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <circle
+        cx="6.5"
+        cy="6.5"
+        r="6"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         fill="#000"
         fillOpacity=".2"

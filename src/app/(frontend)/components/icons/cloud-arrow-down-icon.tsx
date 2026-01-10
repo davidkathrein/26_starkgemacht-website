@@ -19,7 +19,12 @@ export function CloudArrowDownIcon({ className, ...props }: ComponentProps<'svg'
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M6.50977 12.5L6.50977 6.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M6.50977 12.5L6.50977 6.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         d="M4.50488 10.4951L6.50488 12.4951L8.50488 10.4951"
         stroke="currentColor"

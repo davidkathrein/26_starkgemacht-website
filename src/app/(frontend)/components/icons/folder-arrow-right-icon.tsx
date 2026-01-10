@@ -31,7 +31,12 @@ export function FolderArrowRightIcon({ className, ...props }: ComponentProps<'sv
         strokeLinejoin="round"
       />
       <path d="M12.5 9H7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11 10.5L12.5 9L11 7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M11 10.5L12.5 9L11 7.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

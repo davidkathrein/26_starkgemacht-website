@@ -1,0 +1,33 @@
+# Dependencies
+node_modules
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist
+build
+.next
+out
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# Coverage
+coverage
+
+# OS files
+.DS_Store
+
+# IDE
+.vscode
+.idea
+
+# Payload CMS
+payload-types.ts
+.payload

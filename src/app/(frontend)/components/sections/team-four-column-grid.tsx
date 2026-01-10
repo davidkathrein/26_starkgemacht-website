@@ -19,7 +19,7 @@ export function TeamMember({
         {img}
       </div>
       <div>
-        <p className="font-semibold text-olive-950 dark:text-white">{name}</p>
+        <p className="text-olive-950 font-semibold dark:text-white">{name}</p>
         <p className="text-olive-700 dark:text-olive-400">{byline}</p>
       </div>
     </li>

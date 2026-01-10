@@ -1,6 +1,7 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Container } from '../elements/container'
+import Link from 'next/link'
 
 export function FooterLink({
   href,
@@ -9,7 +10,7 @@ export function FooterLink({
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
     <li className={clsx('text-olive-700 dark:text-olive-400', className)}>
-      <a href={href} {...props} />
+      <Link href={href} {...props} />
     </li>
   )
 }
@@ -47,7 +48,7 @@ export function FooterWithLinksAndSocialIcons({
 } & ComponentProps<'footer'>) {
   return (
     <footer className={clsx('pt-16', className)} {...props}>
-      <div className="bg-olive-950/2.5 py-16 text-olive-950 dark:bg-white/5 dark:text-white">
+      <div className="bg-olive-950/2.5 text-olive-950 py-16 dark:bg-white/5 dark:text-white">
         <Container className="flex flex-col gap-10 text-center text-sm/7">
           <div className="flex flex-col gap-6">
             <nav>

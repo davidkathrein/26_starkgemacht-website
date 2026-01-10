@@ -43,7 +43,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="de" className={`h-full flex${familjenGrotesk.variable} ${inter.variable}`}>
-      <body className="h-full flex flex-col">
+      <body className="flex h-full flex-col">
         <NavbarWithLinksActionsAndCenteredLogo
           id="navbar"
           links={
@@ -75,7 +75,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
             </>
           }
         />
-        <main className="grow flex flex-col">{children}</main>
+        <main className="flex grow flex-col">{children}</main>
         <FooterWithNewsletterFormCategoriesAndSocialIcons
           id="footer"
           cta={

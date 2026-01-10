@@ -13,10 +13,36 @@ export function UnorderedListIcon({ className, ...props }: ComponentProps<'svg'>
       className={clsx('inline-block', className)}
       {...props}
     >
-      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="M4.5 1.5h8m-8 4h8m-8 4h8" />
-      <circle cx="1.5" cy="1.5" r="1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="1.5" cy="5.5" r="1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="1.5" cy="9.5" r="1" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M4.5 1.5h8m-8 4h8m-8 4h8"
+      />
+      <circle
+        cx="1.5"
+        cy="1.5"
+        r="1"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="1.5"
+        cy="5.5"
+        r="1"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="1.5"
+        cy="9.5"
+        r="1"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

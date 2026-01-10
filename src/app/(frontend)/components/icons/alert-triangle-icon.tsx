@@ -20,7 +20,12 @@ export function AlertTriangleIcon({ className, ...props }: ComponentProps<'svg'>
         strokeLinejoin="round"
       />
       <path d="M6.5 5.5V7.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M6.5 9.5L6.5 9.51" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M6.5 9.5L6.5 9.51"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   )
 }

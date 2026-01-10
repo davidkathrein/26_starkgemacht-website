@@ -13,7 +13,7 @@ export function NavbarLink({
     <a
       href={href}
       className={clsx(
-        'group inline-flex items-center justify-between gap-2 text-3xl/10 font-medium text-olive-950 lg:text-sm/7 dark:text-white',
+        'group text-olive-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
         className,
       )}
       {...props}
@@ -64,7 +64,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
 } & ComponentProps<'header'>) {
   return (
     <header
-      className={clsx('sticky top-0 z-10 bg-olive-100 dark:bg-olive-950', className)}
+      className={clsx('bg-olive-100 dark:bg-olive-950 sticky top-0 z-10', className)}
       {...props}
     >
       <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
@@ -79,7 +79,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
               command="show-modal"
               commandfor="mobile-menu"
               aria-label="Toggle menu"
-              className="inline-flex rounded-full p-1.5 text-olive-950 hover:bg-olive-950/10 lg:hidden dark:text-white dark:hover:bg-white/10"
+              className="text-olive-950 hover:bg-olive-950/10 inline-flex rounded-full p-1.5 lg:hidden dark:text-white dark:hover:bg-white/10"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="size-6">
                 <path
@@ -94,13 +94,13 @@ export function NavbarWithLinksActionsAndCenteredLogo({
 
         <ElDialog className="lg:hidden">
           <dialog id="mobile-menu" className="backdrop:bg-transparent">
-            <ElDialogPanel className="fixed inset-0 bg-olive-100 px-6 py-6 lg:px-10 dark:bg-olive-950">
+            <ElDialogPanel className="bg-olive-100 dark:bg-olive-950 fixed inset-0 px-6 py-6 lg:px-10">
               <div className="flex justify-end">
                 <button
                   command="close"
                   commandfor="mobile-menu"
                   aria-label="Toggle menu"
-                  className="inline-flex rounded-full p-1.5 text-olive-950 hover:bg-olive-950/10 dark:text-white dark:hover:bg-white/10"
+                  className="text-olive-950 hover:bg-olive-950/10 inline-flex rounded-full p-1.5 dark:text-white dark:hover:bg-white/10"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

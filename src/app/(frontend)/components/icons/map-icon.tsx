@@ -20,7 +20,12 @@ export function MapIcon({ className, ...props }: ComponentProps<'svg'>) {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M4.5 0.500001V10.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <path
+        d="M4.5 0.500001V10.5"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path d="M8.5 2.5V12.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )

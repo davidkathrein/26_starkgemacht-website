@@ -13,7 +13,14 @@ export function AtSymbolIcon({ className, ...props }: ComponentProps<'svg'>) {
       className={clsx('inline-block', className)}
       {...props}
     >
-      <circle cx="6.5" cy="6.5" r="3" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+      <circle
+        cx="6.5"
+        cy="6.5"
+        r="3"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
       <path
         stroke="currentColor"
         strokeLinecap="round"
