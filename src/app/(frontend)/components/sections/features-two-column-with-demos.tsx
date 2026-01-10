@@ -1,6 +1,7 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Section } from '../elements/section'
+import Link from 'next/link'
 
 export function Feature({
   demo,
@@ -8,11 +9,13 @@ export function Feature({
   subheadline,
   cta,
   className,
+  link,
 }: {
   demo: ReactNode
   headline: ReactNode
   subheadline: ReactNode
   cta: ReactNode
+  link?: string
 } & Omit<ComponentProps<'div'>, 'children'>) {
   return (
     <div className={clsx('rounded-lg bg-olive-950/2.5 p-2 dark:bg-white/5', className)}>
@@ -20,12 +23,12 @@ export function Feature({
         {demo}
       </div>
       <div className="flex flex-col gap-4 p-6 sm:p-10 lg:p-6">
-        <div>
+        <MaybeLink href={link}>
           <h3 className="text-base/8 font-medium text-olive-950 dark:text-white">{headline}</h3>
           <div className="mt-2 flex flex-col gap-4 text-sm/7 text-olive-700 dark:text-olive-400">
             {subheadline}
           </div>
-        </div>
+        </MaybeLink>
         {cta}
       </div>
     </div>
@@ -41,4 +44,12 @@ export function FeaturesTwoColumnWithDemos({
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">{features}</div>
     </Section>
   )
+}
+
+function MaybeLink({ href, children }: { href?: string; children: ReactNode }) {
+  if (href) {
+    return <Link href={href}>{children}</Link>
+  }
+
+  return <div>{children}</div>
 }

@@ -26,6 +26,13 @@ export const Event: CollectionConfig = {
       required: true,
     },
     {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+      defaultValue: () => Math.floor(Math.random() * 1000000).toString(),
+    },
+    {
       name: 'previewDescription',
       type: 'text',
       required: false,
@@ -61,6 +68,7 @@ export const Event: CollectionConfig = {
       admin: {
         description: 'Event timezone (e.g., "Europe/Berlin")',
         readOnly: true,
+        hidden: true,
       },
     },
     {
@@ -68,6 +76,16 @@ export const Event: CollectionConfig = {
       type: 'textarea',
       admin: {
         description: 'HTML description from TicketTailor',
+        readOnly: true,
+        hidden: true,
+      },
+    },
+    {
+      name: 'content',
+      type: 'richText',
+      admin: {
+        description:
+          'Automatically parsed from descriptionHtml for better editing (auto-generated via tickettailor).',
       },
     },
     {

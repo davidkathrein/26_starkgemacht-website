@@ -4,10 +4,8 @@ import {
   PlainButtonLink,
   SoftButtonLink,
 } from '@/app/(frontend)/components/elements/button'
-import { Link } from '@/app/(frontend)/components/elements/link'
 import Image from 'next/image'
 import { Main } from '@/app/(frontend)/components/elements/main'
-import { Screenshot } from '@/app/(frontend)/components/elements/screenshot'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
 import { ChevronIcon } from '@/app/(frontend)/components/icons/chevron-icon'
 import { CallToActionSimple } from '@/app/(frontend)/components/sections/call-to-action-simple'
@@ -28,9 +26,11 @@ import {
 } from '@/app/(frontend)/components/sections/testimonials-three-column-grid'
 import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
 import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
-import { fetchAllUpcomingEvents, transformWithAIAndSaveIfNew } from './utils/tickettailor'
+import { fetchAllUpcomingEvents } from './utils/tickettailor'
 import { Suspense } from 'react'
 import { Wallpaper } from './components/elements/wallpaper'
+import { ArrowUpRight, MoveRight } from 'lucide-react'
+import { Link } from './components/elements/link'
 
 export default async function HomePage() {
   return (
@@ -377,57 +377,86 @@ async function EventsFeatureSection() {
             const imageUrl = typeof event.image === 'string' ? event.image : undefined
             const wallpaper = wallpapers[index % wallpapers.length]
             const startDate = new Date(event.startsAtIso)
-            const formattedDate = startDate.toLocaleDateString('de-DE', {
+            const formattedStartDate = startDate.toLocaleDateString('de-DE', {
               day: 'numeric',
               month: 'long',
               year: 'numeric',
             })
 
+            // Format date display with end date if available
+            let dateDisplay = formattedStartDate
+            if (event.endsAtIso) {
+              const endDate = new Date(event.endsAtIso)
+              const formattedEndDate = endDate.toLocaleDateString('de-DE', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })
+
+              // Check if same day
+              if (formattedStartDate !== formattedEndDate) {
+                dateDisplay = `${formattedStartDate} bis ${formattedEndDate}`
+              }
+            }
+
             return (
               <Feature
                 key={event.ticketTailorId}
+                link={'/angebot/' + event.slug}
                 demo={
-                  imageUrl ? (
-                    <Image
-                      src={imageUrl}
-                      alt={event.name}
-                      className="aspect-video w-full rounded-lg object-cover"
-                      width={1800}
-                      height={1012}
-                    />
-                  ) : (
-                    // <Screenshot
-                    //   className="aspect-video w-full rouned-lg object-cover"
-                    //   wallpaper={wallpaper}
-                    //   placement={'bottom'}
-                    // >
-                    //   <Image
-                    //     src={imageUrl}
-                    //     alt={event.name}
-                    //     className="aspect-video w-full object-cover"
-                    //     width={1800}
-                    //     height={1012}
-                    //   />
-                    // </Screenshot>
-                    <Wallpaper color={wallpaper} className="aspect-video w-full object-cover" />
-                  )
+                  <Link href={'/angebot/' + event.slug}>
+                    {imageUrl ? (
+                      <Image
+                        src={imageUrl}
+                        alt={event.name}
+                        className="aspect-video w-full rounded-lg object-cover"
+                        width={1800}
+                        height={1012}
+                      />
+                    ) : (
+                      // <Screenshot
+                      //   className="aspect-video w-full rouned-lg object-cover"
+                      //   wallpaper={wallpaper}
+                      //   placement={'bottom'}
+                      // >
+                      //   <Image
+                      //     src={imageUrl}
+                      //     alt={event.name}
+                      //     className="aspect-video w-full object-cover"
+                      //     width={1800}
+                      //     height={1012}
+                      //   />
+                      // </Screenshot>
+                      <Wallpaper color={wallpaper} className="aspect-video w-full object-cover" />
+                    )}
+                  </Link>
                 }
                 headline={event.name}
                 subheadline={
                   <div>
                     <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-400">
-                      {formattedDate}
+                      {dateDisplay}
+
                       {event.venueName && ` - ${event.venueName}`}
                     </p>
                     {event.descriptionHtml && <p>{event.previewDescription}</p>}
                   </div>
                 }
                 cta={
-                  event.checkoutUrl ? (
-                    <Link href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
-                      Tickets buchen <ArrowNarrowRightIcon />
-                    </Link>
-                  ) : undefined
+                  <div className="flex gap-2">
+                    {event.checkoutUrl ? (
+                      <ButtonLink href={'/angebot/' + event.slug} rel="noopener noreferrer">
+                        Mehr erfahren
+                      </ButtonLink>
+                    ) : undefined}
+                    <PlainButtonLink
+                      href={event.checkoutUrl ?? '#'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Jetzt buchen <MoveRight size={14} />
+                    </PlainButtonLink>
+                  </div>
                 }
               />
             )

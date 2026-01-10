@@ -198,6 +198,7 @@ export interface Event {
    */
   ticketTailorId: string;
   name: string;
+  slug: string;
   /**
    * Short description for previews. AI generated on Event fetch.
    */
@@ -222,6 +223,24 @@ export interface Event {
    * HTML description from TicketTailor
    */
   descriptionHtml?: string | null;
+  /**
+   * Automatically parsed from descriptionHtml for better editing (auto-generated via tickettailor).
+   */
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * Call-to-action text
    */
@@ -398,12 +417,14 @@ export interface TeamSelect<T extends boolean = true> {
 export interface EventSelect<T extends boolean = true> {
   ticketTailorId?: T;
   name?: T;
+  slug?: T;
   previewDescription?: T;
   image?: T;
   startsAtIso?: T;
   endsAtIso?: T;
   timezone?: T;
   descriptionHtml?: T;
+  content?: T;
   ctaText?: T;
   checkoutUrl?: T;
   publicUrl?: T;

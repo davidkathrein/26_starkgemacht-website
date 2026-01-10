@@ -80,7 +80,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           id="footer"
           cta={
             <NewsletterForm
-              headline="Stay in the loop"
+              headline="Bleib auf dem Laufenden"
               subheadline={
                 <p>
                   Get customer support tips, product updates and customer stories that you can

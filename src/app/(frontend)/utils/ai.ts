@@ -3,27 +3,19 @@
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
 import { createAzure } from '@quail-ai/azure-ai-provider'
 import { generateText } from 'ai'
-
-// Konfiguration: 'openrouter' oder 'azure'
-const AI_PROVIDER = (process.env.AI_PROVIDER || 'openrouter') as 'openrouter' | 'azure'
+import { slugify } from 'payload/shared'
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY,
 })
 
-const azure = createAzure({
-  endpoint: process.env.AZURE_HOSTED_ENDPOINT || '',
-  apiKey: process.env.AZURE_API_KEY || '',
-})
+const model = openrouter('google/gemini-2.5-flash')
 
 export async function generatePreviewText(prompt: string): Promise<string> {
   //   const model =
   //     AI_PROVIDER === 'azure'
   //       ? azure(process.env.AZURE_DEPLOYMENT_NAME || 'gpt-4')
   //       : openrouter('google/gemini-2.0-flash-exp:free')
-
-  const model = openrouter('google/gemini-2.5-flash')
-  console.log(prompt)
 
   const response = await generateText({
     model,
@@ -45,4 +37,29 @@ export async function generatePreviewText(prompt: string): Promise<string> {
   }
 
   return response.text.trim()
+}
+
+export async function generateSlug(eventName: string): Promise<string | undefined> {
+  const response = await generateText({
+    model,
+    prompt: [
+      {
+        role: 'system',
+        content:
+          'You are a helpful assistant that generates URL-friendly slugs based on event names provided by the user. The slug should be as concise and clear as possible, lowercase, and use hyphens to separate words. Avoid special characters and spaces.',
+      },
+      {
+        role: 'user',
+        content: `Erstelle einen URL-freundlichen Slug für dieses Event. Der Slug sollte so kurz und klar wie möglich sein: ${eventName}`,
+      },
+    ],
+  })
+
+  console.log('Generated slug response:', response)
+
+  if (!response.text) {
+    throw new Error('No text generated')
+  }
+
+  return slugify(response.text)
 }

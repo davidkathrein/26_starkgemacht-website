@@ -1,8 +1,9 @@
-import { z } from 'zod'
 import { TTEventsBlogResponseSchema, type TTEventForBlog } from '../types/tickettailor' // adjust path
-import { generatePreviewText } from './ai'
-import { getPayload } from 'payload'
+import { generatePreviewText, generateSlug } from './ai'
+import { BasePayload, getPayload } from 'payload'
 import config from '@payload-config'
+import { convertHtmlToRichText } from './richtext'
+import { slugify } from 'payload/shared'
 
 export type TicketTailorEvent = TTEventForBlog
 
@@ -34,13 +35,12 @@ export async function fetchAllUpcomingEvents(options: FetchEventsOptions = {}) {
 
   while (true) {
     const params = new URLSearchParams({
-      'start_at.gte': now.toString(),
+      'end_at.gt': now.toString(),
       status: options.status || 'published',
       limit: String(limit),
     })
 
     if (startingAfter) params.set('starting_after', startingAfter)
-
     const url = `https://api.tickettailor.com/v1/events?${params.toString()}`
 
     const response = await fetch(url, {
@@ -121,17 +121,28 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
     previewDescription = String(text ?? '').trim()
   }
 
+  const [slug, parsedContent] = await Promise.all([
+    generateSlug(event.name),
+    convertHtmlToRichText(description || ''),
+  ])
+
+  if (!slug) {
+    throw new Error('Failed to generate slug for event: ' + event.name)
+  }
+
   // Save to Payload
   const saved = await payload.create({
     collection: 'event',
     data: {
       ticketTailorId: event.ticketTailorId,
       name: event.name,
+      slug,
       startsAtIso: event.startsAtIso,
       endsAtIso: event.endsAtIso,
       timezone: event.timezone,
       descriptionHtml: event.descriptionHtml,
       previewDescription,
+      content: parsedContent,
       ctaText: event.ctaText,
       checkoutUrl: event.checkoutUrl,
       publicUrl: event.publicUrl,
