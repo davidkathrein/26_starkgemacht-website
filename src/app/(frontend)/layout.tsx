@@ -18,6 +18,7 @@ import {
 import { GitHubIcon } from '@/app/(frontend)/components/icons/social/github-icon'
 import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
 import { YouTubeIcon } from '@/app/(frontend)/components/icons/social/youtube-icon'
+import { Logo } from './components/elements/logo'
 
 const familjenGrotesk = Familjen_Grotesk({
   subsets: ['latin'],
@@ -58,12 +59,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
           }
           logo={
             <NavbarLogo href="/">
-              <Image
-                src="/api/media/file/starkgemacht-logologo.svg"
-                alt="StarkGemacht Logo"
-                width={128}
-                height={32}
-              ></Image>
+              <Logo className="text-olive-700 dark:text-olive-400 h-8 w-32" />
             </NavbarLogo>
           }
           actions={
