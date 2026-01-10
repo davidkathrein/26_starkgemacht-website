@@ -1,13 +1,16 @@
 import { SerializedLinkNode } from '@payloadcms/richtext-lexical'
 
 export const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
-  const { value, relationTo } = linkNode.fields.doc!
+  const { relationTo, value } = linkNode.fields.doc!
+  if (typeof value !== 'object') {
+    throw new Error('Expected value to be an object')
+  }
+  const slug = value.slug
 
-  const slug = typeof value !== 'string' && value.slug
-
-  if (relationTo === 'event') {
-    return `/angebot/${slug}`
-  } else {
-    return `/${slug}`
+  switch (relationTo) {
+    case 'event':
+      return `/angebot/${slug}`
+    default:
+      return `/${relationTo}/${slug}`
   }
 }
