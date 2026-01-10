@@ -1,7 +1,10 @@
 import { z } from 'zod'
-import { TTEventsResponseSchema, TTEventSchema, type TTEvent } from '../types/tickettailor' // adjust path
+import { TTEventsBlogResponseSchema, type TTEventForBlog } from '../types/tickettailor' // adjust path
+import { generatePreviewText } from './ai'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 
-export type TicketTailorEvent = z.infer<typeof TTEventSchema>
+export type TicketTailorEvent = TTEventForBlog
 
 interface FetchEventsOptions {
   status?: 'published' | 'draft' | 'sales_closed' | string
@@ -10,16 +13,12 @@ interface FetchEventsOptions {
 }
 
 /**
- * Fetch one page of upcoming events.
- * Uses updated schemas:
- * - TTEventsResponseSchema (root)
- * - TTEventSchema (event)
+ * Fetch all pages of upcoming events (minimal, blog-ready).
  *
- * Ticket Tailor supports `start_at.gte` (unix seconds).
+ * We can’t reliably use the last event id as cursor unless we know the API
+ * ordering is stable. Since your response includes `links.next`, we’ll use that.
  */
-export async function fetchUpcomingEvents(
-  options: FetchEventsOptions = {},
-): Promise<TicketTailorEvent[]> {
+export async function fetchAllUpcomingEvents(options: FetchEventsOptions = {}) {
   const apiKey = process.env.TICKETTAILOR_API_KEY
 
   if (!apiKey) {
@@ -27,48 +26,6 @@ export async function fetchUpcomingEvents(
   }
 
   const now = Math.floor(Date.now() / 1000)
-
-  const params = new URLSearchParams({
-    'start_at.gte': now.toString(),
-    status: options.status || 'published',
-    limit: String(options.limit ?? 100),
-  })
-
-  if (options.startingAfter) {
-    params.set('starting_after', options.startingAfter)
-  }
-
-  const url = `https://api.tickettailor.com/v1/events?status=published}`
-
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`,
-    },
-    // Next.js (optional). Remove if not in Next.
-    next: { revalidate: 300 },
-  })
-
-  if (!response.ok) {
-    throw new Error(`TicketTailor API error: ${response.status} ${response.statusText}`)
-  }
-
-  const data: unknown = await response.json()
-  const validated = TTEventsResponseSchema.parse(data)
-
-  return validated.data
-}
-
-/**
- * Fetch all pages of upcoming events.
- * Safer pagination than "events.length < limit":
- * - If the API returns less than limit, likely end.
- * - Otherwise, continue using the last event id as cursor.
- * - Also stop if the cursor doesn't advance (prevents infinite loops).
- */
-export async function fetchAllUpcomingEvents(
-  options: FetchEventsOptions = {},
-): Promise<TicketTailorEvent[]> {
   const limit = options.limit ?? 100
 
   const all: TicketTailorEvent[] = []
@@ -76,22 +33,114 @@ export async function fetchAllUpcomingEvents(
   let lastCursor: string | undefined
 
   while (true) {
-    const page = await fetchUpcomingEvents({ ...options, limit, startingAfter })
+    const params = new URLSearchParams({
+      'start_at.gte': now.toString(),
+      status: options.status || 'published',
+      limit: String(limit),
+    })
 
+    if (startingAfter) params.set('starting_after', startingAfter)
+
+    const url = `https://api.tickettailor.com/v1/events?${params.toString()}`
+
+    const response = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`,
+      },
+      next: { revalidate: 300 },
+    })
+
+    if (!response.ok) {
+      throw new Error(`TicketTailor API error: ${response.status} ${response.statusText}`)
+    }
+
+    const data: unknown = await response.json()
+    const validated = TTEventsBlogResponseSchema.parse(data)
+
+    const page = validated.events
     if (page.length === 0) break
 
     all.push(...page)
 
-    // End if this is the last page
-    if (page.length < limit) break
+    // Prefer API-provided pagination
+    const nextLink = validated.next
+    if (!nextLink) break
 
-    // Advance cursor
-    startingAfter = page[page.length - 1]?.id
+    // `links.next` in your sample is a relative URL like:
+    // "/events/?starting_after=ev_1516513&status%5B0%5D=published&limit=1"
+    // Extract `starting_after` from it.
+    const nextUrl = new URL(nextLink, 'https://api.tickettailor.com/v1')
+    startingAfter = nextUrl.searchParams.get('starting_after') ?? undefined
 
     // Guard against non-advancing cursor
     if (!startingAfter || startingAfter === lastCursor) break
     lastCursor = startingAfter
   }
 
-  return all
+  // Process all events through Payload (save if new, generate preview description)
+  const processedEvents = await Promise.all(all.map((event) => transformWithAIAndSaveIfNew(event)))
+
+  return processedEvents
+}
+
+/**
+ * Checks if event exists in Payload database by tickettailorId.
+ * If it doesn't exist, generates a preview description using AI and saves the event.
+ * Returns the created or existing event.
+ */
+export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
+  const payload = await getPayload({ config })
+
+  // Check if event already exists
+  const existing = await payload.find({
+    collection: 'event',
+    where: {
+      ticketTailorId: {
+        equals: event.ticketTailorId,
+      },
+    },
+    limit: 1,
+  })
+
+  if (existing.docs.length > 0) {
+    return existing.docs[0]
+  }
+
+  // Generate preview description with AI
+  const description = event.descriptionHtml?.trim()
+  let previewDescription = ''
+
+  if (description) {
+    const text = await generatePreviewText(
+      `Erstelle einen kurzen Vorschautext für dieses Event (maximal 40 Wörter). ` +
+        `Nutze eine freundliche, klare Sprache. Kein Markdown, keine Emojis, keine Wortanzahl.\n\n` +
+        `Eventtitel: ${event.name}\n` +
+        `Beschreibung (HTML): ${description}`,
+    )
+    previewDescription = String(text ?? '').trim()
+  }
+
+  // Save to Payload
+  const saved = await payload.create({
+    collection: 'event',
+    data: {
+      ticketTailorId: event.ticketTailorId,
+      name: event.name,
+      startsAtIso: event.startsAtIso,
+      endsAtIso: event.endsAtIso,
+      timezone: event.timezone,
+      descriptionHtml: event.descriptionHtml,
+      previewDescription,
+      ctaText: event.ctaText,
+      checkoutUrl: event.checkoutUrl,
+      publicUrl: event.publicUrl,
+      image: event.image,
+      venueName: event.venueName,
+      venuePostalCode: event.venuePostalCode,
+      venueCountry: event.venueCountry,
+    },
+  })
+
+  return saved
 }

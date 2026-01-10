@@ -5,6 +5,7 @@ import {
   SoftButtonLink,
 } from '@/app/(frontend)/components/elements/button'
 import { Link } from '@/app/(frontend)/components/elements/link'
+import Image from 'next/image'
 import { Main } from '@/app/(frontend)/components/elements/main'
 import { Screenshot } from '@/app/(frontend)/components/elements/screenshot'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
@@ -27,8 +28,9 @@ import {
 } from '@/app/(frontend)/components/sections/testimonials-three-column-grid'
 import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
 import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
-import { fetchAllUpcomingEvents } from './utils/tickettailor'
+import { fetchAllUpcomingEvents, transformWithAIAndSaveIfNew } from './utils/tickettailor'
 import { Suspense } from 'react'
+import { Wallpaper } from './components/elements/wallpaper'
 
 export default async function HomePage() {
   return (
@@ -351,44 +353,30 @@ export default async function HomePage() {
 
 async function EventsFeatureSection() {
   const events = await fetchAllUpcomingEvents()
-  console.log('Events fetched from TicketTailor:')
-  console.log(events)
-
-  if (!events || events.length === 0) {
-    return (
-      <FeaturesTwoColumnWithDemos
-        id="features"
-        eyebrow="Unsere Angebote"
-        headline="Workshops, Kurse und Projekte"
-        subheadline={<p>Aktuell sind keine Veranstaltungen verfügbar.</p>}
-        features={<></>}
-      />
-    )
-  }
 
   const wallpapers = ['purple', 'blue', 'green', 'brown'] as const
-  const placements = ['bottom-right', 'bottom-left'] as const
 
   return (
     <FeaturesTwoColumnWithDemos
       id="features"
       eyebrow="Unsere Angebote"
-      headline="Workshops, Kurse und Projekte"
+      headline="Workshops, Kurse und Veranstaltungen"
       subheadline={
-        <p>
-          Entdecke unsere aktuellen Veranstaltungen und finde das passende Angebot für dich und
-          deine Gruppe.
-        </p>
+        !events || events.length === 0 ? (
+          <p>Aktuell sind keine Veranstaltungen verfügbar.</p>
+        ) : (
+          <p>
+            Entdecke unsere aktuellen Veranstaltungen und finde das passende Angebot für dich und
+            deine Gruppe.
+          </p>
+        )
       }
       features={
         <>
           {events.map((event, index) => {
-            const imageUrl =
-              event.images?.header ||
-              'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=800&fit=crop'
+            const imageUrl = typeof event.image === 'string' ? event.image : undefined
             const wallpaper = wallpapers[index % wallpapers.length]
-            const placement = placements[index % placements.length]
-            const startDate = new Date(event.start.iso)
+            const startDate = new Date(event.startsAtIso)
             const formattedDate = startDate.toLocaleDateString('de-DE', {
               day: 'numeric',
               month: 'long',
@@ -397,29 +385,46 @@ async function EventsFeatureSection() {
 
             return (
               <Feature
-                key={event.id}
+                key={event.ticketTailorId}
                 demo={
-                  <img
-                    src={imageUrl}
-                    alt={event.name}
-                    className="aspect-video w-full rounded-lg object-cover"
-                    width={1800}
-                    height={1012}
-                  />
+                  imageUrl ? (
+                    <Image
+                      src={imageUrl}
+                      alt={event.name}
+                      className="aspect-video w-full rounded-lg object-cover"
+                      width={1800}
+                      height={1012}
+                    />
+                  ) : (
+                    // <Screenshot
+                    //   className="aspect-video w-full rouned-lg object-cover"
+                    //   wallpaper={wallpaper}
+                    //   placement={'bottom'}
+                    // >
+                    //   <Image
+                    //     src={imageUrl}
+                    //     alt={event.name}
+                    //     className="aspect-video w-full object-cover"
+                    //     width={1800}
+                    //     height={1012}
+                    //   />
+                    // </Screenshot>
+                    <Wallpaper color={wallpaper} className="aspect-video w-full object-cover" />
+                  )
                 }
                 headline={event.name}
                 subheadline={
                   <div>
                     <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-400">
                       {formattedDate}
-                      {event.venue?.name && ` • ${event.venue.name}`}
+                      {event.venueName && ` - ${event.venueName}`}
                     </p>
-                    {event.description && <p>{event.description}</p>}
+                    {event.descriptionHtml && <p>{event.previewDescription}</p>}
                   </div>
                 }
                 cta={
-                  event.url ? (
-                    <Link href={event.url} target="_blank" rel="noopener noreferrer">
+                  event.checkoutUrl ? (
+                    <Link href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
                       Tickets buchen <ArrowNarrowRightIcon />
                     </Link>
                   ) : undefined

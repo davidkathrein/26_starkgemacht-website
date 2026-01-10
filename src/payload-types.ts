@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     team: Team;
+    event: Event;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    event: EventSelect<false> | EventSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -187,6 +189,68 @@ export interface Team {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event".
+ */
+export interface Event {
+  id: number;
+  /**
+   * Unique ID from TicketTailor
+   */
+  ticketTailorId: string;
+  name: string;
+  /**
+   * Short description for previews. AI generated on Event fetch.
+   */
+  previewDescription?: string | null;
+  /**
+   * Event image URL (header or thumbnail)
+   */
+  image?: string | null;
+  /**
+   * ISO 8601 datetime string (e.g., "2022-09-24T09:00:00+02:00")
+   */
+  startsAtIso: string;
+  /**
+   * ISO 8601 datetime string for event end
+   */
+  endsAtIso?: string | null;
+  /**
+   * Event timezone (e.g., "Europe/Berlin")
+   */
+  timezone?: string | null;
+  /**
+   * HTML description from TicketTailor
+   */
+  descriptionHtml?: string | null;
+  /**
+   * Call-to-action text
+   */
+  ctaText?: string | null;
+  /**
+   * TicketTailor checkout URL
+   */
+  checkoutUrl?: string | null;
+  /**
+   * Public event URL
+   */
+  publicUrl?: string | null;
+  /**
+   * Name of the venue
+   */
+  venueName?: string | null;
+  /**
+   * Venue postal code
+   */
+  venuePostalCode?: string | null;
+  /**
+   * Venue country
+   */
+  venueCountry?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -220,6 +284,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: number | Team;
+      } | null)
+    | ({
+        relationTo: 'event';
+        value: number | Event;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -320,6 +388,28 @@ export interface TeamSelect<T extends boolean = true> {
         platform?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "event_select".
+ */
+export interface EventSelect<T extends boolean = true> {
+  ticketTailorId?: T;
+  name?: T;
+  previewDescription?: T;
+  image?: T;
+  startsAtIso?: T;
+  endsAtIso?: T;
+  timezone?: T;
+  descriptionHtml?: T;
+  ctaText?: T;
+  checkoutUrl?: T;
+  publicUrl?: T;
+  venueName?: T;
+  venuePostalCode?: T;
+  venueCountry?: T;
   updatedAt?: T;
   createdAt?: T;
 }
