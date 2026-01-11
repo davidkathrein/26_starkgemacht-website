@@ -54,8 +54,6 @@ export async function generateSlug(eventName: string): Promise<string | undefine
     ],
   })
 
-  console.log('Generated slug response:', response)
-
   if (!response.text) {
     throw new Error('No text generated')
   }

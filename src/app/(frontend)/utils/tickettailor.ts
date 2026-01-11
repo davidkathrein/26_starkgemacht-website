@@ -1,8 +1,9 @@
 import { TTEventsBlogResponseSchema, type TTEventForBlog } from '../types/tickettailor' // adjust path
-import { generatePreviewText, generateSlug } from './ai'
+import { generatePreviewText } from './ai'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { convertHtmlToRichText } from './richtext'
+import { slugify } from 'payload/shared'
 
 export type TicketTailorEvent = TTEventForBlog
 
@@ -40,7 +41,7 @@ export async function fetchAllUpcomingEvents(options: FetchEventsOptions = {}) {
     })
 
     if (startingAfter) params.set('starting_after', startingAfter)
-    const url = `https://api.tickettailor.com/v1/events?${params.toString()}`
+    const url = `https://api.tickettailor.com/v1/events?`
 
     const response = await fetch(url, {
       headers: {
@@ -103,7 +104,27 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
   })
 
   if (existing.docs.length > 0) {
-    return existing.docs[0]
+    const existingEvent = existing.docs[0]
+
+    // Update price information if it has changed
+    if (
+      existingEvent.minPrice !== event.minPrice ||
+      existingEvent.maxPrice !== event.maxPrice ||
+      existingEvent.isFree !== event.isFree
+    ) {
+      const updated = await payload.update({
+        collection: 'event',
+        id: existingEvent.id,
+        data: {
+          minPrice: event.minPrice,
+          maxPrice: event.maxPrice,
+          isFree: event.isFree,
+        },
+      })
+      return updated
+    }
+
+    return existingEvent
   }
 
   // Generate preview description with AI
@@ -120,10 +141,9 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
     previewDescription = String(text ?? '').trim()
   }
 
-  const [slug, parsedContent] = await Promise.all([
-    generateSlug(event.name),
-    convertHtmlToRichText(description || ''),
-  ])
+  const [parsedContent] = await Promise.all([convertHtmlToRichText(description || '')])
+
+  const slug = slugify(event.name)
 
   if (!slug) {
     throw new Error('Failed to generate slug for event: ' + event.name)
@@ -149,6 +169,9 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
       venueName: event.venueName,
       venuePostalCode: event.venuePostalCode,
       venueCountry: event.venueCountry,
+      minPrice: event.minPrice,
+      maxPrice: event.maxPrice,
+      isFree: event.isFree,
     },
   })
 

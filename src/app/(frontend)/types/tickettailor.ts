@@ -32,6 +32,15 @@ const TTVenueMinimalSchema = z
   })
   .passthrough()
 
+const TTTicketTypeSchema = z
+  .object({
+    id: z.string(),
+    name: z.string().optional(),
+    price: z.number().optional(),
+    status: z.string().optional(),
+  })
+  .passthrough()
+
 const TTEventForBlogInSchema = z
   .object({
     object: z.literal('event').optional(),
@@ -48,6 +57,7 @@ const TTEventForBlogInSchema = z
     venue: TTVenueMinimalSchema.optional(),
     hidden: BoolStringSchema.optional(),
     status: z.string().optional(),
+    ticket_types: z.array(TTTicketTypeSchema).optional(),
   })
   .passthrough()
 
@@ -66,21 +76,35 @@ export const TTEventsBlogResponseSchema = z
   .transform((resp) => {
     // Throw everything else away and keep a clean app-facing shape
     return {
-      events: resp.data.map((e) => ({
-        ticketTailorId: e.id,
-        name: e.name,
-        startsAtIso: e.start.iso,
-        endsAtIso: e.end?.iso,
-        timezone: e.timezone,
-        descriptionHtml: e.description ?? '',
-        ctaText: e.call_to_action,
-        checkoutUrl: e.checkout_url,
-        publicUrl: e.url,
-        image: e.images?.header ?? e.images?.thumbnail,
-        venueName: e.venue?.name,
-        venuePostalCode: e.venue?.postal_code,
-        venueCountry: e.venue?.country,
-      })),
+      events: resp.data.map((e) => {
+        // Extract price information from ticket types
+        const ticketTypes = e.ticket_types || []
+        const prices = ticketTypes
+          .filter((t) => typeof t.price === 'number')
+          .map((t) => t.price as number)
+        const minPrice = prices.length > 0 ? Math.min(...prices) : null
+        const maxPrice = prices.length > 0 ? Math.max(...prices) : null
+        const isFree = prices.length > 0 && prices.every((p) => p === 0)
+
+        return {
+          ticketTailorId: e.id,
+          name: e.name,
+          startsAtIso: e.start.iso,
+          endsAtIso: e.end?.iso,
+          timezone: e.timezone,
+          descriptionHtml: e.description ?? '',
+          ctaText: e.call_to_action,
+          checkoutUrl: e.checkout_url,
+          publicUrl: e.url,
+          image: e.images?.header ?? e.images?.thumbnail,
+          venueName: e.venue?.name,
+          venuePostalCode: e.venue?.postal_code,
+          venueCountry: e.venue?.country,
+          minPrice,
+          maxPrice,
+          isFree,
+        }
+      }),
       next: resp.links?.next ?? null,
       previous: resp.links?.previous ?? null,
     }

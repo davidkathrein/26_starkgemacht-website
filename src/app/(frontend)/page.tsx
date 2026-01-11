@@ -14,7 +14,6 @@ import {
   FeaturesTwoColumnWithDemos,
 } from '@/app/(frontend)/components/sections/features-two-column-with-demos'
 import { HeroLeftAlignedWithDemo } from '@/app/(frontend)/components/sections/hero-left-aligned-with-demo'
-import { Stat, StatsWithGraph } from '@/app/(frontend)/components/sections/stats-with-graph'
 import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
 import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
 import { fetchAllUpcomingEvents } from './utils/tickettailor'
@@ -23,6 +22,7 @@ import { Wallpaper } from './components/elements/wallpaper'
 import { Link } from './components/elements/link'
 import BlogThreeColumns from './components/sections/blog-three-columns'
 import { ImageWithCaption } from './components/elements/image-with-caption'
+import { getPriceDisplay } from './utils/preis'
 
 export default async function HomePage() {
   return (
@@ -84,7 +84,7 @@ export default async function HomePage() {
         <BlogThreeColumns id="aktuelles" />
 
         {/* Stats */}
-        <StatsWithGraph
+        {/* <StatsWithGraph
           id="stats"
           eyebrow="Built for scale"
           headline="The inbox powering customer conversations everywhere."
@@ -98,7 +98,7 @@ export default async function HomePage() {
         >
           <Stat stat="2M+" text="Emails manually processed every week across thousands of teams." />
           <Stat stat="99.98%" text="Uptime — because your customers never stop complaining." />
-        </StatsWithGraph>
+        </StatsWithGraph> */}
 
         {/* Testimonial */}
         {/* <TestimonialThreeColumnGrid
@@ -430,9 +430,19 @@ async function EventsFeatureSection() {
                 subheadline={
                   <div>
                     <p className="text-olive-600 dark:text-olive-300 mb-2 text-sm font-medium">
+                      {(event.isFree || event.minPrice !== null) && (
+                        <span className="text-olive-800 dark:text-olive-200 mb-2 font-semibold">
+                          {getPriceDisplay({
+                            isFree: event.isFree,
+                            minPrice: event.minPrice,
+                            maxPrice: event.maxPrice,
+                          })}
+                        </span>
+                      )}
+                      {' | '}
                       {dateDisplay}
 
-                      {event.venueName && ` - ${event.venueName}`}
+                      {event.venueName && ` | ${event.venueName}`}
                     </p>
                     {event.descriptionHtml && <p>{event.previewDescription}</p>}
                   </div>

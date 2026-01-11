@@ -99,6 +99,30 @@ export const Event: CollectionConfig = {
       },
     },
     {
+      name: 'minPrice',
+      type: 'number',
+      admin: {
+        description: 'Minimum ticket price in cents',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'maxPrice',
+      type: 'number',
+      admin: {
+        description: 'Maximum ticket price in cents',
+        readOnly: true,
+      },
+    },
+    {
+      name: 'isFree',
+      type: 'checkbox',
+      admin: {
+        description: 'Whether the event is free',
+        readOnly: true,
+      },
+    },
+    {
       name: 'checkoutUrl',
       type: 'text',
       admin: {

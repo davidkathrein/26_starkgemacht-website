@@ -10,6 +10,7 @@ import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import type { Event } from '@/payload-types'
 import { MoveRight } from 'lucide-react'
+import { getPriceDisplay } from '../../utils/preis'
 
 export default async function AngebotPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params
@@ -76,7 +77,8 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
       <Container>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>
-            {formattedDate} um {formattedTime} Uhr{endDateDisplay}
+            {getPriceDisplay(event)} | {formattedDate} um {formattedTime} Uhr{endDateDisplay}
+            {event.venueName && ` | ${event.venueName}`}
           </Eyebrow>
 
           <Heading className="mt-2">{event.name}</Heading>

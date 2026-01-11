@@ -270,6 +270,18 @@ export interface Event {
    */
   ctaText?: string | null;
   /**
+   * Minimum ticket price in cents
+   */
+  minPrice?: number | null;
+  /**
+   * Maximum ticket price in cents
+   */
+  maxPrice?: number | null;
+  /**
+   * Whether the event is free
+   */
+  isFree?: boolean | null;
+  /**
    * TicketTailor checkout URL
    */
   checkoutUrl?: string | null;
@@ -628,6 +640,9 @@ export interface EventSelect<T extends boolean = true> {
   descriptionHtml?: T;
   content?: T;
   ctaText?: T;
+  minPrice?: T;
+  maxPrice?: T;
+  isFree?: T;
   checkoutUrl?: T;
   publicUrl?: T;
   venueName?: T;

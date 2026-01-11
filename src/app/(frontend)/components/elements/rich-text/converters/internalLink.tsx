@@ -10,6 +10,8 @@ export const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }
   switch (relationTo) {
     case 'event':
       return `/angebot/${slug}`
+    case 'media':
+      return `${value.url}`
     default:
       return `/${relationTo}/${slug}`
   }
