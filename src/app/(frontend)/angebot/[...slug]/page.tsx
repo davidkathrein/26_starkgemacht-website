@@ -8,7 +8,7 @@ import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-wit
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
-import type { Event } from '@/payload-types'
+import type { Event, Media } from '@/payload-types'
 import { MoveRight } from 'lucide-react'
 import { getPriceDisplay } from '../../utils/preis'
 
@@ -37,6 +37,14 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
 
   // Get custom image with caption or fallback to event.image
   const customImage = typeof event.customImage !== 'number' ? event.customImage : null
+  const media:
+    | Pick<Media, 'url' | 'alt' | 'caption' | 'width' | 'height'>
+    | number
+    | null
+    | undefined = customImage || {
+    url: event.image,
+    alt: event.name,
+  }
 
   // Format date
   const startDate = new Date(event.startsAtIso)
@@ -99,12 +107,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             Jetzt Tickets sichern <MoveRight size={14} />
           </ButtonLink>
 
-          {(customImage || event.image) && (
-            <ImageWithCaption
-              media={customImage || (typeof event.image === 'string' ? null : event.image)}
-              className="mt-10"
-            />
-          )}
+          {(customImage || event.image) && <ImageWithCaption media={media} className="mt-10" />}
 
           {event.content && (
             <RichText
