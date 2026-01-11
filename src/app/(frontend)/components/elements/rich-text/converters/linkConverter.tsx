@@ -18,7 +18,22 @@ export const linkConverter: JSXConverters<SerializedLinkNode> = {
     if (fields.linkType === 'internal' && fields.doc) {
       try {
         const href = internalDocToHref({ linkNode: node })
-        return <Link href={href}>{children}</Link>
+
+        const openInNewTab =
+          fields.newTab ||
+          href.includes('mailto:') ||
+          href.includes('tel:') ||
+          href.includes('/api/')
+
+        return (
+          <Link
+            href={href}
+            target={openInNewTab ? '_blank' : undefined}
+            rel={openInNewTab ? 'noopener noreferrer' : undefined}
+          >
+            {children}
+          </Link>
+        )
       } catch (e) {
         // Log error for debugging
         console.error('Failed to process internal link:', e, { fields, doc: fields.doc })
@@ -31,21 +46,17 @@ export const linkConverter: JSXConverters<SerializedLinkNode> = {
       const isExternal =
         fields.url.startsWith('http://') ||
         fields.url.startsWith('https://') ||
-        fields.url.startsWith('//') ||
-        fields.url.includes('mailto:') ||
-        fields.url.includes('tel:') ||
-        fields.url.includes('/api/')
+        fields.url.startsWith('//')
 
-      if (isExternal) {
-        return (
-          <Link href={fields.url} target="_blank" rel="noopener noreferrer">
-            {children}
-          </Link>
-        )
-      }
-
-      // Internal custom links
-      return <Link href={fields.url}>{children}</Link>
+      return (
+        <Link
+          href={fields.url}
+          target={isExternal ? '_blank' : undefined}
+          rel="noopener noreferrer"
+        >
+          {children}
+        </Link>
+      )
     }
 
     // Fallback - log unhandled case
