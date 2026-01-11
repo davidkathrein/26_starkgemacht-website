@@ -19,9 +19,7 @@ export const uploadConverter: JSXConverters<SerializedUploadNode> = {
 
       return (
         <ImageWithCaption
-          src={media.url}
-          alt={media.alt || ''}
-          caption={media.caption}
+          media={media as any}
           width={media.width || 1200}
           height={media.height || 675}
           className="my-8"

@@ -41,7 +41,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // Get author name
   const author = typeof post.author !== 'number' ? post.author : null
-  const authorName = author?.fullName || 'Unbekannt'
+  const authorName = author?.name || 'Unbekannt'
 
   // Get categories
   const categories = post.categories || []
@@ -50,7 +50,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const featuredImage = typeof post.featuredImage !== 'number' ? post.featuredImage : null
 
   return (
-    <div className="bg-olive-50 dark:bg-olive-900 px-6 py-32 lg:px-8">
+    <div className="px-6 py-32 lg:px-8">
       <Container>
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center gap-x-4 text-xs">
@@ -78,14 +78,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <span className="text-olive-800 font-semibold dark:text-white">Von {authorName}</span>
           </div>
 
-          {featuredImage?.url && (
-            <ImageWithCaption
-              src={featuredImage.url}
-              alt={post.title}
-              caption={featuredImage.caption}
-              className="mt-10"
-            />
-          )}
+          {featuredImage && <ImageWithCaption media={featuredImage} className="mt-10" />}
 
           {post.content && (
             <RichText

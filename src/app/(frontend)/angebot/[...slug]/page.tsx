@@ -71,7 +71,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   }
 
   return (
-    <div className="bg-olive-50 dark:bg-olive-900 px-6 py-32 lg:px-8">
+    <div className="px-6 py-32 lg:px-8">
       <Container>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>
@@ -93,17 +93,12 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             rel="noopener noreferrer"
             target="_blank"
           >
-            {event.ctaText || 'Jetzt anmelden'}
+            Jetzt buchen
           </ButtonLink>
 
-          {(customImage?.url || event.image) && (
+          {(customImage || event.image) && (
             <ImageWithCaption
-              src={
-                customImage?.url ||
-                (typeof event.image === 'string' ? event.image : (event.image as any)?.url || '')
-              }
-              alt={event.name}
-              caption={customImage?.caption}
+              media={customImage || (typeof event.image === 'string' ? null : event.image)}
               className="mt-10"
             />
           )}
@@ -136,7 +131,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {event.ctaText || 'Jetzt anmelden'}
+                Jetzt buchen
               </ButtonLink>
             </div>
           )}

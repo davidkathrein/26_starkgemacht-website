@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import { BadgeInfoIcon } from 'lucide-react'
 import { cn } from '@/app/(frontend)/utils/cn'
+import type { Media } from '@/payload-types'
 
 type CaptionVariant = 'below' | 'overlay'
 
 interface ImageWithCaptionProps {
-  src: string
-  alt: string
+  media: Media | number | null | undefined
+  alt?: string
   caption?: string | null
   captionVariant?: CaptionVariant
   width?: number
@@ -16,27 +17,42 @@ interface ImageWithCaptionProps {
 }
 
 export function ImageWithCaption({
-  src,
-  alt,
-  caption,
+  media,
+  alt: altFallback,
+  caption: captionOverride,
   captionVariant = 'below',
-  width = 1200,
-  height = 675,
+  width,
+  height,
   className,
   priority = false,
 }: ImageWithCaptionProps) {
+  // Handle null/undefined or numeric ID
+  if (!media || typeof media === 'number') {
+    return null
+  }
+
+  const url = media.url
+  const alt = media.alt ?? altFallback ?? ''
+  const caption = captionOverride !== undefined ? captionOverride : media.caption
+  const finalWidth = width ?? media.width ?? 1200
+  const finalHeight = height ?? media.height ?? 675
+
+  if (!url) {
+    return null
+  }
+
   if (captionVariant === 'overlay' && caption) {
     return (
       <figure className={cn('relative overflow-hidden rounded-lg', className)}>
         <Image
-          src={src}
+          src={url}
           alt={alt}
-          width={width}
-          height={height}
+          width={finalWidth}
+          height={finalHeight}
           priority={priority}
           className="bg-olive-200 dark:bg-olive-800 h-full w-full object-cover"
         />
-        <div className="from-olive/80 via-olive/40 absolute inset-x-0 bottom-0 h-32 bg-linear-to-t to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
         <figcaption>
           <p className="absolute right-4 bottom-4 left-4 text-sm font-medium text-white">
             {caption}
@@ -49,10 +65,10 @@ export function ImageWithCaption({
   return (
     <figure className={className}>
       <Image
-        src={src}
+        src={url}
         alt={alt}
-        width={width}
-        height={height}
+        width={finalWidth}
+        height={finalHeight}
         priority={priority}
         className="bg-olive-200 dark:bg-olive-800 w-full rounded-xl object-cover"
       />

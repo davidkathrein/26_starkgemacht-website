@@ -69,7 +69,7 @@ export default async function HomePage() {
         />
 
         {/* About */}
-        <CTAWithImageTiles />
+        <CTAWithImageTiles id="uber" />
 
         {/* Team */}
         <TeamImageShortParagraph />
@@ -78,7 +78,7 @@ export default async function HomePage() {
         <Suspense
           fallback={
             <FeaturesTwoColumnWithDemos
-              id="features"
+              id="angebot"
               eyebrow="Unsere Angebote"
               headline="Workshops, Kurse und Projekte"
               subheadline={<p>Lade Veranstaltungen...</p>}
@@ -90,7 +90,7 @@ export default async function HomePage() {
         </Suspense>
 
         {/* Blog Posts */}
-        <BlogThreeColumns />
+        <BlogThreeColumns id="aktuelles" />
 
         {/* Stats */}
         <StatsWithGraph
@@ -110,7 +110,7 @@ export default async function HomePage() {
         </StatsWithGraph>
 
         {/* Testimonial */}
-        <TestimonialThreeColumnGrid
+        {/* <TestimonialThreeColumnGrid
           id="testimonial"
           headline="What our customers are saying"
           subheadline={
@@ -234,7 +234,7 @@ export default async function HomePage() {
             name="Mark Levinson"
             byline="COO at Quirk"
           />
-        </TestimonialThreeColumnGrid>
+        </TestimonialThreeColumnGrid> */}
 
         {/* FAQs */}
         <FAQsTwoColumnAccordion id="faqs" headline="Questions & Answers">
@@ -261,7 +261,7 @@ export default async function HomePage() {
         </FAQsTwoColumnAccordion>
 
         {/* Pricing */}
-        <PricingMultiTier
+        {/* <PricingMultiTier
           id="pricing"
           headline="Pricing to fit your business needs."
           plans={
@@ -327,7 +327,7 @@ export default async function HomePage() {
               />
             </>
           }
-        />
+        /> */}
 
         {/* Call To Action */}
         <CallToActionSimple
@@ -415,9 +415,7 @@ async function EventsFeatureSection() {
                     'url' in event.customImage &&
                     event.customImage.url ? (
                       <ImageWithCaption
-                        src={event.customImage.url}
-                        alt={event.name}
-                        caption={event.customImage.caption}
+                        media={event.customImage}
                         captionVariant="overlay"
                         width={1800}
                         height={1012}

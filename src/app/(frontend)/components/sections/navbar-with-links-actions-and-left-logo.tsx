@@ -73,7 +73,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
           <div className="flex flex-1 items-center">{logo}</div>
           <div className="flex gap-8 max-lg:hidden">{links}</div>
           <div className="flex flex-1 items-center justify-end gap-4">
-            <div className="flex shrink-0 items-center gap-5">{actions}</div>
+            <div className="flex shrink-0 items-center gap-2">{actions}</div>
 
             <button
               command="show-modal"

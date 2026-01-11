@@ -1,14 +1,9 @@
 import React from 'react'
 import { Familjen_Grotesk, Inter } from 'next/font/google'
 import './(frontend)/styles.css'
-import {
-  NavbarLink,
-  NavbarLogo,
-  NavbarWithLinksActionsAndCenteredLogo,
-} from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
-import Image from 'next/image'
-import { ButtonLink, PlainButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Navbar } from './(frontend)/components/navigation/navbar'
 import Link from 'next/link'
+import Image from 'next/image'
 
 const familjenGrotesk = Familjen_Grotesk({
   subsets: ['latin'],
@@ -33,37 +28,7 @@ export default async function RootLayout() {
   return (
     <html lang="de" className={`h-full flex${familjenGrotesk.variable} ${inter.variable}`}>
       <body className="flex h-full flex-col">
-        <NavbarWithLinksActionsAndCenteredLogo
-          id="navbar"
-          links={
-            <>
-              <NavbarLink href="#">Pricing</NavbarLink>
-              <NavbarLink href="#">About</NavbarLink>
-              <NavbarLink href="#">Docs</NavbarLink>
-              <NavbarLink href="#" className="sm:hidden">
-                Log in
-              </NavbarLink>
-            </>
-          }
-          logo={
-            <NavbarLogo href="/">
-              <Image
-                src="/api/media/file/starkgemacht-logologo.svg"
-                alt="StarkGemacht Logo"
-                width={128}
-                height={32}
-              ></Image>
-            </NavbarLogo>
-          }
-          actions={
-            <>
-              <PlainButtonLink href="#" className="max-sm:hidden">
-                Log in
-              </PlainButtonLink>
-              <ButtonLink href="#">Get started</ButtonLink>
-            </>
-          }
-        />
+        <Navbar />
         <main className="flex grow flex-col">
           <div className="grid grow grid-cols-1 grid-rows-[1fr_auto_1fr] bg-white lg:grid-cols-[max(50%,36rem)_1fr] dark:bg-gray-900">
             <div className="mx-auto h-full w-full max-w-7xl px-6 py-24 sm:py-32 lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:px-8">
@@ -101,10 +66,12 @@ export default async function RootLayout() {
               </div>
             </footer> */}
             <div className="hidden lg:relative lg:col-start-2 lg:row-start-1 lg:row-end-4 lg:block">
-              <img
-                alt=""
+              <Image
+                alt="Jasmin Bösch draußen am Schaufeln."
                 src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_5322.jpeg"
                 className="absolute inset-0 size-full object-cover"
+                width={760}
+                height={1024}
               />
             </div>
           </div>

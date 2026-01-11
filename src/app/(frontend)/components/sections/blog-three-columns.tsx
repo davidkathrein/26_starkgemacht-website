@@ -6,8 +6,9 @@ import { Wallpaper } from '../elements/wallpaper'
 import { getWallpaperColorFromIndex } from '../../utils/wallpaper'
 import { Subheading } from '../elements/subheading'
 import { Text } from '../elements/text'
+import { ImageWithCaption } from '../elements/image-with-caption'
 
-export default async function BlogThreeColumns() {
+export default async function BlogThreeColumns({ id }: { id?: string }) {
   const payload = await getPayload({ config })
 
   const { docs: posts } = await payload.find({
@@ -27,7 +28,7 @@ export default async function BlogThreeColumns() {
   }
 
   return (
-    <div className="bg-olive-50 dark:bg-olive-900 py-24 sm:py-32">
+    <section className="bg-olive-50 dark:bg-olive-900 py-24 sm:py-32" id={id}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <Subheading>Aus dem Blog</Subheading>
@@ -52,6 +53,14 @@ export default async function BlogThreeColumns() {
 
             return (
               <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
+                <Link href={`/blog/${post.slug}`}>
+                  <ImageWithCaption
+                    media={post.featuredImage}
+                    alt={post.title}
+                    className="mb-6 aspect-video w-full"
+                    captionVariant="overlay"
+                  />
+                </Link>
                 <div className="flex items-center gap-x-4 text-xs">
                   <time
                     dateTime={publishedDate.toISOString()}
@@ -108,6 +117,6 @@ export default async function BlogThreeColumns() {
           })}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
