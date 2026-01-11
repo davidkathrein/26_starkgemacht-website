@@ -38,9 +38,9 @@ export const linkConverter: JSXConverters<SerializedLinkNode> = {
 
       if (isExternal) {
         return (
-          <a href={fields.url} target="_blank" rel="noopener noreferrer">
+          <Link href={fields.url} target="_blank" rel="noopener noreferrer">
             {children}
-          </a>
+          </Link>
         )
       }
 
