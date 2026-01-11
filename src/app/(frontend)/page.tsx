@@ -24,9 +24,6 @@ import { Link } from './components/elements/link'
 import BlogThreeColumns from './components/sections/blog-three-columns'
 import { ImageWithCaption } from './components/elements/image-with-caption'
 
-export const dynamic = 'force-dynamic'
-export const runtime = 'nodejs'
-
 export default async function HomePage() {
   return (
     <>

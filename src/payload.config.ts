@@ -68,7 +68,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '6f6688e1991aaf3ad82ab5d5',
+      connectionString: process.env.DATABASE_URL || '',
     },
   }),
   sharp,
