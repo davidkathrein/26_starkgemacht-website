@@ -19,8 +19,7 @@ export function Footer() {
           headline="Bleib auf dem Laufenden"
           subheadline={
             <p>
-              Get customer support tips, product updates and customer stories that you can archive
-              as soon as they arrive.
+              Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt in dein Postfach.
             </p>
           }
           action="#"
@@ -28,31 +27,27 @@ export function Footer() {
       }
       links={
         <>
-          <FooterCategory title="Product">
-            <FooterLink href="#">Features</FooterLink>
-            <FooterLink href="#">Pricing</FooterLink>
-            <FooterLink href="#">Integrations</FooterLink>
+          <FooterCategory title="Verein">
+            <FooterLink href="#uber">Über uns</FooterLink>
+            <FooterLink href="#team">Team</FooterLink>
+            <FooterLink href="#aktuelles">Aktuelles</FooterLink>
           </FooterCategory>
-          <FooterCategory title="Company">
-            <FooterLink href="#">About</FooterLink>
-            <FooterLink href="#">Careers</FooterLink>
-            <FooterLink href="#">Blog</FooterLink>
-            <FooterLink href="#">Press Kit</FooterLink>
+          <FooterCategory title="Angebot">
+            <FooterLink href="#angebot">Workshops</FooterLink>
+            <FooterLink href="#angebot">Kurse</FooterLink>
+            <FooterLink href="#angebot">Veranstaltungen</FooterLink>
           </FooterCategory>
-          <FooterCategory title="Resources">
-            <FooterLink href="#">Help Center</FooterLink>
-            <FooterLink href="#">API Docs</FooterLink>
-            <FooterLink href="#">Status</FooterLink>
-            <FooterLink href="#">Contact</FooterLink>
+          <FooterCategory title="Kontakt">
+            <FooterLink href="mailto:kontakt@starkgemacht.com">E-Mail</FooterLink>
+            <FooterLink href="#faqs">Häufige Fragen</FooterLink>
           </FooterCategory>
-          <FooterCategory title="Legal">
-            <FooterLink href="#">Privacy Policy</FooterLink>
-            <FooterLink href="#">Terms of Service</FooterLink>
-            <FooterLink href="#">Security</FooterLink>
+          <FooterCategory title="Rechtliches">
+            <FooterLink href="#">Datenschutz</FooterLink>
+            <FooterLink href="#">Impressum</FooterLink>
           </FooterCategory>
         </>
       }
-      fineprint="© 2025 Oatmeal, Inc."
+      fineprint="© 2025 Verein Stark gemacht 🍀💚"
       socialLinks={
         <>
           <SocialLink href="https://x.com" name="X">

@@ -40,8 +40,7 @@ export default async function TeamImageShortParagraph() {
             Unser Team
           </h2>
           <p className="text-olive-700 dark:text-olive-400 mt-6 text-base/7 text-pretty">
-            Wir sind eine dynamische Gruppe von Menschen, die mit Leidenschaft bei der Sache sind
-            und unseren Kunden die besten Ergebnisse liefern.
+            Wir sind eine engagierte Gemeinschaft, die mit Herzblut daran arbeitet, Menschen zu stärken und das Miteinander zu fördern. Für Gemeinwohl, Natur und einen nachhaltigen, zukunftsorientierten Lebensstil.
           </p>
         </div>
         <ul

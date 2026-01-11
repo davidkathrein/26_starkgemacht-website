@@ -19,8 +19,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description: 'Verein Stark gemacht - Menschen stärken, Gemeinschaft fördern. Workshops, Kurse und Projekte für Empowerment, Gesundheit, Selbstschutz und Nachhaltigkeit.',
+  title: 'Stark gemacht - Empowerment, Gesundheit & Gemeinschaft',
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {

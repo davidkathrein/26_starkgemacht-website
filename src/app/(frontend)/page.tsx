@@ -43,26 +43,27 @@ export default async function HomePage() {
           id="hero"
           eyebrow={
             <AnnouncementBadge
-              href="#"
+              href="mailto:kontakt@starkgemacht.com"
               text="Du willst ein Angebot für deine Schule/Organisation?"
               cta="Jetzt anfragen"
             />
           }
-          headline="Stark gemacht: Empowerment, Gesundheit und Selbstschutz."
+          headline="Stark gemacht: Menschen stärken, Gemeinschaft fördern, Zukunft gestalten."
           subheadline={
             <p>
-              Workshops, Kurse und Projekte für mehr Selbstvertrauen, Wissen und
-              Handlungssicherheit.
+              Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops – wir bringen
+              verschiedene Gesellschaftsgruppen zusammen und fördern einen gesunden, selbstbewussten
+              Lebensstil.
             </p>
           }
           cta={
             <div className="flex items-center gap-4">
-              <ButtonLink href="#" size="lg">
-                Start free trial
+              <ButtonLink href="#angebot" size="lg">
+                Unsere Angebote entdecken
               </ButtonLink>
 
-              <PlainButtonLink href="#" size="lg">
-                See how it works <ArrowNarrowRightIcon />
+              <PlainButtonLink href="#uber" size="lg">
+                Mehr über uns <ArrowNarrowRightIcon />
               </PlainButtonLink>
             </div>
           }
@@ -237,26 +238,26 @@ export default async function HomePage() {
         </TestimonialThreeColumnGrid> */}
 
         {/* FAQs */}
-        <FAQsTwoColumnAccordion id="faqs" headline="Questions & Answers">
+        <FAQsTwoColumnAccordion id="faqs" headline="Häufige Fragen">
           <Faq
             id="faq-1"
-            question="Do I need a credit card to start the free trial?"
-            answer="Yes, but don't worry, you won't be charged until the trial period is over. We won't send you an email reminding you when this happens because we are really hoping you'll forget and we can keep charging you until your cards expires"
+            question="Für wen sind eure Angebote gedacht?"
+            answer="Unsere Workshops und Kurse sind für alle Menschen offen – unabhängig von Alter, Geschlecht oder Herkunft. Ob Singles, Familien, Senioren oder junge Menschen: Wir wollen verschiedene Gesellschaftsgruppen zusammenbringen und stärken."
           />
           <Faq
             id="faq-2"
-            question="Can my whole team use the same inbox?"
-            answer="Yes, the more the merrier! Oatmeal works best when your entire company has access. We will charge you per additional seat, but we won't tell you about this until you get your invoice."
+            question="Wie kann ich mich für eine Veranstaltung anmelden?"
+            answer="Schau dir unsere aktuellen Veranstaltungen an und klicke auf ‘Jetzt anmelden’. Du wirst dann zu unserem Buchungssystem weitergeleitet, wo du dich direkt registrieren kannst."
           />
           <Faq
             id="faq-3"
-            question="Is the AI agent actually a bunch of people in India?"
-            answer="Not just India! We have people in lots of countries around the world pretending to be an AI, including some that are currently under sanctions, so we can't legally mention them here."
+            question="Bietet ihr auch Angebote für Schulen und Organisationen an?"
+            answer="Ja! Wir bieten maßgeschneiderte Workshops und Projekte für Schulen, Unternehmen und Organisationen an. Kontaktiere uns einfach unter kontakt@starkgemacht.com für ein individuelles Angebot."
           />
           <Faq
             id="faq-4"
-            question="Does Oatmeal replace my email client?"
-            answer="Absolutely. The idea is that we transition you away from email entirely, so you become completely dependent on our service. Like a parasite living off a host."
+            question="Was ist die Vision von Stark gemacht?"
+            answer="Wir wollen Menschen mental und physisch stärken, einen gesunden und nachhaltigen Lebensstil fördern, Gemeinschaft leben und Integration aktiv gestalten. Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops – wir schaffen Räume für Begegnung und persönliches Wachstum."
           />
         </FAQsTwoColumnAccordion>
 
@@ -332,21 +333,21 @@ export default async function HomePage() {
         {/* Call To Action */}
         <CallToActionSimple
           id="call-to-action"
-          headline="Ready to make customer support feel simple again?"
+          headline="Bereit, gemeinsam stark zu werden?"
           subheadline={
             <p>
-              Join hundreds of teams using Oatmeal to deliver faster, friendlier email support —
-              using a massive network of low wage workers stationed around the globe
+              Werde Teil unserer Gemeinschaft und entdecke Workshops, Kurse und Veranstaltungen, die
+              dich stärken, inspirieren und mit anderen Menschen verbinden.
             </p>
           }
           cta={
             <div className="flex items-center gap-4">
-              <ButtonLink href="#" size="lg">
-                Start free trial
+              <ButtonLink href="#angebot" size="lg">
+                Zu den Angeboten
               </ButtonLink>
 
-              <PlainButtonLink href="#" size="lg">
-                Book a demo <ChevronIcon />
+              <PlainButtonLink href="mailto:kontakt@starkgemacht.com" size="lg">
+                Kontakt aufnehmen <ChevronIcon />
               </PlainButtonLink>
             </div>
           }
@@ -363,16 +364,17 @@ async function EventsFeatureSection() {
 
   return (
     <FeaturesTwoColumnWithDemos
-      id="features"
+      id="angebot"
       eyebrow="Unsere Angebote"
       headline="Workshops, Kurse und Veranstaltungen"
       subheadline={
         !events || events.length === 0 ? (
-          <p>Aktuell sind keine Veranstaltungen verfügbar.</p>
+          <p>Aktuell sind keine Veranstaltungen verfügbar. Neue Events folgen in Kürze!</p>
         ) : (
           <p>
-            Entdecke unsere aktuellen Veranstaltungen und finde das passende Angebot für dich und
-            deine Gruppe.
+            Von Selbstverteidigung über vegane Kochkurse bis zu nachhaltigen DIY-Workshops –
+            entdecke unsere vielfältigen Angebote für mehr Selbstbewusstsein, Gesundheit und
+            Gemeinschaft.
           </p>
         )
       }

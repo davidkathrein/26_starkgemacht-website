@@ -9,20 +9,16 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-            <Subheading>Unser Verein</Subheading>
+            <Subheading>Stark gemacht 🍀💚</Subheading>
             <p className="text-olive-800 dark:text-olive-200 mt-6 text-xl/8">
-              Quasi est quaerat. Sit molestiae et. Provident ad dolorem occaecati eos iste. Soluta
-              rerum quidem minus ut molestiae velit error quod. Excepturi quidem expedita molestias
-              quas.
+              Entstanden aus der Pandemie-Zeit 2020/2021, als soziale Kontakte für alle zur Herausforderung wurden – für Singles, Senioren, Zugezogene und besonders für Familien und junge Menschen.
             </p>
             <p className="text-olive-700 dark:text-olive-300 mt-6 text-base/7">
-              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat
-              commodo. Elit sunt amet fugiat veniam occaecat fugiat. Quasi aperiam sit non sit neque
-              reprehenderit.
+              Eva Kathrein und Jasmin Bösch, Freundinnen seit Jugendjahren, gründeten 2022 den Verein Stark gemacht mit der Vision, das Sozialleben wieder zu beleben und Menschen aus allen Bevölkerungsschichten zu stärken. Von Selbstverteidigung und Sicherheit über Kochkurse und Workshops bis zu nachhaltigen Projekten – wir fördern einen gesunden Lebensstil, Integration und Gemeinwohl.
             </p>
             <div className="mt-10 flex">
-              <ButtonLink href="#" size="lg">
-                Jetzt Kurse entdecken <ArrowNarrowRightIcon />
+              <ButtonLink href="#angebot" size="lg">
+                Unsere Angebote entdecken <ArrowNarrowRightIcon />
               </ButtonLink>
             </div>
           </div>
