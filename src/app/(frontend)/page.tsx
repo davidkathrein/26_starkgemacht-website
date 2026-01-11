@@ -459,7 +459,7 @@ async function EventsFeatureSection() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      Jetzt buchen <MoveRight size={14} />
+                      Tickets sichern
                     </PlainButtonLink>
                   </div>
                 }

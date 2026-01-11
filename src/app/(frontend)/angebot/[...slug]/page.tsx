@@ -9,6 +9,7 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import type { Event } from '@/payload-types'
+import { MoveRight } from 'lucide-react'
 
 export default async function AngebotPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params
@@ -93,7 +94,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             rel="noopener noreferrer"
             target="_blank"
           >
-            Jetzt buchen
+            Jetzt Tickets sichern <MoveRight size={14} />
           </ButtonLink>
 
           {(customImage || event.image) && (
@@ -131,7 +132,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Jetzt buchen
+                Jetzt Tickets sichern <MoveRight size={14} />
               </ButtonLink>
             </div>
           )}

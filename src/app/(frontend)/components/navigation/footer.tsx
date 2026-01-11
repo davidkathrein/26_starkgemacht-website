@@ -19,7 +19,8 @@ export function Footer() {
           headline="Bleib auf dem Laufenden"
           subheadline={
             <p>
-              Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt in dein Postfach.
+              Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt
+              in dein Postfach.
             </p>
           }
           action="#"
@@ -28,18 +29,18 @@ export function Footer() {
       links={
         <>
           <FooterCategory title="Verein">
-            <FooterLink href="#uber">Über uns</FooterLink>
-            <FooterLink href="#team">Team</FooterLink>
-            <FooterLink href="#aktuelles">Aktuelles</FooterLink>
+            <FooterLink href="/#uber">Über uns</FooterLink>
+            <FooterLink href="/#team">Team</FooterLink>
+            <FooterLink href="/#aktuelles">Aktuelles</FooterLink>
           </FooterCategory>
           <FooterCategory title="Angebot">
-            <FooterLink href="#angebot">Workshops</FooterLink>
-            <FooterLink href="#angebot">Kurse</FooterLink>
-            <FooterLink href="#angebot">Veranstaltungen</FooterLink>
+            <FooterLink href="/#angebot">Workshops</FooterLink>
+            <FooterLink href="/#angebot">Kurse</FooterLink>
+            <FooterLink href="/#angebot">Veranstaltungen</FooterLink>
           </FooterCategory>
           <FooterCategory title="Kontakt">
             <FooterLink href="mailto:kontakt@starkgemacht.com">E-Mail</FooterLink>
-            <FooterLink href="#faqs">Häufige Fragen</FooterLink>
+            <FooterLink href="/#faqs">Häufige Fragen</FooterLink>
           </FooterCategory>
           <FooterCategory title="Rechtliches">
             <FooterLink href="#">Datenschutz</FooterLink>
