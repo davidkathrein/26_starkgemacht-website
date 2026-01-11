@@ -41,7 +41,7 @@ export async function fetchAllUpcomingEvents(options: FetchEventsOptions = {}) {
     })
 
     if (startingAfter) params.set('starting_after', startingAfter)
-    const url = `https://api.tickettailor.com/v1/events?`
+    const url = `https://api.tickettailor.com/v1/events?${params.toString()}`
 
     const response = await fetch(url, {
       headers: {
