@@ -40,7 +40,9 @@ export default async function TeamImageShortParagraph() {
             Unser Team
           </h2>
           <p className="text-olive-700 dark:text-olive-400 mt-6 text-base/7 text-pretty">
-            Wir sind eine engagierte Gemeinschaft, die mit Herzblut daran arbeitet, Menschen zu stärken und das Miteinander zu fördern. Für Gemeinwohl, Natur und einen nachhaltigen, zukunftsorientierten Lebensstil.
+            Wir sind eine engagierte Gemeinschaft, die mit Herzblut daran arbeitet, Menschen zu
+            stärken und das Miteinander zu fördern. Für Gemeinwohl, Natur und einen nachhaltigen,
+            zukunftsorientierten Lebensstil.
           </p>
         </div>
         <ul
@@ -79,7 +81,7 @@ export default async function TeamImageShortParagraph() {
                 )}
                 {member.links && member.links.length > 0 && (
                   <ul role="list" className="mt-6 flex gap-x-6">
-                    {member.links.map((link: any, index: number) => {
+                    {member.links.map((link: { platform: string; url: string }, index: number) => {
                       const IconComponent = Icon(link.platform)
                       if (!IconComponent) return null
 

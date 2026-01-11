@@ -1,9 +1,8 @@
 import { TTEventsBlogResponseSchema, type TTEventForBlog } from '../types/tickettailor' // adjust path
 import { generatePreviewText, generateSlug } from './ai'
-import { BasePayload, getPayload } from 'payload'
+import { getPayload } from 'payload'
 import config from '@payload-config'
 import { convertHtmlToRichText } from './richtext'
-import { slugify } from 'payload/shared'
 
 export type TicketTailorEvent = TTEventForBlog
 

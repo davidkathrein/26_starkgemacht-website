@@ -19,7 +19,8 @@ const inter = Inter({
 })
 
 export const metadata = {
-  description: 'Verein Stark gemacht - Menschen stärken, Gemeinschaft fördern. Workshops, Kurse und Projekte für Empowerment, Gesundheit, Selbstschutz und Nachhaltigkeit.',
+  description:
+    'Verein Stark gemacht - Menschen stärken, Gemeinschaft fördern. Workshops, Kurse und Projekte für Empowerment, Gesundheit, Selbstschutz und Nachhaltigkeit.',
   title: 'Stark gemacht - Empowerment, Gesundheit & Gemeinschaft',
 }
 

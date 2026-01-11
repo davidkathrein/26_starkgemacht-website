@@ -1,7 +1,6 @@
 'use server'
 
 import { createOpenRouter } from '@openrouter/ai-sdk-provider'
-import { createAzure } from '@quail-ai/azure-ai-provider'
 import { generateText } from 'ai'
 import { slugify } from 'payload/shared'
 

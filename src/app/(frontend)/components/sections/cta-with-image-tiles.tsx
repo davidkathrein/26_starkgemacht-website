@@ -11,10 +11,16 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
           <div className="lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
             <Subheading>Stark gemacht 🍀💚</Subheading>
             <p className="text-olive-800 dark:text-olive-200 mt-6 text-xl/8">
-              Entstanden aus der Pandemie-Zeit 2020/2021, als soziale Kontakte für alle zur Herausforderung wurden – für Singles, Senioren, Zugezogene und besonders für Familien und junge Menschen.
+              Entstanden aus der Pandemie-Zeit 2020/2021, als soziale Kontakte für alle zur
+              Herausforderung wurden – für Singles, Senioren, Zugezogene und besonders für Familien
+              und junge Menschen.
             </p>
             <p className="text-olive-700 dark:text-olive-300 mt-6 text-base/7">
-              Eva Kathrein und Jasmin Bösch, Freundinnen seit Jugendjahren, gründeten 2022 den Verein Stark gemacht mit der Vision, das Sozialleben wieder zu beleben und Menschen aus allen Bevölkerungsschichten zu stärken. Von Selbstverteidigung und Sicherheit über Kochkurse und Workshops bis zu nachhaltigen Projekten – wir fördern einen gesunden Lebensstil, Integration und Gemeinwohl.
+              Eva Kathrein und Jasmin Bösch, Freundinnen seit Jugendjahren, gründeten 2022 den
+              Verein Stark gemacht mit der Vision, das Sozialleben wieder zu beleben und Menschen
+              aus allen Bevölkerungsschichten zu stärken. Von Selbstverteidigung und Sicherheit über
+              Kochkurse und Workshops bis zu nachhaltigen Projekten – wir fördern einen gesunden
+              Lebensstil, Integration und Gemeinwohl.
             </p>
             <div className="mt-10 flex">
               <ButtonLink href="#angebot" size="lg">
@@ -34,7 +40,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
             </div>
             <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
               <div className="order-first flex w-64 flex-none justify-end self-end max-sm:w-40 lg:w-auto">
-                <img
+                <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9731.jpeg"
                   width={768}
@@ -43,7 +49,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                 />
               </div>
               <div className="flex w-96 flex-auto justify-end lg:w-auto lg:flex-none">
-                <img
+                <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9738.jpeg"
                   width={1152}
@@ -52,7 +58,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                 />
               </div>
               <div className="hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none">
-                <img
+                <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_4216.jpeg"
                   width={768}

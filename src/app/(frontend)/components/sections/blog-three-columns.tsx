@@ -33,7 +33,8 @@ export default async function BlogThreeColumns({ id }: { id?: string }) {
         <div className="mx-auto max-w-2xl lg:mx-0">
           <Subheading>Aktuelles</Subheading>
           <Text className="mt-6">
-            Neues aus unserem Verein, inspirierende Geschichten und praktische Tipps für ein starkes, selbstbestimmtes Leben.
+            Neues aus unserem Verein, inspirierende Geschichten und praktische Tipps für ein
+            starkes, selbstbestimmtes Leben.
           </Text>
         </div>
         <div className="border-olive-950/20 mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-8 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3 dark:border-white/20">

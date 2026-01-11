@@ -20,7 +20,7 @@ export function Stat({
 }
 
 export function StatsWithGraph({ children, ...props }: ComponentProps<typeof Section>) {
-  let pathId = useId()
+  const pathId = useId()
 
   return (
     <Section {...props}>

@@ -9,7 +9,7 @@ export const uploadConverter: JSXConverters<SerializedUploadNode> = {
     if (relationTo === 'media' && typeof value === 'object' && value !== null) {
       const media = value as {
         url?: string
-        alt?: string
+        alt: string
         caption?: string
         width?: number
         height?: number
@@ -19,7 +19,7 @@ export const uploadConverter: JSXConverters<SerializedUploadNode> = {
 
       return (
         <ImageWithCaption
-          media={media as any}
+          media={media}
           width={media.width || 1200}
           height={media.height || 675}
           className="my-8"

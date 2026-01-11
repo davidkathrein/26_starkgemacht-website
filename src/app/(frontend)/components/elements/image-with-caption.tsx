@@ -6,8 +6,8 @@ import type { Media } from '@/payload-types'
 type CaptionVariant = 'below' | 'overlay'
 
 interface ImageWithCaptionProps {
-  media: Media | number | null | undefined
-  alt?: string
+  media: Pick<Media, 'url' | 'alt' | 'caption' | 'width' | 'height'> | number | null | undefined
+  alt?: string | undefined
   caption?: string | null
   captionVariant?: CaptionVariant
   width?: number
