@@ -1,9 +1,5 @@
 import { AnnouncementBadge } from '@/app/(frontend)/components/elements/announcement-badge'
-import {
-  ButtonLink,
-  PlainButtonLink,
-  SoftButtonLink,
-} from '@/app/(frontend)/components/elements/button'
+import { ButtonLink, PlainButtonLink } from '@/app/(frontend)/components/elements/button'
 import Image from 'next/image'
 import { Main } from '@/app/(frontend)/components/elements/main'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
@@ -18,21 +14,18 @@ import {
   FeaturesTwoColumnWithDemos,
 } from '@/app/(frontend)/components/sections/features-two-column-with-demos'
 import { HeroLeftAlignedWithDemo } from '@/app/(frontend)/components/sections/hero-left-aligned-with-demo'
-import { Plan, PricingMultiTier } from '@/app/(frontend)/components/sections/pricing-multi-tier'
 import { Stat, StatsWithGraph } from '@/app/(frontend)/components/sections/stats-with-graph'
-import {
-  Testimonial,
-  TestimonialThreeColumnGrid,
-} from '@/app/(frontend)/components/sections/testimonials-three-column-grid'
 import CTAWithImageTiles from '@/app/(frontend)/components/sections/cta-with-image-tiles'
 import TeamImageShortParagraph from '@/app/(frontend)/components/sections/team-image-short-paragraph'
 import { fetchAllUpcomingEvents } from './utils/tickettailor'
 import { Suspense } from 'react'
 import { Wallpaper } from './components/elements/wallpaper'
-import { ArrowUpRight, MoveRight } from 'lucide-react'
 import { Link } from './components/elements/link'
 import BlogThreeColumns from './components/sections/blog-three-columns'
 import { ImageWithCaption } from './components/elements/image-with-caption'
+
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export default async function HomePage() {
   return (
