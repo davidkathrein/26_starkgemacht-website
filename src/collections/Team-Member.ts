@@ -8,8 +8,20 @@ export const TeamMember: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+    defaultColumns: ['name', 'role', 'order'],
   },
+  defaultSort: 'order',
   fields: [
+    {
+      name: 'order',
+      type: 'number',
+      required: true,
+      defaultValue: 0,
+      admin: {
+        description: 'Lower numbers appear first in the team list',
+        position: 'sidebar',
+      },
+    },
     {
       name: 'name',
       type: 'text',
