@@ -9,6 +9,7 @@ import {
 import { FacebookIcon } from '@/app/(frontend)/components/icons/social/facebook-icon'
 import { InstagramIcon } from '@/app/(frontend)/components/icons/social/instagram-icon'
 import { Mail } from 'lucide-react'
+import Link from 'next/link'
 
 export function Footer() {
   return (
@@ -23,7 +24,6 @@ export function Footer() {
               in dein Postfach.
             </p>
           }
-          action="#"
         />
       }
       links={
@@ -48,7 +48,19 @@ export function Footer() {
           </FooterCategory>
         </>
       }
-      fineprint="© 2025 Verein Stark gemacht 🍀💚"
+      fineprint="© 2026 Verein Stark gemacht 🍀💚"
+      attribution={
+        <span>
+          Website von{' '}
+          <Link
+            className="cursor-pointer underline"
+            target="_blank"
+            href="https://davidkathrein.at"
+          >
+            David Kathrein
+          </Link>
+        </span>
+      }
       socialLinks={
         <>
           <SocialLink href="mailto:kontakt@starkgemacht.com" name="E-Mail">

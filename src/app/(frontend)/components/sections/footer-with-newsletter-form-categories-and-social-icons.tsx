@@ -1,8 +1,8 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Container } from '../elements/container'
-import { ArrowNarrowRightIcon } from '../icons/arrow-narrow-right-icon'
 import Link from 'next/link'
+import { NewsletterFormClient } from './newsletter-form-client'
 
 export function FooterCategory({
   title,
@@ -59,38 +59,14 @@ export function NewsletterForm({
 }: {
   headline: ReactNode
   subheadline: ReactNode
-} & ComponentProps<'form'>) {
+} & Omit<ComponentProps<'form'>, 'action' | 'method'>) {
   return (
-    <form
-      className={clsx('flex max-w-sm flex-col gap-2', className)}
-      name="newsletter-signup"
-      action="https://edd7cb9a.sibforms.com/serve/MUIFADQ2tZH_p7XTpFIm7XDfFSgyHbGYP_SeJyKITUqtQB-SLIvL3aJ5SpUw-pMXR7bmHkplJxIEOjW8dZdHQsGoo2kR9K-B2UySOoRXG7dEMEUsgY3nSdef80XDqHG7EBbmiNMEwOr3IRDZRVKbgasIghsEVAMiNKCoCoICjOVhx-PhYYvheToTnIsZTA8ByhjABOrwo3tC0o1Uww=="
-      method="POST"
+    <NewsletterFormClient
+      headline={headline}
+      subheadline={subheadline}
+      className={className}
       {...props}
-    >
-      <p>{headline}</p>
-      <div className="text-olive-700 dark:text-olive-400 flex flex-col gap-4">{subheadline}</div>
-      <div className="border-olive-950/20 has-[input:focus]:border-olive-950 flex items-center border-b py-2 dark:border-white/20 dark:has-[input:focus]:border-white">
-        <input
-          type="email"
-          placeholder="Email"
-          id="EMAIL"
-          name="EMAIL"
-          required
-          aria-required="true"
-          autoComplete="email"
-          aria-label="Email"
-          className="text-olive-950 flex-1 focus:outline-hidden dark:text-white"
-        />
-        <button
-          type="submit"
-          aria-label="Subscribe"
-          className="hover:bg-olive-950/10 relative inline-flex size-7 items-center justify-center rounded-full after:absolute after:-inset-2 dark:hover:bg-white/10 after:pointer-fine:hidden"
-        >
-          <ArrowNarrowRightIcon />
-        </button>
-      </div>
-    </form>
+    />
   )
 }
 
@@ -99,12 +75,14 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
   links,
   fineprint,
   socialLinks,
+  attribution,
   className,
   ...props
 }: {
   cta: ReactNode
   links: ReactNode
   fineprint: ReactNode
+  attribution: ReactNode
   socialLinks?: ReactNode
 } & ComponentProps<'footer'>) {
   return (
@@ -119,6 +97,7 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
           </div>
           <div className="flex items-center justify-between gap-10 text-sm/7">
             <div className="text-olive-600 dark:text-olive-500">{fineprint}</div>
+            <div className="text-olive-600 dark:text-olive-500">{attribution}</div>
             {socialLinks && <div className="flex items-center gap-4 sm:gap-10">{socialLinks}</div>}
           </div>
         </Container>
