@@ -186,6 +186,10 @@ export interface Media {
  */
 export interface Team {
   id: number;
+  /**
+   * Lower numbers appear first in the team list
+   */
+  order: number;
   name: string;
   role: string;
   photo: number | Media;
@@ -608,6 +612,7 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "team_select".
  */
 export interface TeamSelect<T extends boolean = true> {
+  order?: T;
   name?: T;
   role?: T;
   photo?: T;

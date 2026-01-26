@@ -30,42 +30,42 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
               </ButtonLink>
             </div>
           </div>
-          <div className="flex flex-wrap items-start justify-end gap-6 sm:gap-8 lg:contents">
-            <div className="w-0 flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end">
+          <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start md:justify-end md:gap-8 lg:contents">
+            <div className="order-first w-full md:order-0 md:w-0 md:flex-auto lg:ml-auto lg:w-auto lg:flex-none lg:self-end">
               <Image
                 alt=""
                 src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_1686.jpeg"
                 width={1152}
-                height={1200} // was 823
-                className="bg-olive-100 dark:bg-olive-900 aspect-7/7 w-148 max-w-none rounded-2xl object-cover max-sm:w-120"
+                height={1200}
+                className="bg-olive-100 dark:bg-olive-900 aspect-video w-full rounded-2xl object-cover object-left md:aspect-7/7 md:w-148 md:max-w-none"
               />
             </div>
             <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
-              <div className="order-first flex w-64 flex-none justify-end self-end max-sm:w-40 lg:w-auto">
+              <div className="order-first w-full md:flex md:w-64 md:flex-none md:justify-end md:self-end lg:w-auto">
                 <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9731.jpeg"
                   width={768}
                   height={604}
-                  className="bg-olive-100 dark:bg-olive-900 aspect-4/3 w-[24rem] max-w-none flex-none rounded-2xl object-cover"
+                  className="bg-olive-100 dark:bg-olive-900 aspect-video w-full rounded-2xl object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none md:flex-none"
                 />
               </div>
-              <div className="flex w-96 flex-auto justify-end lg:w-auto lg:flex-none">
+              <div className="w-full md:flex md:w-96 md:flex-auto md:justify-end lg:w-auto lg:flex-none">
                 <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9738.jpeg"
                   width={1152}
                   height={842}
-                  className="bg-olive-100 dark:bg-olive-900 aspect-7/5 w-148 max-w-none flex-none rounded-2xl object-cover max-sm:w-120"
+                  className="bg-olive-100 dark:bg-olive-900 aspect-video w-full rounded-2xl object-cover md:aspect-7/5 md:w-148 md:max-w-none md:flex-none"
                 />
               </div>
-              <div className="hidden sm:block sm:w-0 sm:flex-auto lg:w-auto lg:flex-none">
+              <div className="md:w-0 md:flex-auto lg:w-auto lg:flex-none">
                 <Image
                   alt=""
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_4216.jpeg"
                   width={768}
                   height={604}
-                  className="bg-olive-100 dark:bg-olive-900 aspect-4/3 w-[24rem] max-w-none rounded-2xl object-cover"
+                  className="bg-olive-100 dark:bg-olive-900 aspect-video w-full rounded-2xl object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none"
                 />
               </div>
             </div>

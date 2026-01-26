@@ -6,9 +6,9 @@ import {
   NewsletterForm,
   SocialLink,
 } from '@/app/(frontend)/components/sections/footer-with-newsletter-form-categories-and-social-icons'
-import { GitHubIcon } from '@/app/(frontend)/components/icons/social/github-icon'
-import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
-import { YouTubeIcon } from '@/app/(frontend)/components/icons/social/youtube-icon'
+import { FacebookIcon } from '@/app/(frontend)/components/icons/social/facebook-icon'
+import { InstagramIcon } from '@/app/(frontend)/components/icons/social/instagram-icon'
+import { Mail } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -51,14 +51,14 @@ export function Footer() {
       fineprint="© 2025 Verein Stark gemacht 🍀💚"
       socialLinks={
         <>
-          <SocialLink href="https://x.com" name="X">
-            <XIcon />
+          <SocialLink href="mailto:kontakt@starkgemacht.com" name="E-Mail">
+            <Mail className="size-6" />
           </SocialLink>
-          <SocialLink href="https://github.com" name="GitHub">
-            <GitHubIcon />
+          <SocialLink href="https://www.facebook.com/StarkGemachtVerein/" name="Facebook">
+            <FacebookIcon />
           </SocialLink>
-          <SocialLink href="https://www.youtube.com" name="YouTube">
-            <YouTubeIcon />
+          <SocialLink href="https://www.instagram.com/starkgemachtverein/" name="Instagram">
+            <InstagramIcon />
           </SocialLink>
         </>
       }

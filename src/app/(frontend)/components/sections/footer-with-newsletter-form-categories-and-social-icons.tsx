@@ -61,13 +61,24 @@ export function NewsletterForm({
   subheadline: ReactNode
 } & ComponentProps<'form'>) {
   return (
-    <form className={clsx('flex max-w-sm flex-col gap-2', className)} {...props}>
+    <form
+      className={clsx('flex max-w-sm flex-col gap-2', className)}
+      name="newsletter-signup"
+      action="https://edd7cb9a.sibforms.com/serve/MUIFADQ2tZH_p7XTpFIm7XDfFSgyHbGYP_SeJyKITUqtQB-SLIvL3aJ5SpUw-pMXR7bmHkplJxIEOjW8dZdHQsGoo2kR9K-B2UySOoRXG7dEMEUsgY3nSdef80XDqHG7EBbmiNMEwOr3IRDZRVKbgasIghsEVAMiNKCoCoICjOVhx-PhYYvheToTnIsZTA8ByhjABOrwo3tC0o1Uww=="
+      method="POST"
+      {...props}
+    >
       <p>{headline}</p>
       <div className="text-olive-700 dark:text-olive-400 flex flex-col gap-4">{subheadline}</div>
       <div className="border-olive-950/20 has-[input:focus]:border-olive-950 flex items-center border-b py-2 dark:border-white/20 dark:has-[input:focus]:border-white">
         <input
           type="email"
           placeholder="Email"
+          id="EMAIL"
+          name="EMAIL"
+          required
+          aria-required="true"
+          autoComplete="email"
           aria-label="Email"
           className="text-olive-950 flex-1 focus:outline-hidden dark:text-white"
         />
@@ -97,7 +108,7 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
   socialLinks?: ReactNode
 } & ComponentProps<'footer'>) {
   return (
-    <footer className={clsx('pt-16', className)} {...props}>
+    <footer className={clsx(className)} {...props}>
       <div className="bg-olive-950/2.5 text-olive-950 py-16 dark:bg-white/5 dark:text-white">
         <Container className="flex flex-col gap-16">
           <div className="grid grid-cols-1 gap-x-6 gap-y-16 text-sm/7 lg:grid-cols-2">

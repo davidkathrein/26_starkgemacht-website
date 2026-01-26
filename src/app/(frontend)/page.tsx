@@ -322,6 +322,7 @@ export default async function HomePage() {
 
         {/* Call To Action */}
         <CallToActionSimple
+          className="mb-16"
           id="call-to-action"
           headline="Bereit, gemeinsam stark zu werden?"
           subheadline={
