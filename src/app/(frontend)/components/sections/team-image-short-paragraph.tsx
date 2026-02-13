@@ -4,6 +4,7 @@ import { SiFacebook, SiLinkedin, SiInstagram } from 'react-icons/si'
 import { Mail, Globe2 } from 'lucide-react'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
+import { RichText } from '@/app/(frontend)/components/elements/rich-text'
 
 const getIconByName = (name: string) => {
   switch (name.toLowerCase()) {
@@ -77,9 +78,15 @@ export default async function TeamImageShortParagraph() {
                 </h3>
                 <p className="text-olive-700 dark:text-olive-300 text-base/7">{member.role}</p>
                 {member.bio && (
-                  <p className="text-olive-600 dark:text-olive-400 mt-4 text-base/7">
-                    {member.bio}
-                  </p>
+                  <div className="text-olive-600 dark:text-olive-400 mt-4 text-base/7 [&_p]:mb-2 [&_p:last-child]:mb-0">
+                    {typeof member.bio === 'object' &&
+                    member.bio !== null &&
+                    'root' in member.bio ? (
+                      <RichText data={member.bio} className="[&_p]:mb-4 [&_p:last-child]:mb-0" />
+                    ) : (
+                      <p>{String(member.bio)}</p>
+                    )}
+                  </div>
                 )}
                 {member.links && member.links.length > 0 && (
                   <ul role="list" className="mt-6 flex gap-x-6">

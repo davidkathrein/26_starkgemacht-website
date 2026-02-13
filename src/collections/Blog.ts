@@ -13,16 +13,18 @@ export const Blog: CollectionConfig = {
   },
   access: {
     read: ({ req: { user } }) => {
-      // Public can only see published posts
+      // Public: only published posts with publishedAt in the past
       if (!user) {
         return {
           _status: { equals: 'published' },
+          publishedAt: { less_than_equal: new Date().toISOString() },
         }
       }
       // Authenticated users can see all
       return true
     },
   },
+  defaultSort: 'publishedAt',
   versions: {
     drafts: {
       autosave: true,
@@ -92,11 +94,13 @@ export const Blog: CollectionConfig = {
       name: 'publishedAt',
       type: 'date',
       label: 'Veröffentlichungsdatum',
+      defaultValue: new Date(),
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
         },
-        description: 'Nur zu visuellen Zwecken',
+        description:
+          'Beiträge werden nach diesem Datum sortiert. Ein Beitrag mit einem Datum in der Zukunft wird auf der Website erst ab diesem Zeitpunkt angezeigt.',
       },
     },
   ],

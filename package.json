@@ -32,9 +32,11 @@
     "@payloadcms/storage-vercel-blob": "^3.70.0",
     "@payloadcms/ui": "3.70.0",
     "@quail-ai/azure-ai-provider": "^2.0.0",
+    "@radix-ui/react-slot": "^1.2.4",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindplus/elements": "^1.0.22",
     "ai": "^6.0.27",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
@@ -49,6 +51,7 @@
     "sharp": "0.34.2",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
+    "tailwindcss-animate": "^1.0.7",
     "zod": "^3.25.76"
   },
   "devDependencies": {

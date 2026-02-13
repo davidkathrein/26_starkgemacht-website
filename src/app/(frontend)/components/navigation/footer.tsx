@@ -31,7 +31,7 @@ export function Footer() {
           <FooterCategory title="Verein">
             <FooterLink href="/#uber">Über uns</FooterLink>
             <FooterLink href="/#team">Team</FooterLink>
-            <FooterLink href="/#aktuelles">Aktuelles</FooterLink>
+            <FooterLink href="/blog">Blog</FooterLink>
           </FooterCategory>
           <FooterCategory title="Angebot">
             <FooterLink href="/#angebot">Workshops</FooterLink>

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { regenerateMissingImageSizes } from '@/hooks/regenerateMediaSizes'
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -23,6 +24,16 @@ export const Media: CollectionConfig = {
         }
         return data
       },
+      async ({ collection, data, operation, originalDoc, req }) => {
+        if (operation === 'update' && originalDoc) {
+          await regenerateMissingImageSizes({
+            collection,
+            data,
+            originalDoc: originalDoc as Record<string, unknown>,
+            req,
+          })
+        }
+      },
     ],
   },
   fields: [
@@ -41,6 +52,29 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
+    focalPoint: true,
+    imageSizes: [
+      {
+        name: 'aspect16x9',
+        width: 1280,
+        height: 720,
+      },
+      {
+        name: 'aspect4x3',
+        width: 1280,
+        height: 960,
+      },
+      {
+        name: 'square',
+        width: 1600,
+        height: 1600,
+      },
+      {
+        name: 'aspect3x4',
+        width: 1280,
+        height: 1707,
+      },
+    ],
     pasteURL: {
       allowList: [
         {

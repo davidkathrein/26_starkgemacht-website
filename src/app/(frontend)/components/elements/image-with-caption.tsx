@@ -5,11 +5,20 @@ import type { Media } from '@/payload-types'
 
 type CaptionVariant = 'below' | 'overlay'
 
+/** Use a specific image size variant when available (e.g. 'aspect16x9' for 16:9 crop, 'aspect4x3' for 4:3 crop). */
+export type ImageSizeVariant = 'aspect16x9' | 'aspect4x3' | 'square' | 'aspect3x4'
+
 interface ImageWithCaptionProps {
-  media: Pick<Media, 'url' | 'alt' | 'caption' | 'width' | 'height'> | number | null | undefined
+  media:
+    | Pick<Media, 'url' | 'alt' | 'caption' | 'width' | 'height' | 'sizes'>
+    | number
+    | null
+    | undefined
   alt?: string | undefined
   caption?: string | null
   captionVariant?: CaptionVariant
+  /** Prefer this image size variant when available (e.g. 16:9 for Aktuelles section). */
+  imageSize?: ImageSizeVariant
   width?: number
   height?: number
   className?: string
@@ -21,6 +30,7 @@ export function ImageWithCaption({
   alt: altFallback,
   caption: captionOverride,
   captionVariant = 'below',
+  imageSize,
   width,
   height,
   className,
@@ -31,11 +41,12 @@ export function ImageWithCaption({
     return null
   }
 
-  const url = media.url
+  const sizeVariant = imageSize && media.sizes?.[imageSize]?.url ? media.sizes[imageSize] : null
+  const url = sizeVariant?.url ?? media.url
   const alt = media.alt ?? altFallback ?? ''
   const caption = captionOverride !== undefined ? captionOverride : media.caption
-  const finalWidth = width ?? media.width ?? 1200
-  const finalHeight = height ?? media.height ?? 675
+  const finalWidth = width ?? sizeVariant?.width ?? media.width ?? 1200
+  const finalHeight = height ?? sizeVariant?.height ?? media.height ?? 675
 
   if (!url) {
     return null

@@ -1,5 +1,42 @@
 import type { CollectionConfig } from 'payload'
 
+/** Convert legacy textarea string to Lexical richText so existing data is preserved. */
+function stringToLexicalBio(value: string): {
+  root: {
+    type: string
+    children: unknown[]
+    direction: string
+    format: string
+    indent: number
+    version: number
+  }
+} {
+  const paragraphs = value.split(/\n/).filter((line) => line.trim() !== '').length
+    ? value.split(/\n/).map((line) => line.trim())
+    : [value]
+  return {
+    root: {
+      type: 'root',
+      children: paragraphs.map((text) => ({
+        type: 'paragraph',
+        children: [
+          { type: 'text', detail: 0, format: 0, mode: 'normal', style: '', text, version: 1 },
+        ],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        textFormat: 0,
+        textStyle: '',
+        version: 1,
+      })),
+      direction: 'ltr',
+      format: '',
+      indent: 0,
+      version: 1,
+    },
+  }
+}
+
 export const TeamMember: CollectionConfig = {
   slug: 'team',
   labels: {
@@ -11,6 +48,16 @@ export const TeamMember: CollectionConfig = {
     defaultColumns: ['name', 'role', 'order'],
   },
   defaultSort: 'order',
+  hooks: {
+    afterRead: [
+      ({ doc }) => {
+        if (doc.bio != null && typeof doc.bio === 'string') {
+          ;(doc as Record<string, unknown>).bio = stringToLexicalBio(doc.bio)
+        }
+        return doc
+      },
+    ],
+  },
   fields: [
     {
       name: 'order',
@@ -40,7 +87,7 @@ export const TeamMember: CollectionConfig = {
     },
     {
       name: 'bio',
-      type: 'textarea',
+      type: 'richText',
       required: true,
     },
     {

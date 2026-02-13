@@ -15,7 +15,7 @@ export function Navbar() {
         <>
           <NavbarLink href="/#uber">Über Uns</NavbarLink>
           <NavbarLink href="/#angebot">Angebot</NavbarLink>
-          <NavbarLink href="/#aktuelles">Aktuelles</NavbarLink>
+          <NavbarLink href="/blog">Blog</NavbarLink>
           <NavbarLink href="mailto:kontakt@starkgemacht.com" className="sm:hidden">
             kontakt(at)starkgemacht.com
           </NavbarLink>
