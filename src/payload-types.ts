@@ -197,7 +197,7 @@ export interface Team {
   links?:
     | {
         /**
-         * Full URL including https:// or mailto:
+         * Full URL including https://beispiel.com or mailto:office@beispiel.com
          */
         url: string;
         platform: 'mail' | 'website' | 'instagram' | 'facebook' | 'linkedin' | 'x';
