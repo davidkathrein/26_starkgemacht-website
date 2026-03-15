@@ -53,7 +53,7 @@ export default async function RootLayout() {
             {/* <footer className="self-end lg:col-span-2 lg:col-start-1 lg:row-start-3">
               <div className="border-t border-gray-100 bg-gray-50 py-10 dark:border-white/10 dark:bg-gray-800/50">
                 <nav className="mx-auto flex w-full max-w-7xl items-center gap-x-4 px-6 text-sm/7 text-gray-600 lg:px-8 dark:text-gray-400">
-                  <a href="#">Contact support</a>
+                  <Link href="#">Contact support</Link>
                   <svg
                     viewBox="0 0 2 2"
                     aria-hidden="true"
@@ -61,7 +61,7 @@ export default async function RootLayout() {
                   >
                     <circle r={1} cx={1} cy={1} />
                   </svg>
-                  <a href="#">Status</a>
+                  <Link href="#">Status</Link>
                 </nav>
               </div>
             </footer> */}

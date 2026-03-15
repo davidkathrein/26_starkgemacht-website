@@ -3,6 +3,7 @@ import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
 import { SiFacebook, SiInstagram } from 'react-icons/si'
 import { Linkedin } from 'lucide-react'
 import { Mail, Globe2 } from 'lucide-react'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@/app/(frontend)/components/elements/rich-text'
@@ -24,6 +25,12 @@ const getIconByName = (name: string) => {
     default:
       return null
   }
+}
+
+const getLinkTooltip = (platform: string, url: string) => {
+  if (url.startsWith('mailto:')) return 'Mailprogramm öffnen'
+
+  return `${platform} öffnen`
 }
 
 export default async function TeamImageShortParagraph() {
@@ -97,15 +104,24 @@ export default async function TeamImageShortParagraph() {
 
                       return (
                         <li key={index}>
-                          <a
-                            href={link.url}
-                            className="text-olive-600 hover:text-olive-700 dark:text-olive-400 dark:hover:text-olive-300"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <span className="sr-only">{link.platform}</span>
-                            <IconComponent className="size-5" />
-                          </a>
+                          <TooltipProvider>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <a
+                                  href={link.url}
+                                  className="text-olive-600 hover:text-olive-700 dark:text-olive-400 dark:hover:text-olive-300"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  <span className="sr-only">{link.platform}</span>
+                                  <IconComponent className="size-5" />
+                                </a>
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                <p>{getLinkTooltip(link.platform, link.url)}</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
                         </li>
                       )
                     })}

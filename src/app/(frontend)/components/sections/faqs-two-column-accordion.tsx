@@ -58,7 +58,7 @@ export function FAQsTwoColumnAccordion({
           <Subheading>{headline}</Subheading>
           {subheadline && <Text className="flex flex-col gap-4 text-pretty">{subheadline}</Text>}
         </div>
-        <Accordion type="multiple" className="border-olive-950/10 border-y dark:border-white/10">
+        <Accordion type="multiple">
           {children}
         </Accordion>
       </Container>

@@ -12,6 +12,7 @@ import type { Event, Media } from '@/payload-types'
 import { Globe2, MapPin, MoveRight } from 'lucide-react'
 import { getPriceDisplay } from '../../utils/preis'
 import { Separator } from '@/components/ui/separator'
+import Link from 'next/link'
 
 import type { Metadata } from 'next'
 
@@ -147,9 +148,9 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   const CtaButton: React.ReactNode = event.checkoutUrl && (
     <div className="mt-10 flex items-center gap-4">
       <Button asChild size="lg">
-        <a href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
+        <Link href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
           Jetzt Tickets sichern <MoveRight size={14} />
-        </a>
+        </Link>
       </Button>
     </div>
   )
@@ -172,9 +173,9 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           )}
 
           <Button asChild className="mt-6" size="lg">
-            <a href={event.checkoutUrl ?? '#'} rel="noopener noreferrer" target="_blank">
+            <Link href={event.checkoutUrl ?? '#'} rel="noopener noreferrer" target="_blank">
               Jetzt Tickets sichern <MoveRight size={14} />
-            </a>
+            </Link>
           </Button>
 
           {(customImage || event.image) && <ImageWithCaption media={media} className="mt-10" />}

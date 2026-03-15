@@ -23,6 +23,7 @@ import { Link } from './components/elements/link'
 import BlogThreeColumns from './components/sections/blog-three-columns'
 import { ImageWithCaption } from './components/elements/image-with-caption'
 import { getPriceDisplay } from './utils/preis'
+import NextLink from 'next/link'
 
 export default async function HomePage() {
   return (
@@ -49,13 +50,13 @@ export default async function HomePage() {
           cta={
             <div className="flex items-center gap-4">
               <Button size="lg" asChild>
-                <a href="#angebot">Unsere Angebote entdecken</a>
+                <NextLink href="#angebot">Unsere Angebote entdecken</NextLink>
               </Button>
 
               <Button variant="ghost" size="lg" asChild>
-                <a href="#uber">
+                <NextLink href="#uber">
                   Mehr über uns <ArrowNarrowRightIcon />
-                </a>
+                </NextLink>
               </Button>
             </div>
           }
@@ -231,7 +232,7 @@ export default async function HomePage() {
           />
           <Faq
             id="faq-4"
-            question="Was ist die Vision von Stark gemacht?"
+            question="Was ist die Vision von StarkGemacht?"
             answer="Wir wollen Menschen mental und physisch stärken, einen gesunden und nachhaltigen Lebensstil fördern, Gemeinschaft leben und Integration aktiv gestalten. Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops – wir schaffen Räume für Begegnung und persönliches Wachstum."
           />
         </FAQsTwoColumnAccordion>
@@ -250,13 +251,13 @@ export default async function HomePage() {
           cta={
             <div className="flex items-center gap-4">
               <Button size="lg" asChild>
-                <a href="#angebot">Zu den Angeboten</a>
+                <NextLink href="#angebot">Zu den Angeboten</NextLink>
               </Button>
 
               <Button variant="ghost" size="lg" asChild>
-                <a href="mailto:kontakt@starkgemacht.com">
+                <NextLink href="mailto:kontakt@starkgemacht.com">
                   Kontakt aufnehmen <ChevronIcon />
-                </a>
+                </NextLink>
               </Button>
             </div>
           }
@@ -370,15 +371,19 @@ async function EventsFeatureSection() {
                   <div className="flex gap-2">
                     {event.checkoutUrl ? (
                       <Button asChild>
-                        <a href={'/angebot/' + event.slug} rel="noopener noreferrer">
+                        <NextLink href={'/angebot/' + event.slug} rel="noopener noreferrer">
                           Mehr erfahren
-                        </a>
+                        </NextLink>
                       </Button>
                     ) : undefined}
                     <Button variant="ghost" asChild>
-                      <a href={event.checkoutUrl ?? '#'} target="_blank" rel="noopener noreferrer">
+                      <NextLink
+                        href={event.checkoutUrl ?? '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Tickets sichern
-                      </a>
+                      </NextLink>
                     </Button>
                   </div>
                 }

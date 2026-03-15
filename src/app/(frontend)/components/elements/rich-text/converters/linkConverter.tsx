@@ -11,7 +11,7 @@ export const linkConverter: JSXConverters<SerializedLinkNode> = {
     // Guard against missing fields
     if (!fields) {
       console.warn('Link node has no fields', node)
-      return <a href="#">{children}</a>
+      return <Link href="#">{children}</Link>
     }
 
     // Handle internal document links
@@ -61,6 +61,6 @@ export const linkConverter: JSXConverters<SerializedLinkNode> = {
 
     // Fallback - log unhandled case
     console.warn('Unhandled link type:', { linkType: fields.linkType, fields })
-    return <a href={fields.url || '#'}>{children}</a>
+    return <Link href={fields.url || '#'}>{children}</Link>
   },
 }

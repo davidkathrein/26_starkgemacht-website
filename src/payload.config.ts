@@ -22,6 +22,7 @@ import { TeamMember } from './collections/Team-Member'
 import { Event } from './collections/Event'
 import { Category } from './collections/Category'
 import { Blog } from './collections/Blog'
+import { Page } from './collections/Page'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -33,7 +34,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, TeamMember, Event, Category, Blog],
+  collections: [Users, Media, TeamMember, Event, Category, Blog, Page],
   plugins: [
     vercelBlobStorage({
       enabled: true, // Optional, defaults to true

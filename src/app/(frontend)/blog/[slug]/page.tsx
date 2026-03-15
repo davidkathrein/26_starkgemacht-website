@@ -15,10 +15,18 @@ import { Mail, Globe2 } from 'lucide-react'
 import { Avatar } from '@/app/(frontend)/components/elements/avatar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 
 const DEFAULT_DESCRIPTION =
   'Aktuelle Beiträge von Stark gemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
+
+const getLinkTooltip = (platform: string, url: string) => {
+  if (url.startsWith('mailto:')) return 'Mailprogramm öffnen'
+
+  return `${platform} öffnen`
+}
 
 async function getBlogPostBySlug(slug: string) {
   const payload = await getPayload({ config })
@@ -254,15 +262,24 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                         if (!IconComponent) return null
                         return (
                           <li key={link.id ?? index}>
-                            <a
-                              href={link.url}
-                              className="text-olive-600 transition-colors hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-200"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <span className="sr-only">{link.platform}</span>
-                              <IconComponent className="size-5" />
-                            </a>
+                            <TooltipProvider>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Link
+                                    href={link.url}
+                                    className="text-olive-600 transition-colors hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-200"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    <span className="sr-only">{link.platform}</span>
+                                    <IconComponent className="size-5" />
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{getLinkTooltip(link.platform, link.url)}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </TooltipProvider>
                           </li>
                         )
                       })}

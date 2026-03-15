@@ -1,6 +1,7 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Link } from '../elements/link'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { MobileNavSheet } from './mobile-nav-sheet'
 
 export function NavbarLink({
@@ -43,11 +44,20 @@ export function NavbarLogo({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <Link
-      href={href}
-      {...props}
-      className={clsx('inline-flex items-stretch justify-center', className)}
-    />
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            href={href}
+            {...props}
+            className={clsx('inline-flex items-stretch justify-center', className)}
+          />
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Zur Startseite</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 

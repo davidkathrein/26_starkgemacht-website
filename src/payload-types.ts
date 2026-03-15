@@ -73,6 +73,7 @@ export interface Config {
     event: Event;
     category: Category;
     blog: Blog;
+    pages: Page;
     'payload-kv': PayloadKv;
     'payload-jobs': PayloadJob;
     'payload-locked-documents': PayloadLockedDocument;
@@ -87,6 +88,7 @@ export interface Config {
     event: EventSelect<false> | EventSelect<true>;
     category: CategorySelect<false> | CategorySelect<true>;
     blog: BlogSelect<false> | BlogSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-jobs': PayloadJobsSelect<false> | PayloadJobsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -443,6 +445,46 @@ export interface Blog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Suchmaschinenoptimierung
+   */
+  seo?: {
+    title?: string | null;
+    description?: string | null;
+    image?: (number | null) | Media;
+    noIndex?: boolean | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -580,6 +622,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'blog';
         value: number | Blog;
+      } | null)
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -805,6 +851,27 @@ export interface BlogSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  content?: T;
+  seo?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        noIndex?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -892,10 +959,15 @@ export interface TaskSchedulePublish {
   input: {
     type?: ('publish' | 'unpublish') | null;
     locale?: string | null;
-    doc?: {
-      relationTo: 'blog';
-      value: number | Blog;
-    } | null;
+    doc?:
+      | ({
+          relationTo: 'blog';
+          value: number | Blog;
+        } | null)
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null);
     global?: string | null;
     user?: (number | null) | User;
   };

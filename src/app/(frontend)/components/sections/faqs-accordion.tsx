@@ -30,10 +30,10 @@ export function Faq({
       className="border-olive-950/10 dark:border-white/10"
       {...props}
     >
-      <AccordionTrigger className="text-olive-950 py-4 text-left text-base/7 hover:no-underline dark:text-white">
+      <AccordionTrigger className="py-4 text-left text-base/7 text-olive-950 hover:no-underline dark:text-white">
         {question}
       </AccordionTrigger>
-      <AccordionContent className="text-olive-700 dark:text-olive-400 -mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7">
+      <AccordionContent className="-mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7 text-olive-700 dark:text-olive-400">
         {answer}
       </AccordionContent>
     </AccordionItem>
@@ -57,9 +57,7 @@ export function FAQsAccordion({
           <Subheading>{headline}</Subheading>
           {subheadline && <Text className="flex flex-col gap-4 text-pretty">{subheadline}</Text>}
         </div>
-        <Accordion type="multiple" className="border-olive-950/10 border-y dark:border-white/10">
-          {children}
-        </Accordion>
+        <Accordion type="multiple">{children}</Accordion>
       </div>
     </section>
   )
