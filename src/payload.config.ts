@@ -23,6 +23,7 @@ import { Event } from './collections/Event'
 import { Category } from './collections/Category'
 import { Blog } from './collections/Blog'
 import { Page } from './collections/Page'
+import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -35,6 +36,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, TeamMember, Event, Category, Blog, Page],
+  globals: [Footer],
   plugins: [
     vercelBlobStorage({
       enabled: true, // Optional, defaults to true

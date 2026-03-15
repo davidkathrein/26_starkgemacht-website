@@ -8,6 +8,10 @@ import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@/app/(frontend)/components/elements/rich-text'
 import Link from 'next/link'
+import {
+  resolveLinkComponentHref,
+  shouldOpenLinkInNewTab,
+} from '@/app/(frontend)/utils/linkComponent'
 
 const getIconByName = (name: string) => {
   switch (name.toLowerCase()) {
@@ -99,7 +103,10 @@ export default async function TeamImageShortParagraph() {
                 )}
                 {member.links && member.links.length > 0 && (
                   <ul role="list" className="mt-6 flex gap-x-6">
-                    {member.links.map((link: { platform: string; url: string }, index: number) => {
+                    {member.links.map((link, index) => {
+                      const href = resolveLinkComponentHref(link)
+                      if (!href) return null
+
                       const IconComponent = Icon(link.platform)
                       if (!IconComponent) return null
 
@@ -108,17 +115,23 @@ export default async function TeamImageShortParagraph() {
                           <Tooltip>
                             <TooltipTrigger asChild>
                               <Link
-                                href={link.url}
+                                href={href}
                                 className="text-olive-600 hover:text-olive-700 dark:text-olive-400 dark:hover:text-olive-300"
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                target={
+                                  shouldOpenLinkInNewTab(href, link.newTab) ? '_blank' : undefined
+                                }
+                                rel={
+                                  shouldOpenLinkInNewTab(href, link.newTab)
+                                    ? 'noopener noreferrer'
+                                    : undefined
+                                }
                               >
                                 <span className="sr-only">{link.platform}</span>
                                 <IconComponent className="size-5" />
                               </Link>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>{getLinkTooltip(link.platform, link.url)}</p>
+                              <p>{getLinkTooltip(link.platform, href)}</p>
                             </TooltipContent>
                           </Tooltip>
                         </li>

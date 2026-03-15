@@ -10,45 +10,108 @@ import { FacebookIcon } from '@/app/(frontend)/components/icons/social/facebook-
 import { InstagramIcon } from '@/app/(frontend)/components/icons/social/instagram-icon'
 import { Mail } from 'lucide-react'
 import Link from 'next/link'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import type { Footer as FooterGlobalDoc } from '@/payload-types'
+import {
+  resolveLinkComponentHref,
+  resolveLinkComponentLabel,
+  shouldOpenLinkInNewTab,
+} from '@/app/(frontend)/utils/linkComponent'
 
-export function Footer() {
+async function resolveFooterData() {
+  const payload = await getPayload({ config })
+
+  let footer: FooterGlobalDoc | null = null
+
+  try {
+    footer = await payload.findGlobal({
+      slug: 'footer',
+      depth: 2,
+      overrideAccess: false,
+    })
+  } catch {
+    footer = null
+  }
+
+  const groups = footer?.linkGroups?.length ? footer.linkGroups : []
+
+  const resolvedGroups = groups.map((group) => {
+    const title = group.title?.trim()
+    if (!title) return null
+
+    const links =
+      group.links
+        ?.map((link) => {
+          const label = resolveLinkComponentLabel(link)
+          const href = resolveLinkComponentHref(link)
+          if (!label || !href) return null
+
+          return {
+            label,
+            href,
+            newTab: Boolean(link.newTab),
+          }
+        })
+        .filter((link): link is { label: string; href: string; newTab: boolean } =>
+          Boolean(link),
+        ) ?? []
+
+    return { title, links }
+  })
+
+  const filteredResolvedGroups = resolvedGroups.filter(
+    (
+      group,
+    ): group is { title: string; links: { label: string; href: string; newTab: boolean }[] } =>
+      Boolean(group),
+  )
+
+  return {
+    newsletterHeadline: footer?.newsletter?.headline?.trim() || 'Newsletter anmelden',
+    newsletterSubheadline:
+      footer?.newsletter?.subheadline?.trim() ||
+      'Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt in dein Postfach.',
+    fineprint: `© ${new Date().getFullYear()} ${process.env.NEXT_PUBLIC_SITE_NAME}`,
+    groups: filteredResolvedGroups.length ? filteredResolvedGroups : [],
+  }
+}
+
+export async function Footer() {
+  const footerData = await resolveFooterData()
+
   return (
     <FooterWithNewsletterFormCategoriesAndSocialIcons
       id="footer"
       cta={
         <NewsletterForm
-          headline="Newsletter anmelden"
-          subheadline={
-            <p>
-              Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt
-              in dein Postfach.
-            </p>
-          }
+          headline={footerData.newsletterHeadline}
+          subheadline={<p>{footerData.newsletterSubheadline}</p>}
         />
       }
       links={
         <>
-          <FooterCategory title="Verein">
-            <FooterLink href="/#uber">Über uns</FooterLink>
-            <FooterLink href="/#team">Team</FooterLink>
-            <FooterLink href="/blog">Blog</FooterLink>
-          </FooterCategory>
-          <FooterCategory title="Angebot">
-            <FooterLink href="/#angebot">Workshops</FooterLink>
-            <FooterLink href="/#angebot">Kurse</FooterLink>
-            <FooterLink href="/#angebot">Veranstaltungen</FooterLink>
-          </FooterCategory>
-          <FooterCategory title="Kontakt">
-            <FooterLink href="mailto:kontakt@starkgemacht.com">E-Mail</FooterLink>
-            <FooterLink href="/#faqs">Häufige Fragen</FooterLink>
-          </FooterCategory>
-          <FooterCategory title="Rechtliches">
-            <FooterLink href="#">Datenschutz</FooterLink>
-            <FooterLink href="#">Impressum</FooterLink>
-          </FooterCategory>
+          {footerData.groups.map((group) => (
+            <FooterCategory key={group.title} title={group.title}>
+              {group.links.map((link) => (
+                <FooterLink
+                  key={`${group.title}-${link.href}-${link.label}`}
+                  href={link.href}
+                  target={shouldOpenLinkInNewTab(link.href, link.newTab) ? '_blank' : undefined}
+                  rel={
+                    shouldOpenLinkInNewTab(link.href, link.newTab)
+                      ? 'noopener noreferrer'
+                      : undefined
+                  }
+                >
+                  {link.label}
+                </FooterLink>
+              ))}
+            </FooterCategory>
+          ))}
         </>
       }
-      fineprint={`© ${new Date().getFullYear()} Verein StarkGemacht 🍀💚`}
+      fineprint={footerData.fineprint}
       attribution={
         <span>
           Website von{' '}

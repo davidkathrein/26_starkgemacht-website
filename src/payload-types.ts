@@ -99,8 +99,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    footer: Footer;
+  };
+  globalsSelect: {
+    footer: FooterSelect<false> | FooterSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -256,14 +260,155 @@ export interface Team {
   };
   links?:
     | {
+        linkType: 'url' | 'doc' | 'others';
+        url?: string | null;
+        doc?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'blog';
+              value: number | Blog;
+            } | null)
+          | ({
+              relationTo: 'event';
+              value: number | Event;
+            } | null)
+          | ({
+              relationTo: 'media';
+              value: number | Media;
+            } | null)
+          | ({
+              relationTo: 'team';
+              value: number | Team;
+            } | null)
+          | ({
+              relationTo: 'category';
+              value: number | Category;
+            } | null);
         /**
-         * Full URL including https://beispiel.com or mailto:office@beispiel.com
+         * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
          */
-        url: string;
+        internalPath?: string | null;
+        newTab?: boolean | null;
         platform: 'mail' | 'website' | 'instagram' | 'facebook' | 'linkedin' | 'x';
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Suchmaschinenoptimierung
+   */
+  seo?: {
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog".
+ */
+export interface Blog {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Kurze Zusammenfassung für Vorschau und SEO
+   */
+  excerpt?: string | null;
+  /**
+   * Bild für Vorschau und Artikelkopf
+   */
+  featuredImage?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  /**
+   * Autor des Blog Posts
+   */
+  author: number | Team;
+  /**
+   * Kategorien des Blog Posts
+   */
+  categories?:
+    | {
+        item: number | Category;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Beiträge werden nach diesem Datum sortiert. Ein Beitrag mit einem Datum in der Zukunft wird auf der Website erst ab diesem Zeitpunkt angezeigt.
+   */
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "category".
+ */
+export interface Category {
+  id: number;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  /**
+   * Kurze Beschreibung der Kategorie
+   */
+  description?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -367,119 +512,6 @@ export interface Event {
   venueCountry?: string | null;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "category".
- */
-export interface Category {
-  id: number;
-  name: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  /**
-   * Kurze Beschreibung der Kategorie
-   */
-  description?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "blog".
- */
-export interface Blog {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  /**
-   * Kurze Zusammenfassung für Vorschau und SEO
-   */
-  excerpt?: string | null;
-  /**
-   * Bild für Vorschau und Artikelkopf
-   */
-  featuredImage?: (number | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  /**
-   * Autor des Blog Posts
-   */
-  author: number | Team;
-  /**
-   * Kategorien des Blog Posts
-   */
-  categories?:
-    | {
-        item: number | Category;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * Beiträge werden nach diesem Datum sortiert. Ein Beitrag mit einem Datum in der Zukunft wird auf der Website erst ab diesem Zeitpunkt angezeigt.
-   */
-  publishedAt?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages".
- */
-export interface Page {
-  id: number;
-  title: string;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  /**
-   * Suchmaschinenoptimierung
-   */
-  seo?: {
-    description?: string | null;
-    image?: (number | null) | Media;
-  };
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -776,7 +808,11 @@ export interface TeamSelect<T extends boolean = true> {
   links?:
     | T
     | {
+        linkType?: T;
         url?: T;
+        doc?: T;
+        internalPath?: T;
+        newTab?: T;
         platform?: T;
         id?: T;
       };
@@ -936,6 +972,92 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  /**
+   * Jede Gruppe enthaelt manuelle Links.
+   */
+  linkGroups?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              linkType: 'url' | 'doc' | 'others';
+              href?: string | null;
+              doc?:
+                | ({
+                    relationTo: 'pages';
+                    value: number | Page;
+                  } | null)
+                | ({
+                    relationTo: 'blog';
+                    value: number | Blog;
+                  } | null)
+                | ({
+                    relationTo: 'event';
+                    value: number | Event;
+                  } | null)
+                | ({
+                    relationTo: 'media';
+                    value: number | Media;
+                  } | null);
+              /**
+               * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
+               */
+              internalPath?: string | null;
+              newTab?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  newsletter?: {
+    headline?: string | null;
+    subheadline?: string | null;
+    hideNewsletter?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  linkGroups?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              linkType?: T;
+              href?: T;
+              doc?: T;
+              internalPath?: T;
+              newTab?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  newsletter?:
+    | T
+    | {
+        headline?: T;
+        subheadline?: T;
+        hideNewsletter?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

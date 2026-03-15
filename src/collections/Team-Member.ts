@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { buildLinkComponentFields } from '@/fields/linkComponent'
 
 /** Convert legacy textarea string to Lexical richText so existing data is preserved. */
 function stringToLexicalBio(value: string): {
@@ -94,34 +95,10 @@ export const TeamMember: CollectionConfig = {
       type: 'array',
       name: 'links',
       fields: [
-        {
-          name: 'url',
-          type: 'text',
-          required: true,
-          validate: (val: unknown) => {
-            if (!val || typeof val !== 'string') return true // required handles empty
-            const trimmed = val.trim()
-            if (trimmed.startsWith('mailto:')) {
-              const email = trimmed.slice(7).trim()
-              if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                return 'Invalid mailto URL. Use mailto:email@example.com'
-              }
-              return true
-            }
-            try {
-              new URL(trimmed)
-              if (!/^https?:\/\//i.test(trimmed)) {
-                return 'URL must start with https:// or http://'
-              }
-              return true
-            } catch {
-              return 'Enter a valid URL (e.g. https://beispiel.com) or mailto:office@beispiel.com'
-            }
-          },
-          admin: {
-            description: 'Full URL including https://beispiel.com or mailto:office@beispiel.com',
-          },
-        },
+        ...buildLinkComponentFields({
+          relationTo: ['pages', 'blog', 'event', 'media', 'team', 'category'],
+          includeNewTab: true,
+        }),
         {
           name: 'platform',
           type: 'select',

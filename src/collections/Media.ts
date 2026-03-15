@@ -66,21 +66,25 @@ export const Media: CollectionConfig = {
         name: 'aspect16x9',
         width: 1280,
         height: 720,
+        withoutEnlargement: true,
       },
       {
         name: 'aspect4x3',
         width: 1280,
         height: 960,
+        withoutEnlargement: true,
       },
       {
         name: 'square',
         width: 1600,
         height: 1600,
+        withoutEnlargement: true,
       },
       {
         name: 'aspect3x4',
         width: 1280,
         height: 1707,
+        withoutEnlargement: true,
       },
       {
         name: 'seoPreview',

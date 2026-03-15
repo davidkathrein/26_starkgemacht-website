@@ -19,6 +19,10 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { withSiteName } from '@/lib/seo'
+import {
+  resolveLinkComponentHref,
+  shouldOpenLinkInNewTab,
+} from '@/app/(frontend)/utils/linkComponent'
 
 const DEFAULT_DESCRIPTION =
   'Aktuelle Beiträge von StarkGemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
@@ -259,6 +263,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   {author.links && author.links.length > 0 && (
                     <ul role="list" className="flex flex-wrap gap-x-6 gap-y-2">
                       {author.links.map((link, index) => {
+                        const href = resolveLinkComponentHref(link)
+                        if (!href) return null
+
                         const IconComponent = getSocialIcon(link.platform)
                         if (!IconComponent) return null
                         return (
@@ -266,17 +273,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                             <Tooltip>
                               <TooltipTrigger asChild>
                                 <Link
-                                  href={link.url}
+                                  href={href}
                                   className="text-olive-600 transition-colors hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-200"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
+                                  target={
+                                    shouldOpenLinkInNewTab(href, link.newTab) ? '_blank' : undefined
+                                  }
+                                  rel={
+                                    shouldOpenLinkInNewTab(href, link.newTab)
+                                      ? 'noopener noreferrer'
+                                      : undefined
+                                  }
                                 >
                                   <span className="sr-only">{link.platform}</span>
                                   <IconComponent className="size-5" />
                                 </Link>
                               </TooltipTrigger>
                               <TooltipContent>
-                                <p>{getLinkTooltip(link.platform, link.url)}</p>
+                                <p>{getLinkTooltip(link.platform, href)}</p>
                               </TooltipContent>
                             </Tooltip>
                           </li>

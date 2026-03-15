@@ -45,7 +45,7 @@ export function BlogPostCard({
   const TitleTag = headingLevel
 
   return (
-    <article className="flex max-w-xl flex-col items-start">
+    <article className="flex flex-col items-start">
       <Link href={`/blog/${post.slug}`} className="block w-full">
         <ImageWithCaption
           media={post.featuredImage}
@@ -76,7 +76,7 @@ export function BlogPostCard({
                   <Badge
                     key={index}
                     variant="secondary"
-                    className="bg-olive-100 text-olive-700 hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700 cursor-pointer relative z-10 rounded-full px-3 py-1.5 font-medium transition-colors"
+                    className="relative z-10 cursor-pointer rounded-full bg-olive-100 px-3 py-1.5 font-medium text-olive-700 transition-colors hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700"
                     onClick={() => onCategoryClick(slug)}
                     role="button"
                     tabIndex={0}
@@ -89,7 +89,7 @@ export function BlogPostCard({
                 <Link key={index} href={`/blog?category=${encodeURIComponent(slug)}`}>
                   <Badge
                     variant="secondary"
-                    className="bg-olive-100 text-olive-700 hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700 cursor-pointer relative z-10 rounded-full px-3 py-1.5 font-medium transition-colors"
+                    className="relative z-10 cursor-pointer rounded-full bg-olive-100 px-3 py-1.5 font-medium text-olive-700 transition-colors hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700"
                   >
                     {c.name}
                   </Badge>
@@ -104,7 +104,7 @@ export function BlogPostCard({
               return categoryItem ? (
                 <Badge
                   variant="secondary"
-                  className="bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-300 relative z-10 rounded-full px-3 py-1.5 font-medium"
+                  className="relative z-10 rounded-full bg-olive-100 px-3 py-1.5 font-medium text-olive-700 dark:bg-olive-800 dark:text-olive-300"
                 >
                   {categoryItem.name}
                 </Badge>
@@ -113,14 +113,14 @@ export function BlogPostCard({
         </div>
       </div>
       <div className="group relative">
-        <TitleTag className="font-display text-olive-800 group-hover:text-olive-600 dark:group-hover:text-olive-200 mt-3 text-lg/6 font-semibold dark:text-white">
+        <TitleTag className="font-display mt-3 text-lg/6 font-semibold text-olive-800 group-hover:text-olive-600 dark:text-white dark:group-hover:text-olive-200">
           <Link href={`/blog/${post.slug}`}>
             <span className="absolute inset-0" />
             {post.title}
           </Link>
         </TitleTag>
         {post.excerpt && (
-          <p className="text-olive-600 dark:text-olive-300 mt-5 line-clamp-3 text-sm/6">
+          <p className="mt-5 line-clamp-3 text-sm/6 text-olive-600 dark:text-olive-300">
             {post.excerpt}
           </p>
         )}
@@ -139,7 +139,7 @@ export function BlogPostCard({
             fallbackId={author.id}
             size="default"
           />
-          <span className="text-olive-800 text-sm font-semibold dark:text-white">
+          <span className="text-sm font-semibold text-olive-800 dark:text-white">
             {author.name}
           </span>
         </div>
