@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-with-caption'
 import { Avatar } from '@/app/(frontend)/components/elements/avatar'
 import { Badge } from '@/components/ui/badge'

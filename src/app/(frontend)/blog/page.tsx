@@ -1,5 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import { Suspense } from 'react'
 import { Container } from '@/app/(frontend)/components/elements/container'
 import { Heading } from '@/app/(frontend)/components/elements/heading'
 import { Text } from '@/app/(frontend)/components/elements/text'
@@ -38,7 +39,9 @@ export default async function BlogOverviewPage() {
             starkes, selbstbestimmtes Leben.
           </Text>
 
-          <BlogOverviewClient posts={posts} categories={categories} className="mt-8" />
+          <Suspense fallback={<div className="mt-8">Lade Beiträge...</div>}>
+            <BlogOverviewClient posts={posts} categories={categories} className="mt-8" />
+          </Suspense>
         </div>
       </Container>
     </div>

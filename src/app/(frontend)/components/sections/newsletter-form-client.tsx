@@ -5,6 +5,7 @@ import type { ComponentProps, ReactNode } from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowNarrowRightIcon } from '../icons/arrow-narrow-right-icon'
+import { Button } from '@/components/ui/button'
 
 const NEWSLETTER_FORM_ACTION =
   'https://edd7cb9a.sibforms.com/serve/MUIFADQ2tZH_p7XTpFIm7XDfFSgyHbGYP_SeJyKITUqtQB-SLIvL3aJ5SpUw-pMXR7bmHkplJxIEOjW8dZdHQsGoo2kR9K-B2UySOoRXG7dEMEUsgY3nSdef80XDqHG7EBbmiNMEwOr3IRDZRVKbgasIghsEVAMiNKCoCoICjOVhx-PhYYvheToTnIsZTA8ByhjABOrwo3tC0o1Uww=='
@@ -67,11 +68,13 @@ export function NewsletterFormClient({
           disabled={isSubmitting}
           className="text-olive-950 flex-1 focus:outline-hidden disabled:opacity-50 dark:text-white"
         />
-        <button
+        <Button
           type="submit"
+          variant="ghost"
+          size="icon"
           aria-label="Subscribe"
           disabled={isSubmitting}
-          className="hover:bg-olive-950/10 relative inline-flex size-7 items-center justify-center rounded-full after:absolute after:-inset-2 disabled:opacity-50 dark:hover:bg-white/10 after:pointer-fine:hidden"
+          className="relative size-7 after:absolute after:-inset-2 after:pointer-fine:hidden"
         >
           {isSubmitting ? (
             <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
@@ -79,7 +82,7 @@ export function NewsletterFormClient({
             <ArrowNarrowRightIcon />
           )}
           {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
-        </button>
+        </Button>
       </div>
     </form>
   )

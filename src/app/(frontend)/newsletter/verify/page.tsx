@@ -1,6 +1,7 @@
+import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
-import { ButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'E-Mail bestätigen - Newsletter - Stark gemacht',
@@ -30,12 +31,14 @@ export default function NewsletterSuccessPage() {
             Keine E-Mail erhalten? Überprüfe bitte deinen Spam-Ordner.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <ButtonLink size="lg" href="/#angebot">
-              Angebote entdecken
-            </ButtonLink>
-            <ButtonLink size="lg" color="light" href="/">
-              <span aria-hidden="true">&larr;</span> Zurück zur Startseite
-            </ButtonLink>
+            <Button size="lg" asChild>
+              <Link href="/#angebot">Angebote entdecken</Link>
+            </Button>
+            <Button size="lg" variant="light" asChild>
+              <Link href="/">
+                <span aria-hidden="true">&larr;</span> Zurück zur Startseite
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

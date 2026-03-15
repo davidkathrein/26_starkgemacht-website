@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Button } from '@/components/ui/button'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
 import { Subheading } from '../elements/subheading'
 
@@ -25,9 +25,9 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
               gemeinschaftliche Projekte.
             </p>
             <div className="mt-10 flex">
-              <ButtonLink href="#angebot" size="lg">
-                Unsere Angebote entdecken <ArrowNarrowRightIcon />
-              </ButtonLink>
+              <Button size="lg" asChild>
+                <a href="#angebot">Unsere Angebote entdecken <ArrowNarrowRightIcon /></a>
+              </Button>
             </div>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:flex-wrap md:items-start md:justify-end md:gap-8 lg:contents">

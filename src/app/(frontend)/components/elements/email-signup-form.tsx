@@ -1,6 +1,6 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
-import { Button } from './button'
+import { Button } from '@/components/ui/button'
 
 export function EmailSignupForm({
   label = 'Email address',
@@ -35,7 +35,7 @@ export function EmailSignupForm({
         aria-label={label}
         placeholder={placeholder}
       />
-      <Button color={variant === 'normal' ? 'dark/light' : 'light'} type="submit">
+      <Button variant={variant === 'normal' ? 'default' : 'light'} type="submit">
         {cta}
       </Button>
     </form>

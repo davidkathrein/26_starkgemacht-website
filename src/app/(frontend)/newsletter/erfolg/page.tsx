@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Metadata } from 'next'
-import { ButtonLink } from '../../components/elements/button'
+import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Anmeldung erfolgreich - Newsletter - Stark gemacht',
@@ -29,12 +29,14 @@ export default function NewsletterSuccessPage() {
             unseren aktuellen Angeboten vorbei – vielleicht ist ja etwas Passendes für dich dabei!
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            <ButtonLink size="lg" href="/#angebot">
-              Angebote entdecken
-            </ButtonLink>
-            <ButtonLink size="lg" color="light" href="/">
-              <span aria-hidden="true">&larr;</span> Zurück zur Startseite
-            </ButtonLink>
+            <Button size="lg" asChild>
+              <Link href="/#angebot">Angebote entdecken</Link>
+            </Button>
+            <Button size="lg" variant="light" asChild>
+              <Link href="/">
+                <span aria-hidden="true">&larr;</span> Zurück zur Startseite
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

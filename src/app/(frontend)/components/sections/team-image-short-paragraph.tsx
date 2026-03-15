@@ -54,8 +54,8 @@ export default async function TeamImageShortParagraph() {
         >
           {teamMembers.map((member) => {
             const imageUrl =
-              typeof member.photo === 'object' && member.photo?.url
-                ? member.photo.url
+              typeof member.photo === 'object' && member.photo.sizes?.aspect4x3?.url
+                ? member.photo.sizes?.aspect4x3?.url
                 : typeof member.photo === 'string'
                   ? member.photo
                   : ''

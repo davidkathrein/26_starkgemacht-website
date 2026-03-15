@@ -1,5 +1,5 @@
 import { AnnouncementBadge } from '@/app/(frontend)/components/elements/announcement-badge'
-import { ButtonLink, PlainButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Main } from '@/app/(frontend)/components/elements/main'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
@@ -48,13 +48,13 @@ export default async function HomePage() {
           }
           cta={
             <div className="flex items-center gap-4">
-              <ButtonLink href="#angebot" size="lg">
-                Unsere Angebote entdecken
-              </ButtonLink>
+              <Button size="lg" asChild>
+                <a href="#angebot">Unsere Angebote entdecken</a>
+              </Button>
 
-              <PlainButtonLink href="#uber" size="lg">
-                Mehr über uns <ArrowNarrowRightIcon />
-              </PlainButtonLink>
+              <Button variant="ghost" size="lg" asChild>
+                <a href="#uber">Mehr über uns <ArrowNarrowRightIcon /></a>
+              </Button>
             </div>
           }
         />
@@ -333,13 +333,13 @@ export default async function HomePage() {
           }
           cta={
             <div className="flex items-center gap-4">
-              <ButtonLink href="#angebot" size="lg">
-                Zu den Angeboten
-              </ButtonLink>
+              <Button size="lg" asChild>
+                <a href="#angebot">Zu den Angeboten</a>
+              </Button>
 
-              <PlainButtonLink href="mailto:kontakt@starkgemacht.com" size="lg">
-                Kontakt aufnehmen <ChevronIcon />
-              </PlainButtonLink>
+              <Button variant="ghost" size="lg" asChild>
+                <a href="mailto:kontakt@starkgemacht.com">Kontakt aufnehmen <ChevronIcon /></a>
+              </Button>
             </div>
           }
         />
@@ -451,17 +451,24 @@ async function EventsFeatureSection() {
                 cta={
                   <div className="flex gap-2">
                     {event.checkoutUrl ? (
-                      <ButtonLink href={'/angebot/' + event.slug} rel="noopener noreferrer">
-                        Mehr erfahren
-                      </ButtonLink>
+                      <Button asChild>
+                        <a href={'/angebot/' + event.slug} rel="noopener noreferrer">
+                          Mehr erfahren
+                        </a>
+                      </Button>
                     ) : undefined}
-                    <PlainButtonLink
-                      href={event.checkoutUrl ?? '#'}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Button
+                      variant="ghost"
+                      asChild
                     >
-                      Tickets sichern
-                    </PlainButtonLink>
+                      <a
+                        href={event.checkoutUrl ?? '#'}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Tickets sichern
+                      </a>
+                    </Button>
                   </div>
                 }
               />

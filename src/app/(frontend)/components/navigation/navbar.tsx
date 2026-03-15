@@ -1,10 +1,11 @@
 import React from 'react'
+import Link from 'next/link'
 import {
   NavbarLink,
   NavbarLogo,
   NavbarWithLinksActionsAndCenteredLogo,
 } from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
-import { ButtonLink, PlainButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Button } from '@/components/ui/button'
 import { Logo } from '@/app/(frontend)/components/elements/logo'
 
 export function Navbar() {
@@ -28,10 +29,12 @@ export function Navbar() {
       }
       actions={
         <>
-          <PlainButtonLink href="mailto:kontakt@starkgemacht.com" className="max-sm:hidden">
-            kontakt(at)starkgemacht.com
-          </PlainButtonLink>
-          <ButtonLink href="/#angebot">Unser Angebot</ButtonLink>
+          <Button variant="ghost" asChild className="max-sm:hidden">
+            <a href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</a>
+          </Button>
+          <Button asChild>
+            <Link href="/#angebot">Unser Angebot</Link>
+          </Button>
         </>
       }
     />

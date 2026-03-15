@@ -48,7 +48,7 @@ export function Footer() {
           </FooterCategory>
         </>
       }
-      fineprint="© 2026 Verein Stark gemacht 🍀💚"
+      fineprint={`© ${new Date().getFullYear()} Verein Stark gemacht 🍀💚`}
       attribution={
         <span>
           Website von{' '}

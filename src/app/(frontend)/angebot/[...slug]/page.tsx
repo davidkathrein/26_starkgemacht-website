@@ -2,15 +2,16 @@ import { Container } from '@/app/(frontend)/components/elements/container'
 import { Eyebrow } from '@/app/(frontend)/components/elements/eyebrow'
 import { Heading } from '@/app/(frontend)/components/elements/heading'
 import { Text } from '@/app/(frontend)/components/elements/text'
-import { ButtonLink } from '@/app/(frontend)/components/elements/button'
+import { Button } from '@/components/ui/button'
 import { RichText } from '@/app/(frontend)/components/elements/rich-text'
 import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-with-caption'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import { notFound } from 'next/navigation'
 import type { Event, Media } from '@/payload-types'
-import { MoveRight } from 'lucide-react'
+import { Globe2, MapPin, MoveRight } from 'lucide-react'
 import { getPriceDisplay } from '../../utils/preis'
+import { Separator } from '@/components/ui/separator'
 
 export default async function AngebotPage({ params }: { params: Promise<{ slug: string[] }> }) {
   const { slug } = await params
@@ -80,6 +81,23 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
     }
   }
 
+  const venueCountryDisplay = event.venueCountry
+    ? event.venueCountry.length === 2
+      ? (new Intl.DisplayNames(['de'], { type: 'region' }).of(event.venueCountry.toUpperCase()) ??
+        event.venueCountry)
+      : event.venueCountry
+    : null
+
+  const CtaButton: React.ReactNode = event.checkoutUrl && (
+    <div className="mt-10 flex items-center gap-4">
+      <Button asChild size="lg">
+        <a href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
+          Jetzt Tickets sichern <MoveRight size={14} />
+        </a>
+      </Button>
+    </div>
+  )
+
   return (
     <div className="px-6 py-32 lg:px-8">
       <Container>
@@ -97,15 +115,11 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             </Text>
           )}
 
-          <ButtonLink
-            href={event.checkoutUrl ?? '#'}
-            className="mt-6"
-            size="lg"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Jetzt Tickets sichern <MoveRight size={14} />
-          </ButtonLink>
+          <Button asChild className="mt-6" size="lg">
+            <a href={event.checkoutUrl ?? '#'} rel="noopener noreferrer" target="_blank">
+              Jetzt Tickets sichern <MoveRight size={14} />
+            </a>
+          </Button>
 
           {(customImage || event.image) && <ImageWithCaption media={media} className="mt-10" />}
 
@@ -116,31 +130,60 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
             />
           )}
 
+          {CtaButton}
+
+          <Separator />
+
           {event.venueName && (
-            <div className="border-olive-950/20 dark:bg-olive-900 mt-10 rounded-xl border bg-white p-6 dark:border-white/20">
-              <h3 className="font-display text-olive-800 text-xl font-semibold dark:text-white">
-                Veranstaltungsort
-              </h3>
-              <div className="text-olive-600 dark:text-olive-300 mt-4 space-y-1">
-                <p className="text-olive-800 font-semibold dark:text-white">{event.venueName}</p>
-                {event.venuePostalCode && <p>{event.venuePostalCode}</p>}
-                {event.venueCountry && <p>{event.venueCountry}</p>}
+            <section className="border-olive-950/10 via-olive-50/80 to-olive-100/70 dark:from-olive-900 dark:via-olive-900 dark:to-olive-950 mt-12 overflow-hidden rounded-[1.75rem] border bg-linear-to-br from-white p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10">
+              <div className="dark:bg-olive-950/70 relative overflow-hidden rounded-[calc(1.75rem-1px)] bg-white/80 px-6 py-6 backdrop-blur-sm sm:px-8 sm:py-8">
+                <div className="bg-olive-200/50 dark:bg-olive-700/20 absolute -top-14 -right-14 h-32 w-32 rounded-full blur-3xl" />
+                <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start">
+                  <div className="flex flex-col items-start justify-between">
+                    <div className="border-olive-950/10 text-olive-600 dark:text-olive-300 inline-flex items-center gap-2 rounded-full border bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.18em] uppercase dark:border-white/10 dark:bg-white/5">
+                      <MapPin className="h-3.5 w-3.5" />
+                      Veranstaltungsort
+                    </div>
+
+                    <h3 className="font-display text-olive-900 mt-4 text-2xl font-semibold tracking-tight sm:text-3xl dark:text-white">
+                      {event.venueName}
+                    </h3>
+                  </div>
+
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+                    <div className="border-olive-950/10 rounded-2xl border bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                      <p className="text-olive-500 dark:text-olive-400 text-xs font-semibold tracking-[0.18em] uppercase">
+                        Adresse
+                      </p>
+                      <p className="text-olive-800 mt-2 text-sm leading-6 font-medium dark:text-white">
+                        {event.venuePostalCode ?? event.venueName}
+                      </p>
+                    </div>
+
+                    {venueCountryDisplay && (
+                      <div className="border-olive-950/10 rounded-2xl border bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                        <div className="flex items-start gap-3">
+                          <div className="bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-200 flex h-9 w-9 items-center justify-center rounded-full">
+                            <Globe2 className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <p className="text-olive-500 dark:text-olive-400 text-xs font-semibold tracking-[0.18em] uppercase">
+                              Land
+                            </p>
+                            <p className="text-olive-800 mt-1 text-sm leading-6 font-medium dark:text-white">
+                              {venueCountryDisplay}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
+            </section>
           )}
 
-          {event.checkoutUrl && (
-            <div className="mt-10 flex items-center gap-4">
-              <ButtonLink
-                href={event.checkoutUrl}
-                size="lg"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Jetzt Tickets sichern <MoveRight size={14} />
-              </ButtonLink>
-            </div>
-          )}
+          {CtaButton}
         </div>
       </Container>
     </div>

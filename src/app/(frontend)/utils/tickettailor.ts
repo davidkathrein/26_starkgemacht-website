@@ -126,6 +126,7 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
 
     return existingEvent
   }
+  // event doesnt exist: Create new entry with AI-generated preview description
 
   // Generate preview description with AI
   const description = event.descriptionHtml?.trim()
@@ -143,7 +144,7 @@ export async function transformWithAIAndSaveIfNew(event: TTEventForBlog) {
 
   const [parsedContent] = await Promise.all([convertHtmlToRichText(description || '')])
 
-  const slug = slugify(event.name)
+  const slug = slugify(event.name + '-' + event.ticketTailorId)
 
   if (!slug) {
     throw new Error('Failed to generate slug for event: ' + event.name)

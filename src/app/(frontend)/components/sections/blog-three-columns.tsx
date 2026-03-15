@@ -1,8 +1,9 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
+import Link from 'next/link'
 import { Subheading } from '../elements/subheading'
 import { Text } from '../elements/text'
-import { ButtonLink } from '../elements/button'
+import { Button } from '@/components/ui/button'
 import { BlogPostCard } from '@/app/(frontend)/blog/blog-post-card'
 
 export default async function BlogThreeColumns({ id }: { id?: string }) {
@@ -33,9 +34,9 @@ export default async function BlogThreeColumns({ id }: { id?: string }) {
             Neues aus unserem Verein, inspirierende Geschichten und praktische Tipps für ein
             starkes, selbstbestimmtes Leben.
           </Text>
-          <ButtonLink size="lg" href="/blog" className="mt-6">
-            Alle Blog Beiträge
-          </ButtonLink>
+          <Button size="lg" asChild className="mt-6">
+            <Link href="/blog">Alle Blog Beiträge</Link>
+          </Button>
         </div>
         <div className="border-olive-950/20 mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-8 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3 dark:border-white/20">
           {posts.map((post) => (

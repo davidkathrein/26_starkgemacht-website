@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { clsx } from 'clsx/lite'
-import type { ComponentProps } from 'react'
 import { Wallpaper } from '@/app/(frontend)/components/elements/wallpaper'
 import { getWallpaperColorFromIndex } from '@/app/(frontend)/utils/wallpaper'
 
