@@ -48,7 +48,7 @@ export function Footer() {
           </FooterCategory>
         </>
       }
-      fineprint={`© ${new Date().getFullYear()} Verein Stark gemacht 🍀💚`}
+      fineprint={`© ${new Date().getFullYear()} Verein StarkGemacht 🍀💚`}
       attribution={
         <span>
           Website von{' '}

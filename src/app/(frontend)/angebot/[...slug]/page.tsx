@@ -13,11 +13,12 @@ import { Globe2, MapPin, MoveRight } from 'lucide-react'
 import { getPriceDisplay } from '../../utils/preis'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
+import { withSiteName } from '@/lib/seo'
 
 import type { Metadata } from 'next'
 
 const DEFAULT_DESCRIPTION =
-  'Verein Stark gemacht - Menschen stärken durch Workshops, Kurse und Projekte. Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops. Für ein selbstbewusstes, gesundes und gemeinschaftliches Leben.'
+  'Verein StarkGemacht - Menschen stärken durch Workshops, Kurse und Projekte. Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops. Für ein selbstbewusstes, gesundes und gemeinschaftliches Leben.'
 
 async function getEventBySlug(slugString: string) {
   const payload = await getPayload({ config })
@@ -47,12 +48,12 @@ export async function generateMetadata({
 
   if (!event) {
     return {
-      title: 'Angebot - Stark gemacht',
+      title: withSiteName('Angebot'),
       description: DEFAULT_DESCRIPTION,
     }
   }
 
-  const title = `${event.name} - Stark gemacht`
+  const title = withSiteName(event.name)
   const description = event.previewDescription || DEFAULT_DESCRIPTION
   const customImage = typeof event.customImage !== 'number' ? event.customImage : null
   const imageUrl =

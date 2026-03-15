@@ -18,9 +18,10 @@ import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { withSiteName } from '@/lib/seo'
 
 const DEFAULT_DESCRIPTION =
-  'Aktuelle Beiträge von Stark gemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
+  'Aktuelle Beiträge von StarkGemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
 
 const getLinkTooltip = (platform: string, url: string) => {
   if (url.startsWith('mailto:')) return 'Mailprogramm öffnen'
@@ -55,12 +56,12 @@ export async function generateMetadata({
 
   if (!post) {
     return {
-      title: 'Blog - Stark gemacht',
+      title: withSiteName('Blog'),
       description: DEFAULT_DESCRIPTION,
     }
   }
 
-  const title = `${post.title} - Stark gemacht`
+  const title = withSiteName(post.title)
   const description = post.excerpt || DEFAULT_DESCRIPTION
   const featuredImage = typeof post.featuredImage !== 'number' ? post.featuredImage : null
   const imageUrl = featuredImage?.sizes?.seoPreview?.url || featuredImage?.url || undefined

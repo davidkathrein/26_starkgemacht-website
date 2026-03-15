@@ -10,14 +10,14 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="flex flex-col justify-center lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-            <Subheading>Stark gemacht 🍀💚</Subheading>
+            <Subheading>Über StarkGemacht 🍀💚</Subheading>
             <p className="mt-6 text-xl/8 text-olive-800 dark:text-olive-200">
               Entstanden aus der Pandemiezeit 2020/2021, als soziale Kontakte für viele zur
               Herausforderung wurden – besonders für Singles, Senior:innen, Zugezogene, Familien und
               junge Menschen.
             </p>
             <p className="mt-6 text-base/7 text-olive-700 dark:text-olive-300">
-              2022 gründeten Eva Kathrein und Jasmin Bösch den Verein „Stark gemacht“, um das
+              2022 gründeten Eva Kathrein und Jasmin Bösch den Verein „StarkGemacht“, um das
               Sozialleben wieder zu beleben und Menschen aus allen Bevölkerungsgruppen zu stärken.
             </p>
             <p className="mt-6 text-base/7 text-olive-700 dark:text-olive-300">

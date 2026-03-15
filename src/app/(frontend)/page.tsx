@@ -40,7 +40,7 @@ export default async function HomePage() {
               cta="Jetzt anfragen"
             />
           }
-          headline="Stark gemacht: Menschen stärken, Gemeinschaft fördern, Zukunft gestalten."
+          headline="StarkGemacht: Menschen stärken, Gemeinschaft fördern, Zukunft gestalten."
           subheadline={
             <p>
               Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops – wir bringen

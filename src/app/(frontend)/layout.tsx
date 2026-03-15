@@ -4,6 +4,7 @@ import './styles.css'
 import { Navbar } from './components/navigation/navbar'
 import { Footer } from './components/navigation/footer'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { SITE_NAME } from '@/lib/seo'
 
 const familjenGrotesk = Familjen_Grotesk({
   subsets: ['latin'],
@@ -21,8 +22,8 @@ const inter = Inter({
 
 export const metadata = {
   description:
-    'Verein Stark gemacht - Menschen stärken, Gemeinschaft fördern. Workshops, Kurse und Projekte für Empowerment, Gesundheit, Selbstschutz und Nachhaltigkeit.',
-  title: 'Stark gemacht - Empowerment, Gesundheit & Gemeinschaft',
+    'Verein StarkGemacht - Menschen stärken, Gemeinschaft fördern. Workshops, Kurse und Projekte für Empowerment, Gesundheit, Selbstschutz und Nachhaltigkeit.',
+  title: `${SITE_NAME} - Empowerment, Gesundheit & Gemeinschaft`,
 }
 
 export default async function RootLayout(props: { children: React.ReactNode }) {
