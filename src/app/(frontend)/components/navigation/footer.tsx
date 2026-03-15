@@ -17,7 +17,7 @@ export function Footer() {
       id="footer"
       cta={
         <NewsletterForm
-          headline="Bleib auf dem Laufenden"
+          headline="Newsletter anmelden"
           subheadline={
             <p>
               Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt

@@ -6,6 +6,7 @@ import {
   NavbarWithLinksActionsAndCenteredLogo,
 } from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
 import { Button } from '@/components/ui/button'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Logo } from '@/app/(frontend)/components/elements/logo'
 
 export function Navbar() {
@@ -24,14 +25,23 @@ export function Navbar() {
       }
       logo={
         <NavbarLogo href="/#hero">
-          <Logo className="text-olive-700 dark:text-olive-400 h-8 w-32" />
+          <Logo className="h-8 w-32 text-olive-700 dark:text-olive-400" />
         </NavbarLogo>
       }
       actions={
         <>
-          <Button variant="ghost" asChild className="max-sm:hidden">
-            <a href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</a>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" asChild className="max-sm:hidden">
+                  <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Mailprogramm öffnen</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <Button asChild>
             <Link href="/#angebot">Unser Angebot</Link>
           </Button>
