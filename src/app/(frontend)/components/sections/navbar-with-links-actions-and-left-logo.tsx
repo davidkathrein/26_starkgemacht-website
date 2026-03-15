@@ -13,7 +13,7 @@ export function NavbarLink({
     <a
       href={href}
       className={clsx(
-        'group text-olive-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
+        'group inline-flex items-center justify-between gap-2 text-3xl/10 font-medium text-olive-950 lg:text-sm/7 dark:text-white',
         className,
       )}
       {...props}
@@ -63,21 +63,30 @@ export function NavbarWithLinksActionsAndCenteredLogo({
   actions: ReactNode
 } & ComponentProps<'header'>) {
   return (
-    <header
-      className={clsx('bg-olive-100 dark:bg-olive-950 sticky top-0 z-10', className)}
-      {...props}
-    >
-      <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
-      <nav>
-        <div className="mx-auto flex h-(--scroll-padding-top) max-w-7xl items-center gap-4 px-6 lg:px-10">
-          <div className="flex flex-1 items-center">{logo}</div>
-          <div className="flex gap-8 max-lg:hidden">{links}</div>
-          <div className="flex flex-1 items-center justify-end gap-4">
-            <div className="flex shrink-0 items-center gap-2">{actions}</div>
-            <MobileNavSheet>{links}</MobileNavSheet>
+    <>
+      <header
+        className={clsx(
+          'fixed top-0 right-0 left-0 z-10 bg-olive-100 dark:bg-olive-950',
+          className,
+        )}
+        {...props}
+      >
+        <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
+        <nav>
+          <div className="mx-auto flex h-(--scroll-padding-top) max-w-7xl items-center gap-4 px-6 lg:px-10">
+            <div className="flex flex-1 items-center">{logo}</div>
+            <div className="flex gap-8 max-lg:hidden">{links}</div>
+            <div className="flex flex-1 items-center justify-end gap-4">
+              <div className="flex shrink-0 items-center gap-2">{actions}</div>
+              <MobileNavSheet>{links}</MobileNavSheet>
+            </div>
           </div>
-        </div>
-      </nav>
-    </header>
+        </nav>
+      </header>
+      <div>
+        {/* Dummy element to prevent content from being hidden behind the fixed header */}
+        <div className="h-(--scroll-padding-top)" />
+      </div>
+    </>
   )
 }
