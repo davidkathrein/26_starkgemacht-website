@@ -55,7 +55,8 @@ export async function generateMetadata({
   const title = `${event.name} - Stark gemacht`
   const description = event.previewDescription || DEFAULT_DESCRIPTION
   const customImage = typeof event.customImage !== 'number' ? event.customImage : null
-  const imageUrl = customImage?.sizes?.seoPreview?.url || customImage?.url || event.image || undefined
+  const imageUrl =
+    customImage?.sizes?.seoPreview?.url || customImage?.url || event.image || undefined
 
   return {
     title,
@@ -183,7 +184,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           {event.content && (
             <RichText
               data={event.content}
-              className="text-olive-600 dark:text-olive-300 mt-10 max-w-2xl space-y-6 text-base/7"
+              className="mt-10 max-w-2xl space-y-6 text-base/7 text-olive-600 dark:text-olive-300"
             />
           )}
 
@@ -192,42 +193,42 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           <Separator />
 
           {event.venueName && (
-            <section className="border-olive-950/10 via-olive-50/80 to-olive-100/70 dark:from-olive-900 dark:via-olive-900 dark:to-olive-950 mt-12 overflow-hidden rounded-[1.75rem] border bg-linear-to-br from-white p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10">
-              <div className="dark:bg-olive-950/70 relative overflow-hidden rounded-[calc(1.75rem-1px)] bg-white/80 px-6 py-6 backdrop-blur-sm sm:px-8 sm:py-8">
-                <div className="bg-olive-200/50 dark:bg-olive-700/20 absolute -top-14 -right-14 h-32 w-32 rounded-full blur-3xl" />
+            <section className="mt-12 overflow-hidden rounded-[1.75rem] border border-olive-950/10 bg-linear-to-br from-white via-olive-50/80 to-olive-100/70 p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10 dark:from-olive-900 dark:via-olive-900 dark:to-olive-950">
+              <div className="relative overflow-hidden rounded-[calc(1.75rem-1px)] bg-white/80 px-6 py-6 backdrop-blur-sm sm:px-8 sm:py-8 dark:bg-olive-950/70">
+                <div className="absolute -top-14 -right-14 h-32 w-32 rounded-full bg-olive-200/50 blur-3xl dark:bg-olive-700/20" />
                 <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start">
                   <div className="flex flex-col items-start justify-between">
-                    <div className="border-olive-950/10 text-olive-600 dark:text-olive-300 inline-flex items-center gap-2 rounded-full border bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.18em] uppercase dark:border-white/10 dark:bg-white/5">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-olive-950/10 bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-olive-600 uppercase dark:border-white/10 dark:bg-white/5 dark:text-olive-300">
                       <MapPin className="h-3.5 w-3.5" />
                       Veranstaltungsort
                     </div>
 
-                    <h3 className="font-display text-olive-900 mt-4 text-2xl font-semibold tracking-tight sm:text-3xl dark:text-white">
+                    <h3 className="font-display mt-4 text-2xl font-semibold tracking-tight text-olive-900 sm:text-3xl dark:text-white">
                       {event.venueName}
                     </h3>
                   </div>
 
                   <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                    <div className="border-olive-950/10 rounded-2xl border bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
-                      <p className="text-olive-500 dark:text-olive-400 text-xs font-semibold tracking-[0.18em] uppercase">
+                    <div className="rounded-2xl border border-olive-950/10 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                      <p className="text-xs font-semibold tracking-[0.18em] text-olive-500 uppercase dark:text-olive-400">
                         Adresse
                       </p>
-                      <p className="text-olive-800 mt-2 text-sm leading-6 font-medium dark:text-white">
+                      <p className="mt-2 text-sm leading-6 font-medium text-olive-800 dark:text-white">
                         {event.venuePostalCode ?? event.venueName}
                       </p>
                     </div>
 
                     {venueCountryDisplay && (
-                      <div className="border-olive-950/10 rounded-2xl border bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
+                      <div className="rounded-2xl border border-olive-950/10 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
                         <div className="flex items-start gap-3">
-                          <div className="bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-200 flex h-9 w-9 items-center justify-center rounded-full">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-olive-100 text-olive-700 dark:bg-olive-800 dark:text-olive-200">
                             <Globe2 className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="text-olive-500 dark:text-olive-400 text-xs font-semibold tracking-[0.18em] uppercase">
+                            <p className="text-xs font-semibold tracking-[0.18em] text-olive-500 uppercase dark:text-olive-400">
                               Land
                             </p>
-                            <p className="text-olive-800 mt-1 text-sm leading-6 font-medium dark:text-white">
+                            <p className="mt-1 text-sm leading-6 font-medium text-olive-800 dark:text-white">
                               {venueCountryDisplay}
                             </p>
                           </div>
