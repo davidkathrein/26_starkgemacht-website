@@ -1,6 +1,7 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 export function EmailSignupForm({
   label = 'Email address',
@@ -25,9 +26,9 @@ export function EmailSignupForm({
       )}
       {...props}
     >
-      <input
+      <Input
         className={clsx(
-          'min-w-0 flex-1 px-3 text-sm/7 focus:outline-hidden dark:text-white',
+          'min-w-0 flex-1 border-0 bg-transparent px-3 text-sm/7 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-white',
           variant === 'normal' && 'text-olive-950',
           variant === 'overlay' && 'text-white placeholder:text-white/60',
         )}

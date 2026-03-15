@@ -3,6 +3,59 @@ import type { SanitizedCollectionConfig } from 'payload'
 
 type ImageSizeConfig = { name: string; width?: number; height?: number; position?: string | number }
 
+type ImageFormatOptions = {
+  format?: string
+  options?: Record<string, unknown>
+}
+
+function formatToExtension(format: string): string {
+  switch (format) {
+    case 'jpg':
+    case 'jpeg':
+      return 'jpg'
+    case 'png':
+      return 'png'
+    case 'webp':
+      return 'webp'
+    case 'avif':
+      return 'avif'
+    case 'gif':
+      return 'gif'
+    case 'tiff':
+      return 'tif'
+    case 'heif':
+      return 'heif'
+    case 'jp2':
+      return 'jp2'
+    default:
+      return 'jpg'
+  }
+}
+
+function formatToMimeType(format: string): string {
+  switch (format) {
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg'
+    case 'png':
+      return 'image/png'
+    case 'webp':
+      return 'image/webp'
+    case 'avif':
+      return 'image/avif'
+    case 'gif':
+      return 'image/gif'
+    case 'tiff':
+      return 'image/tiff'
+    case 'heif':
+      return 'image/heif'
+    case 'jp2':
+      return 'image/jp2'
+    default:
+      return 'image/jpeg'
+  }
+}
+
 function isImageMimeType(mimeType: string | null | undefined): boolean {
   return Boolean(mimeType && mimeType.startsWith('image/'))
 }
@@ -83,14 +136,27 @@ export async function regenerateMissingImageSizes({
     const width = sizeConfig.width ?? 1280
     const height = sizeConfig.height ?? 720
     const position = sizeConfig.position != null ? String(sizeConfig.position) : 'centre'
+    const formatOptions = (sizeConfig as { formatOptions?: ImageFormatOptions }).formatOptions
+    const targetFormat = formatOptions?.format?.toLowerCase()
 
     try {
-      const resizedBuffer = await sharp(imageBuffer)
+      let pipeline = sharp(imageBuffer)
         .rotate()
         .resize(width, height, { fit: 'cover', position })
-        .toBuffer()
 
-      const sizeFilename = `${baseName}-${width}x${height}.${ext}`
+      if (targetFormat) {
+        pipeline = pipeline.toFormat(
+          targetFormat as Parameters<import('sharp').Sharp['toFormat']>[0],
+          formatOptions?.options as Parameters<import('sharp').Sharp['toFormat']>[1],
+        )
+      }
+
+      const resizedBuffer = await pipeline.toBuffer()
+
+      const outputExt = targetFormat ? formatToExtension(targetFormat) : ext
+      const outputMime = targetFormat ? formatToMimeType(targetFormat) : defaultMime
+
+      const sizeFilename = `${baseName}-${width}x${height}.${outputExt}`
       const uploadData: { prefix: string; filename?: string } = { prefix }
 
       await handleUpload({
@@ -98,7 +164,7 @@ export async function regenerateMissingImageSizes({
         file: {
           buffer: resizedBuffer,
           filename: sizeFilename,
-          mimeType: defaultMime,
+          mimeType: outputMime,
         },
       })
 
@@ -109,7 +175,7 @@ export async function regenerateMissingImageSizes({
         filename: finalFilename,
         width: meta.width ?? width,
         height: meta.height ?? height,
-        mimeType: defaultMime,
+        mimeType: outputMime,
         filesize: resizedBuffer.length,
       }
     } catch (err) {

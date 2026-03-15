@@ -1,6 +1,8 @@
-import { ElTabGroup, ElTabList, ElTabPanels } from '@tailwindplus/elements/react'
+'use client'
+
 import { clsx } from 'clsx/lite'
 import { type ComponentProps, type ReactNode } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Container } from '../elements/container'
 import { CheckmarkIcon } from '../icons/checkmark-icon'
 import { MinusIcon } from '../icons/minus-icon'
@@ -79,6 +81,12 @@ export function PlanComparisonTable<const Plan extends string>({
     features: { name: ReactNode; value: ReactNode | Record<Plan, ReactNode> }[]
   }[]
 } & ComponentProps<'section'>) {
+  const defaultPlan = plans[0]
+
+  if (!defaultPlan) {
+    return null
+  }
+
   return (
     <section className={clsx('py-16', className)} {...props}>
       <Container>
@@ -110,32 +118,37 @@ export function PlanComparisonTable<const Plan extends string>({
         </table>
 
         <div className="sm:hidden">
-          <ElTabGroup>
-            <ElTabList className="flex gap-6">
+          <Tabs defaultValue={defaultPlan}>
+            <TabsList
+              className="grid h-auto w-full rounded-none border-b border-b-olive-950/10 bg-transparent p-0 dark:border-b-white/10"
+              style={{ gridTemplateColumns: `repeat(${plans.length}, minmax(0, 1fr))` }}
+            >
               {plans.map((plan) => (
-                <button
+                <TabsTrigger
                   key={plan}
-                  type="button"
-                  className="text-olive-500 aria-selected:border-olive-950 aria-selected:text-olive-950 relative -mb-px flex-1 border-b border-b-transparent px-2 py-6 text-sm/5 font-medium dark:aria-selected:border-white dark:aria-selected:text-white"
+                  value={plan}
+                  className="text-olive-500 relative -mb-px rounded-none border-b-2 border-b-transparent px-2 py-6 text-sm/5 font-medium data-[state=active]:border-olive-950 data-[state=active]:bg-transparent data-[state=active]:text-olive-950 data-[state=active]:shadow-none dark:data-[state=active]:border-white dark:data-[state=active]:text-white"
                 >
                   {plan}
-                </button>
+                </TabsTrigger>
               ))}
-            </ElTabList>
-            <ElTabPanels>
+            </TabsList>
+            <div>
               {plans.map((plan) => (
-                <table key={plan} className="w-full border-collapse text-left text-sm/5">
-                  <colgroup>
-                    <col className="w-3/4" />
-                    <col className="w-1/4" />
-                  </colgroup>
-                  {features.map((group, index) => (
-                    <FeatureGroup key={index} group={group} plans={[plan]} />
-                  ))}
-                </table>
+                <TabsContent key={plan} value={plan} className="mt-0">
+                  <table className="w-full border-collapse text-left text-sm/5">
+                    <colgroup>
+                      <col className="w-3/4" />
+                      <col className="w-1/4" />
+                    </colgroup>
+                    {features.map((group, index) => (
+                      <FeatureGroup key={index} group={group} plans={[plan]} />
+                    ))}
+                  </table>
+                </TabsContent>
               ))}
-            </ElTabPanels>
-          </ElTabGroup>
+            </div>
+          </Tabs>
         </div>
       </Container>
     </section>

@@ -1,9 +1,20 @@
-import { clsx } from 'clsx/lite'
 import type { ComponentProps } from 'react'
+import { Button as BaseButton } from '@/components/ui/button'
 
-const sizes = {
-  md: 'px-3 py-1',
-  lg: 'px-4 py-2',
+const sizeMap = {
+  md: 'default',
+  lg: 'lg',
+} as const
+
+type LegacySize = keyof typeof sizeMap
+type LegacyColor = 'dark/light' | 'light'
+
+function getSolidVariant(color: LegacyColor) {
+  return color === 'light' ? 'light' : 'default'
+}
+
+function getGhostVariant(color: LegacyColor) {
+  return color === 'light' ? 'ghostLight' : 'ghost'
 }
 
 export function Button({
@@ -13,21 +24,15 @@ export function Button({
   className,
   ...props
 }: {
-  size?: keyof typeof sizes
-  color?: 'dark/light' | 'light'
+  size?: LegacySize
+  color?: LegacyColor
 } & ComponentProps<'button'>) {
   return (
-    <button
+    <BaseButton
       type={type}
-      className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium',
-        color === 'dark/light' &&
-          'bg-olive-700 hover:bg-olive-600 dark:bg-olive-400 dark:text-olive-950 dark:hover:bg-olive-300 text-white',
-        color === 'light' &&
-          'hover bg-olive-50 text-olive-800 hover:bg-olive-100 dark:bg-olive-200 dark:hover:bg-olive-100',
-        sizes[size],
-        className,
-      )}
+      variant={getSolidVariant(color)}
+      size={sizeMap[size]}
+      className={className}
       {...props}
     />
   )
@@ -41,23 +46,13 @@ export function ButtonLink({
   ...props
 }: {
   href: string
-  size?: keyof typeof sizes
-  color?: 'dark/light' | 'light'
+  size?: LegacySize
+  color?: LegacyColor
 } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <a
-      href={href}
-      className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium',
-        color === 'dark/light' &&
-          'bg-olive-700 hover:bg-olive-600 dark:bg-olive-400 dark:text-olive-950 dark:hover:bg-olive-300 text-white',
-        color === 'light' &&
-          'hover bg-olive-50 text-olive-800 hover:bg-olive-100 dark:bg-olive-200 dark:hover:bg-olive-100',
-        sizes[size],
-        className,
-      )}
-      {...props}
-    />
+    <BaseButton asChild variant={getSolidVariant(color)} size={sizeMap[size]} className={className}>
+      <a href={href} {...props} />
+    </BaseButton>
   )
 }
 
@@ -67,16 +62,14 @@ export function SoftButton({
   className,
   ...props
 }: {
-  size?: keyof typeof sizes
+  size?: LegacySize
 } & ComponentProps<'button'>) {
   return (
-    <button
+    <BaseButton
       type={type}
-      className={clsx(
-        'bg-olive-950/10 text-olive-950 hover:bg-olive-950/15 inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
-        sizes[size],
-        className,
-      )}
+      variant="soft"
+      size={sizeMap[size]}
+      className={className}
       {...props}
     />
   )
@@ -89,18 +82,12 @@ export function SoftButtonLink({
   ...props
 }: {
   href: string
-  size?: keyof typeof sizes
+  size?: LegacySize
 } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <a
-      href={href}
-      className={clsx(
-        'bg-olive-950/10 text-olive-950 hover:bg-olive-950/15 inline-flex shrink-0 items-center justify-center gap-1 rounded-full text-sm/7 font-medium dark:bg-white/10 dark:text-white dark:hover:bg-white/20',
-        sizes[size],
-        className,
-      )}
-      {...props}
-    />
+    <BaseButton asChild variant="soft" size={sizeMap[size]} className={className}>
+      <a href={href} {...props} />
+    </BaseButton>
   )
 }
 
@@ -111,20 +98,15 @@ export function PlainButton({
   className,
   ...props
 }: {
-  size?: keyof typeof sizes
-  color?: 'dark/light' | 'light'
+  size?: LegacySize
+  color?: LegacyColor
 } & ComponentProps<'button'>) {
   return (
-    <button
+    <BaseButton
       type={type}
-      className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-2 rounded-full text-sm/7 font-medium',
-        color === 'dark/light' &&
-          'text-olive-950 hover:bg-olive-950/10 dark:text-white dark:hover:bg-white/10',
-        color === 'light' && 'text-white hover:bg-white/15 dark:hover:bg-white/10',
-        sizes[size],
-        className,
-      )}
+      variant={getGhostVariant(color)}
+      size={sizeMap[size]}
+      className={className}
       {...props}
     />
   )
@@ -138,21 +120,12 @@ export function PlainButtonLink({
   ...props
 }: {
   href: string
-  size?: keyof typeof sizes
-  color?: 'dark/light' | 'light'
+  size?: LegacySize
+  color?: LegacyColor
 } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <a
-      href={href}
-      className={clsx(
-        'inline-flex shrink-0 items-center justify-center gap-2 rounded-full text-sm/7 font-medium',
-        color === 'dark/light' &&
-          'text-olive-950 hover:bg-olive-950/10 dark:text-white dark:hover:bg-white/10',
-        color === 'light' && 'text-white hover:bg-white/15 dark:hover:bg-white/10',
-        sizes[size],
-        className,
-      )}
-      {...props}
-    />
+    <BaseButton asChild variant={getGhostVariant(color)} size={sizeMap[size]} className={className}>
+      <a href={href} {...props} />
+    </BaseButton>
   )
 }

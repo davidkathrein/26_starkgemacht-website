@@ -74,6 +74,20 @@ export const Media: CollectionConfig = {
         width: 1280,
         height: 1707,
       },
+      {
+        name: 'seoPreview',
+        width: 1200,
+        height: 630,
+        formatOptions: {
+          format: 'jpeg',
+          options: {
+            quality: 84,
+            progressive: true,
+            mozjpeg: true,
+          },
+        },
+        withoutEnlargement: true,
+      },
     ],
     pasteURL: {
       allowList: [

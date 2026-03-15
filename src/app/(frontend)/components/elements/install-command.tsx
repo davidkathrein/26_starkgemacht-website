@@ -1,6 +1,8 @@
-import { ElCopyable } from '@tailwindplus/elements/react'
+'use client'
+
 import { clsx } from 'clsx/lite'
-import type { ComponentProps, ReactNode } from 'react'
+import { useEffect, useState, type ComponentProps } from 'react'
+import { Button } from '@/components/ui/button'
 import { CheckmarkIcon } from '../icons/checkmark-icon'
 import { Squares2StackedIcon } from '../icons/squares-2-stacked-icon'
 
@@ -10,14 +12,31 @@ export function InstallCommand({
   className,
   ...props
 }: {
-  snippet: ReactNode
+  snippet: string
   variant?: 'normal' | 'overlay'
 } & ComponentProps<'div'>) {
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!copied) {
+      return undefined
+    }
+
+    const timeoutId = window.setTimeout(() => setCopied(false), 2000)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [copied])
+
+  async function handleCopy() {
+    await navigator.clipboard.writeText(snippet)
+    setCopied(true)
+  }
+
   return (
     <div
       className={clsx(
         'flex items-center justify-between gap-6 rounded-full p-1 font-mono text-sm/7 inset-ring-1 dark:bg-white/10 dark:inset-ring-white/10',
-        variant === 'normal' && 'text-olive-600 bg-white inset-ring-black/10 dark:text-white',
+        variant === 'normal' && 'bg-white text-olive-600 inset-ring-black/10 dark:text-white',
         variant === 'overlay' && 'bg-white/15 text-white inset-ring-white/10',
         className,
       )}
@@ -25,17 +44,18 @@ export function InstallCommand({
     >
       <div className="flex items-center gap-2 pl-3">
         <div className="text-current/60 select-none">$</div>
-        <ElCopyable id="snippet">{snippet}</ElCopyable>
+        <code className="truncate">{snippet}</code>
       </div>
-      <button
-        command="--copy"
-        commandfor="snippet"
+      <Button
         type="button"
-        className="group hover:bg-olive-950/10 relative flex size-9 items-center justify-center rounded-full after:absolute after:-inset-1 dark:hover:bg-white/10 after:pointer-fine:hidden"
+        variant={variant === 'overlay' ? 'ghostLight' : 'ghost'}
+        size="icon"
+        className="relative after:absolute after:-inset-1 after:pointer-fine:hidden"
+        aria-label="Befehl kopieren"
+        onClick={handleCopy}
       >
-        <Squares2StackedIcon className="group-data-copied:hidden" />
-        <CheckmarkIcon className="not-group-data-copied:hidden" />
-      </button>
+        {copied ? <CheckmarkIcon /> : <Squares2StackedIcon />}
+      </Button>
     </div>
   )
 }

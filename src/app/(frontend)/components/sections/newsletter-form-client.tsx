@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowNarrowRightIcon } from '../icons/arrow-narrow-right-icon'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 const NEWSLETTER_FORM_ACTION =
   'https://edd7cb9a.sibforms.com/serve/MUIFADQ2tZH_p7XTpFIm7XDfFSgyHbGYP_SeJyKITUqtQB-SLIvL3aJ5SpUw-pMXR7bmHkplJxIEOjW8dZdHQsGoo2kR9K-B2UySOoRXG7dEMEUsgY3nSdef80XDqHG7EBbmiNMEwOr3IRDZRVKbgasIghsEVAMiNKCoCoICjOVhx-PhYYvheToTnIsZTA8ByhjABOrwo3tC0o1Uww=='
@@ -54,9 +55,9 @@ export function NewsletterFormClient({
       {...props}
     >
       <p>{headline}</p>
-      <div className="text-olive-700 dark:text-olive-400 flex flex-col gap-4">{subheadline}</div>
-      <div className="border-olive-950/20 has-[input:focus]:border-olive-950 flex items-center border-b py-2 dark:border-white/20 dark:has-[input:focus]:border-white">
-        <input
+      <div className="flex flex-col gap-4 text-olive-700 dark:text-olive-400">{subheadline}</div>
+      <div className="flex items-center border-b border-olive-950/20 py-2 has-[input:focus]:border-olive-950 dark:border-white/20 dark:has-[input:focus]:border-white">
+        <Input
           type="email"
           placeholder="Email"
           id="EMAIL"
@@ -66,7 +67,7 @@ export function NewsletterFormClient({
           autoComplete="email"
           aria-label="Email"
           disabled={isSubmitting}
-          className="text-olive-950 flex-1 focus:outline-hidden disabled:opacity-50 dark:text-white"
+          className="h-auto flex-1 rounded-none border-0 px-0 py-0 text-olive-950 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:opacity-50 dark:text-white"
         />
         <Button
           type="submit"

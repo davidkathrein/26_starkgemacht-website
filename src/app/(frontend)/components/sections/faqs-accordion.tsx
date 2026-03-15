@@ -1,41 +1,42 @@
-import { ElDisclosure } from '@tailwindplus/elements/react'
+'use client'
+
 import { clsx } from 'clsx/lite'
 import { type ComponentProps, type ReactNode, useId } from 'react'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 import { Subheading } from '../elements/subheading'
 import { Text } from '../elements/text'
-import { MinusIcon } from '../icons/minus-icon'
-import { PlusIcon } from '../icons/plus-icon'
 
 export function Faq({
   id,
   question,
   answer,
   ...props
-}: { question: ReactNode; answer: ReactNode } & ComponentProps<'div'>) {
+}: {
+  question: ReactNode
+  answer: ReactNode
+} & Omit<ComponentProps<typeof AccordionItem>, 'children' | 'value'>) {
   const autoId = useId()
-  id = id || autoId
+  const value = id || autoId
 
   return (
-    <div id={id} {...props}>
-      <button
-        type="button"
-        id={`${id}-question`}
-        command="--toggle"
-        commandfor={`${id}-answer`}
-        className="text-olive-950 flex w-full items-start justify-between gap-6 py-4 text-left text-base/7 dark:text-white"
-      >
+    <AccordionItem
+      value={value}
+      id={id}
+      className="border-olive-950/10 dark:border-white/10"
+      {...props}
+    >
+      <AccordionTrigger className="text-olive-950 py-4 text-left text-base/7 hover:no-underline dark:text-white">
         {question}
-        <PlusIcon className="h-lh in-aria-expanded:hidden" />
-        <MinusIcon className="h-lh not-in-aria-expanded:hidden" />
-      </button>
-      <ElDisclosure
-        id={`${id}-answer`}
-        hidden
-        className="text-olive-700 dark:text-olive-400 -mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7"
-      >
+      </AccordionTrigger>
+      <AccordionContent className="text-olive-700 dark:text-olive-400 -mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7">
         {answer}
-      </ElDisclosure>
-    </div>
+      </AccordionContent>
+    </AccordionItem>
   )
 }
 
@@ -56,9 +57,9 @@ export function FAQsAccordion({
           <Subheading>{headline}</Subheading>
           {subheadline && <Text className="flex flex-col gap-4 text-pretty">{subheadline}</Text>}
         </div>
-        <div className="divide-olive-950/10 border-olive-950/10 divide-y border-y dark:divide-white/10 dark:border-white/10">
+        <Accordion type="multiple" className="border-olive-950/10 border-y dark:border-white/10">
           {children}
-        </div>
+        </Accordion>
       </div>
     </section>
   )
