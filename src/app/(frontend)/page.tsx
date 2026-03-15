@@ -53,7 +53,9 @@ export default async function HomePage() {
               </Button>
 
               <Button variant="ghost" size="lg" asChild>
-                <a href="#uber">Mehr über uns <ArrowNarrowRightIcon /></a>
+                <a href="#uber">
+                  Mehr über uns <ArrowNarrowRightIcon />
+                </a>
               </Button>
             </div>
           }
@@ -82,23 +84,6 @@ export default async function HomePage() {
 
         {/* Blog Posts */}
         <BlogThreeColumns id="aktuelles" />
-
-        {/* Stats */}
-        {/* <StatsWithGraph
-          id="stats"
-          eyebrow="Built for scale"
-          headline="The inbox powering customer conversations everywhere."
-          subheadline={
-            <p>
-              Oatmeal helps teams deliver personal, organized, and fast customer support across the
-              world. From small startups to enterprise teams, we process millions of messages each
-              month — using a massive network of low wage workers stationed around the globe.
-            </p>
-          }
-        >
-          <Stat stat="2M+" text="Emails manually processed every week across thousands of teams." />
-          <Stat stat="99.98%" text="Uptime — because your customers never stop complaining." />
-        </StatsWithGraph> */}
 
         {/* Testimonial */}
         {/* <TestimonialThreeColumnGrid
@@ -251,75 +236,6 @@ export default async function HomePage() {
           />
         </FAQsTwoColumnAccordion>
 
-        {/* Pricing */}
-        {/* <PricingMultiTier
-          id="pricing"
-          headline="Pricing to fit your business needs."
-          plans={
-            <>
-              <Plan
-                name="Starter"
-                price="$12"
-                period="/mo"
-                subheadline={<p>Small teams getting started with shared inboxes</p>}
-                features={[
-                  'Shared inbox for up to 2 mailboxes',
-                  'Tagging & assignment',
-                  'Private notes',
-                  'Automatic replies',
-                  'Email support',
-                ]}
-                cta={
-                  <SoftButtonLink href="#" size="lg">
-                    Start free trial
-                  </SoftButtonLink>
-                }
-              />
-              <Plan
-                name="Growth"
-                price="$49"
-                period="/mo"
-                subheadline={<p>Growing teams needing collaboration and insights</p>}
-                badge="Most popular"
-                features={[
-                  'Everything in Starter',
-                  'Inbox Agent',
-                  'Unlimited mailboxes',
-                  'Collision detection',
-                  'Snippets and templates',
-                  'Reporting dashboard',
-                  'Slack integration',
-                ]}
-                cta={
-                  <ButtonLink href="#" size="lg">
-                    Start free trial
-                  </ButtonLink>
-                }
-              />
-              <Plan
-                name="Pro"
-                price="$299"
-                period="/mo"
-                subheadline={<p>Support-focused organizations and larger teams</p>}
-                features={[
-                  'Everything in Growth',
-                  'Custom roles & permissions',
-                  'Automation engine',
-                  'API access',
-                  'SLA tracking',
-                  'SSO support',
-                  'SOC 2 compliance',
-                ]}
-                cta={
-                  <SoftButtonLink href="#" size="lg">
-                    Start free trial
-                  </SoftButtonLink>
-                }
-              />
-            </>
-          }
-        /> */}
-
         {/* Call To Action */}
         <CallToActionSimple
           className="mb-16"
@@ -338,7 +254,9 @@ export default async function HomePage() {
               </Button>
 
               <Button variant="ghost" size="lg" asChild>
-                <a href="mailto:kontakt@starkgemacht.com">Kontakt aufnehmen <ChevronIcon /></a>
+                <a href="mailto:kontakt@starkgemacht.com">
+                  Kontakt aufnehmen <ChevronIcon />
+                </a>
               </Button>
             </div>
           }
@@ -430,9 +348,9 @@ async function EventsFeatureSection() {
                 headline={event.name}
                 subheadline={
                   <div>
-                    <p className="text-olive-600 dark:text-olive-300 mb-2 text-sm font-medium">
+                    <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-300">
                       {(event.isFree || event.minPrice !== null) && (
-                        <span className="text-olive-800 dark:text-olive-200 mb-2 font-semibold">
+                        <span className="mb-2 font-semibold text-olive-800 dark:text-olive-200">
                           {getPriceDisplay({
                             isFree: event.isFree,
                             minPrice: event.minPrice,
@@ -457,15 +375,8 @@ async function EventsFeatureSection() {
                         </a>
                       </Button>
                     ) : undefined}
-                    <Button
-                      variant="ghost"
-                      asChild
-                    >
-                      <a
-                        href={event.checkoutUrl ?? '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                    <Button variant="ghost" asChild>
+                      <a href={event.checkoutUrl ?? '#'} target="_blank" rel="noopener noreferrer">
                         Tickets sichern
                       </a>
                     </Button>

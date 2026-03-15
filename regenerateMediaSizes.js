@@ -26,11 +26,20 @@ async function loadPayloadConfig() {
   return config
 }
 
+function toAbsoluteUrl(url) {
+  if (/^https?:\/\//i.test(url)) {
+    return url
+  }
+
+  const baseUrl = process.env.MEDIA_SOURCE_BASE_URL || 'http://localhost:3000'
+  return new URL(url, baseUrl).toString()
+}
+
 async function regenerateMediaSizes() {
   try {
     const config = await loadPayloadConfig()
     const payload = await getPayload({ config })
-    let processed = 0
+    let updated = 0
     let skipped = 0
     let failed = 0
 
@@ -56,17 +65,46 @@ async function regenerateMediaSizes() {
           continue
         }
 
+        const mimeType = mediaDoc.mimeType || null
+        if (!mimeType || !mimeType.startsWith('image/')) {
+          console.warn(`Skipping media ${label}: non-image mimeType (${mimeType || 'unknown'})`)
+          skipped += 1
+          continue
+        }
+
+        const sourceUrl = toAbsoluteUrl(mediaDoc.url)
+        const res = await fetch(sourceUrl, { method: 'GET' })
+        if (!res.ok) {
+          console.warn(
+            `Skipping media ${label}: failed to download source (${res.status}) from ${sourceUrl}`,
+          )
+          skipped += 1
+          continue
+        }
+
+        const sourceBuffer = Buffer.from(await res.arrayBuffer())
+
         await payload.update({
           collection: 'media',
           id: mediaDoc.id,
+          context: {
+            skipCustomSizeHook: true,
+          },
           data: {
             alt: mediaDoc.alt || 'Image',
             caption: mediaDoc.caption || undefined,
           },
+          file: {
+            data: sourceBuffer,
+            mimetype: mimeType,
+            name: mediaDoc.filename,
+            size: sourceBuffer.length,
+          },
+          overwriteExistingFiles: true,
         })
 
-        console.log(`Media ${label} processed`)
-        processed += 1
+        console.log(`Media ${label} updated`)
+        updated += 1
       } catch (error) {
         console.error(`Media ${label} failed to regenerate`)
         console.error(error)
@@ -77,7 +115,7 @@ async function regenerateMediaSizes() {
     console.log('Media size regeneration completed!')
     console.log('Summary:')
     console.log(`- total: ${docs.length}`)
-    console.log(`- processed: ${processed}`)
+    console.log(`- updated: ${updated}`)
     console.log(`- skipped: ${skipped}`)
     console.log(`- failed: ${failed}`)
     process.exit(0)

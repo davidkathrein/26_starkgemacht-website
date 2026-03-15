@@ -24,12 +24,20 @@ export const Media: CollectionConfig = {
         }
         return data
       },
-      async ({ collection, data, operation, originalDoc, req }) => {
-        if (operation === 'update' && originalDoc) {
+      async ({ collection, context, data, operation, originalDoc, req }) => {
+        const skipCustomSizeHook = Boolean(
+          (context as { skipCustomSizeHook?: boolean } | undefined)?.skipCustomSizeHook,
+        )
+
+        if (operation === 'update' && originalDoc && !skipCustomSizeHook) {
           await regenerateMissingImageSizes({
             collection,
             data,
             originalDoc: originalDoc as Record<string, unknown>,
+            forceRegenerate: Boolean(
+              (context as { forceRegenerateImageSizes?: boolean } | undefined)
+                ?.forceRegenerateImageSizes,
+            ),
             req,
           })
         }
@@ -81,9 +89,8 @@ export const Media: CollectionConfig = {
         formatOptions: {
           format: 'jpeg',
           options: {
-            quality: 84,
+            quality: 80,
             progressive: true,
-            mozjpeg: true,
           },
         },
         withoutEnlargement: true,

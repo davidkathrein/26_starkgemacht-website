@@ -13,10 +13,12 @@ import { Globe2, MapPin, MoveRight } from 'lucide-react'
 import { getPriceDisplay } from '../../utils/preis'
 import { Separator } from '@/components/ui/separator'
 
-export default async function AngebotPage({ params }: { params: Promise<{ slug: string[] }> }) {
-  const { slug } = await params
-  const slugString = slug.join('/')
+import type { Metadata } from 'next'
 
+const DEFAULT_DESCRIPTION =
+  'Verein Stark gemacht - Menschen stärken durch Workshops, Kurse und Projekte. Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops. Für ein selbstbewusstes, gesundes und gemeinschaftliches Leben.'
+
+async function getEventBySlug(slugString: string) {
   const payload = await getPayload({ config })
 
   const events = await payload.find({
@@ -27,10 +29,64 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
       },
     },
     limit: 1,
-    depth: 2, // Populate relationships including customImage
+    depth: 2,
   })
 
-  const event = events.docs[0] as Event | undefined
+  return events.docs[0] as Event | undefined
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const slugString = slug.join('/')
+  const event = await getEventBySlug(slugString)
+
+  if (!event) {
+    return {
+      title: 'Angebot - Stark gemacht',
+      description: DEFAULT_DESCRIPTION,
+    }
+  }
+
+  const title = `${event.name} - Stark gemacht`
+  const description = event.previewDescription || DEFAULT_DESCRIPTION
+  const customImage = typeof event.customImage !== 'number' ? event.customImage : null
+  const imageUrl = customImage?.sizes?.seoPreview?.url || customImage?.url || event.image || undefined
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      url: `/angebot/${slugString}`,
+      images: imageUrl
+        ? [
+            {
+              url: imageUrl,
+              alt: customImage?.alt || event.name,
+            },
+          ]
+        : undefined,
+    },
+    twitter: {
+      card: imageUrl ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : undefined,
+    },
+  }
+}
+
+export default async function AngebotPage({ params }: { params: Promise<{ slug: string[] }> }) {
+  const { slug } = await params
+  const slugString = slug.join('/')
+
+  const event = await getEventBySlug(slugString)
 
   if (!event) {
     notFound()

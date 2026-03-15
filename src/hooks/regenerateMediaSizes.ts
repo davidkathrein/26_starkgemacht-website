@@ -77,11 +77,13 @@ export async function regenerateMissingImageSizes({
   data,
   originalDoc,
   req,
+  forceRegenerate = false,
 }: {
   collection: SanitizedCollectionConfig
   data: Record<string, unknown>
   originalDoc?: Record<string, unknown> | null
   req: PayloadRequest
+  forceRegenerate?: boolean
 }): Promise<void> {
   const uploadConfig = collection.upload
   if (!uploadConfig || typeof uploadConfig !== 'object') return
@@ -94,8 +96,14 @@ export async function regenerateMissingImageSizes({
   const filename = (doc?.filename ?? data?.filename) as string | undefined
   const mimeType = (doc?.mimeType ?? data?.mimeType) as string | undefined
 
-  if (!url || !filename || !isImageMimeType(mimeType)) return
-  if (!needsSizeGeneration(originalDoc ?? data, imageSizes)) return
+  if (!url || !filename || !isImageMimeType(mimeType)) {
+    req.payload.logger.warn('Regenerate media sizes: missing url/filename or non-image mime type')
+    return
+  }
+
+  if (!forceRegenerate && !needsSizeGeneration(originalDoc ?? data, imageSizes)) {
+    return
+  }
 
   const handleUpload = (uploadConfig as Record<string, unknown>).handleUpload as
     | ((args: {
@@ -105,7 +113,10 @@ export async function regenerateMissingImageSizes({
     | undefined
 
   const sharp = req.payload.config.sharp as typeof import('sharp') | undefined
-  if (!handleUpload || !sharp) return
+  if (!handleUpload || !sharp) {
+    req.payload.logger.warn('Regenerate media sizes: missing handleUpload or sharp in upload config')
+    return
+  }
 
   let imageBuffer: Buffer
   try {
