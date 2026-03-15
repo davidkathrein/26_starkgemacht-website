@@ -3,10 +3,11 @@ import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
 import { SiFacebook, SiInstagram } from 'react-icons/si'
 import { Linkedin } from 'lucide-react'
 import { Mail, Globe2 } from 'lucide-react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { RichText } from '@/app/(frontend)/components/elements/rich-text'
+import Link from 'next/link'
 
 const getIconByName = (name: string) => {
   switch (name.toLowerCase()) {
@@ -104,24 +105,22 @@ export default async function TeamImageShortParagraph() {
 
                       return (
                         <li key={index}>
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <a
-                                  href={link.url}
-                                  className="text-olive-600 hover:text-olive-700 dark:text-olive-400 dark:hover:text-olive-300"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  <span className="sr-only">{link.platform}</span>
-                                  <IconComponent className="size-5" />
-                                </a>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{getLinkTooltip(link.platform, link.url)}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Link
+                                href={link.url}
+                                className="text-olive-600 hover:text-olive-700 dark:text-olive-400 dark:hover:text-olive-300"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <span className="sr-only">{link.platform}</span>
+                                <IconComponent className="size-5" />
+                              </Link>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{getLinkTooltip(link.platform, link.url)}</p>
+                            </TooltipContent>
+                          </Tooltip>
                         </li>
                       )
                     })}

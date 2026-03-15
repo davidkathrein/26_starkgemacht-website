@@ -3,6 +3,7 @@ import { Familjen_Grotesk, Inter } from 'next/font/google'
 import './styles.css'
 import { Navbar } from './components/navigation/navbar'
 import { Footer } from './components/navigation/footer'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 const familjenGrotesk = Familjen_Grotesk({
   subsets: ['latin'],
@@ -30,9 +31,11 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="de" className={`h-full flex${familjenGrotesk.variable} ${inter.variable}`}>
       <body className="flex h-full flex-col">
-        <Navbar />
-        <main className="flex grow flex-col">{children}</main>
-        <Footer />
+        <TooltipProvider>
+          <Navbar />
+          <main className="flex grow flex-col">{children}</main>
+          <Footer />
+        </TooltipProvider>
       </body>
     </html>
   )

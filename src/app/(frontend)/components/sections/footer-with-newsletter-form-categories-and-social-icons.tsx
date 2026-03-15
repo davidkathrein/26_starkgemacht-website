@@ -2,7 +2,7 @@ import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { Container } from '../elements/container'
 import Link from 'next/link'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { NewsletterFormClient } from './newsletter-form-client'
 import { AsvoeLogo } from '@/components/asvoe-logo'
 import { ExternalLogoWrapper } from '@/components/external-logo-wrapper'
@@ -50,22 +50,20 @@ export function SocialLink({
   name: string
 } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <a
-            href={href}
-            target="_blank"
-            aria-label={name}
-            className={clsx('text-olive-950 *:size-6 dark:text-white', className)}
-            {...props}
-          />
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{getSocialLinkTooltip(name, href)}</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <a
+          href={href}
+          target="_blank"
+          aria-label={name}
+          className={clsx('text-olive-950 *:size-6 dark:text-white', className)}
+          {...props}
+        />
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>{getSocialLinkTooltip(name, href)}</p>
+      </TooltipContent>
+    </Tooltip>
   )
 }
 

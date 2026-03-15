@@ -18,17 +18,17 @@ export const Page: CollectionConfig = {
   fields: [
     { name: 'title', type: 'text', required: true, label: 'Titel' },
     slugField({ fieldToUse: 'title' }),
-    { name: 'content', type: 'richText', required: true, label: 'Inhalt' },
     {
-      type: 'group', name: 'seo', label: 'SEO',
+      type: 'group',
+      name: 'seo',
+      label: 'SEO',
       admin: { description: 'Suchmaschinenoptimierung' },
       fields: [
-        { name: 'title', type: 'text', label: 'SEO-Titel' },
         { name: 'description', type: 'textarea', label: 'Meta-Beschreibung' },
         { name: 'image', type: 'upload', relationTo: 'media', label: 'Vorschaubild (Open Graph)' },
-        { name: 'noIndex', type: 'checkbox', label: 'Noindex', defaultValue: false },
       ],
     },
+    { name: 'content', type: 'richText', required: true, label: 'Inhalt' },
   ],
   timestamps: true,
 }

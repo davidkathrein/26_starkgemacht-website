@@ -20,7 +20,7 @@ export function MobileNavSheet({ children }: { children: ReactNode }) {
       </SheetTrigger>
       <SheetContent
         side="right"
-        className="bg-olive-100 text-olive-950 border-l-olive-950/10 px-6 py-6 dark:bg-olive-950 dark:text-white dark:border-l-white/10"
+        className="border-l-olive-950/10 bg-olive-100 px-6 py-6 text-olive-950 dark:border-l-white/10 dark:bg-olive-950 dark:text-white"
       >
         <SheetHeader className="sr-only">
           <SheetTitle>Navigation</SheetTitle>

@@ -1,12 +1,10 @@
-import React from 'react'
 import Link from 'next/link'
 import {
-  NavbarLink,
   NavbarLogo,
   NavbarWithLinksActionsAndCenteredLogo,
 } from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
 import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Logo } from '@/app/(frontend)/components/elements/logo'
 
 export function Navbar() {
@@ -15,12 +13,21 @@ export function Navbar() {
       id="navbar"
       links={
         <>
-          <NavbarLink href="/#uber">Über Uns</NavbarLink>
-          <NavbarLink href="/#angebot">Angebot</NavbarLink>
-          <NavbarLink href="/blog">Blog</NavbarLink>
-          <NavbarLink href="mailto:kontakt@starkgemacht.com" className="sm:hidden">
-            kontakt(at)starkgemacht.com
-          </NavbarLink>
+          <Button variant="link" className="max-sm:hidden">
+            <Link href="/#uber">Unser Angebot</Link>
+          </Button>
+          <Button variant="link" className="max-sm:hidden">
+            <Link href="/#uber">Über Uns</Link>
+          </Button>
+          <Button variant="link" className="max-sm:hidden">
+            <Link href="/#angebot">Angebot</Link>
+          </Button>
+          <Button variant="link" className="max-sm:hidden">
+            <Link href="/blog">Blog</Link>
+          </Button>
+          <Button variant="link" className="sm:hidden">
+            <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
+          </Button>
         </>
       }
       logo={
@@ -30,18 +37,16 @@ export function Navbar() {
       }
       actions={
         <>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="ghost" asChild className="max-sm:hidden">
-                  <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Mailprogramm öffnen</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button variant="ghost" asChild className="max-sm:hidden">
+                <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Mailprogramm öffnen</p>
+            </TooltipContent>
+          </Tooltip>
           <Button asChild>
             <Link href="/#angebot">Unser Angebot</Link>
           </Button>

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { Main } from '@/app/(frontend)/components/elements/main'
 import { ArrowNarrowRightIcon } from '@/app/(frontend)/components/icons/arrow-narrow-right-icon'
-import { ChevronIcon } from '@/app/(frontend)/components/icons/chevron-icon'
+import { ChevronRight } from 'lucide-react'
 import { CallToActionSimple } from '@/app/(frontend)/components/sections/call-to-action-simple'
 import {
   FAQsTwoColumnAccordion,
@@ -24,6 +24,7 @@ import BlogThreeColumns from './components/sections/blog-three-columns'
 import { ImageWithCaption } from './components/elements/image-with-caption'
 import { getPriceDisplay } from './utils/preis'
 import NextLink from 'next/link'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export default async function HomePage() {
   return (
@@ -254,11 +255,18 @@ export default async function HomePage() {
                 <NextLink href="#angebot">Zu den Angeboten</NextLink>
               </Button>
 
-              <Button variant="ghost" size="lg" asChild>
-                <NextLink href="mailto:kontakt@starkgemacht.com">
-                  Kontakt aufnehmen <ChevronIcon />
-                </NextLink>
-              </Button>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Button variant="ghost" size="lg" asChild>
+                    <NextLink href="mailto:kontakt@starkgemacht.com">
+                      Jetzt kontaktieren <ChevronRight />
+                    </NextLink>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Mailprogramm öffnen</p>
+                </TooltipContent>
+              </Tooltip>
             </div>
           }
         />

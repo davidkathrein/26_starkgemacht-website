@@ -455,6 +455,13 @@ export interface Page {
    */
   generateSlug?: boolean | null;
   slug: string;
+  /**
+   * Suchmaschinenoptimierung
+   */
+  seo?: {
+    description?: string | null;
+    image?: (number | null) | Media;
+  };
   content: {
     root: {
       type: string;
@@ -469,15 +476,6 @@ export interface Page {
       version: number;
     };
     [k: string]: unknown;
-  };
-  /**
-   * Suchmaschinenoptimierung
-   */
-  seo?: {
-    title?: string | null;
-    description?: string | null;
-    image?: (number | null) | Media;
-    noIndex?: boolean | null;
   };
   updatedAt: string;
   createdAt: string;
@@ -857,15 +855,13 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   generateSlug?: T;
   slug?: T;
-  content?: T;
   seo?:
     | T
     | {
-        title?: T;
         description?: T;
         image?: T;
-        noIndex?: T;
       };
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
