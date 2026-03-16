@@ -74,15 +74,9 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: databaseURL,
-      ssl:
-        process.env.NODE_ENV === 'production'
-          ? {
-              rejectUnauthorized: true,
-              ca: supabaseCACert,
-            }
-          : {
-              rejectUnauthorized: false,
-            },
+      ssl: {
+        rejectUnauthorized: false,
+      },
     },
   }),
   sharp,
