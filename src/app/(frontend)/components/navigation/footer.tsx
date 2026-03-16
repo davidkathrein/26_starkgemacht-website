@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
 import type { Footer as FooterGlobalDoc } from '@/payload-types'
+import { NEXT_PUBLIC_SITE_NAME } from '@/lib/seo'
 import {
   resolveLinkComponentHref,
   resolveLinkComponentLabel,
@@ -64,16 +65,17 @@ async function resolveFooterData() {
     (
       group,
     ): group is { title: string; links: { label: string; href: string; newTab: boolean }[] } =>
-      Boolean(group),
+      group !== null && group.links.length > 0,
   )
 
   return {
+    hideNewsletter: Boolean(footer?.newsletter?.hideNewsletter),
     newsletterHeadline: footer?.newsletter?.headline?.trim() || 'Newsletter anmelden',
     newsletterSubheadline:
       footer?.newsletter?.subheadline?.trim() ||
       'Erhalte aktuelle Informationen zu unseren Workshops, Kursen und Veranstaltungen direkt in dein Postfach.',
-    fineprint: `© ${new Date().getFullYear()} ${process.env.NEXT_PUBLIC_SITE_NAME}`,
-    groups: filteredResolvedGroups.length ? filteredResolvedGroups : [],
+    fineprint: `© ${new Date().getFullYear()} ${NEXT_PUBLIC_SITE_NAME}`,
+    groups: filteredResolvedGroups,
   }
 }
 
@@ -84,10 +86,12 @@ export async function Footer() {
     <FooterWithNewsletterFormCategoriesAndSocialIcons
       id="footer"
       cta={
-        <NewsletterForm
-          headline={footerData.newsletterHeadline}
-          subheadline={<p>{footerData.newsletterSubheadline}</p>}
-        />
+        footerData.hideNewsletter ? null : (
+          <NewsletterForm
+            headline={footerData.newsletterHeadline}
+            subheadline={<p>{footerData.newsletterSubheadline}</p>}
+          />
+        )
       }
       links={
         <>

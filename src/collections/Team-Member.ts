@@ -96,7 +96,7 @@ export const TeamMember: CollectionConfig = {
       name: 'links',
       fields: [
         ...buildLinkComponentFields({
-          relationTo: ['pages', 'blog', 'event', 'media', 'team', 'category'],
+          relationTo: ['pages', 'blog', 'event', 'media'],
           includeNewTab: true,
         }),
         {
