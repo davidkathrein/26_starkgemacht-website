@@ -27,7 +27,7 @@ import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const databaseURL = process.env.STORAGE_POSTGRES_URL_NON_POOLING || ''
+const databaseURL = process.env.STORAGE_POSTGRES_URL || ''
 const supabaseCACert = process.env.SUPABASE_CA_CERT || ''
 
 export default buildConfig({
