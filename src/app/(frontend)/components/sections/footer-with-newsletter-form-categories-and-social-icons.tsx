@@ -34,7 +34,7 @@ export function FooterLink({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <li className={clsx('text-brand-700 dark:text-brand-400', className)}>
+    <li className={clsx('text-muted-foreground', className)}>
       <Link href={href} {...props} />
     </li>
   )
@@ -56,7 +56,7 @@ export function SocialLink({
           href={href}
           target="_blank"
           aria-label={name}
-          className={clsx('text-brand-950 *:size-6 dark:text-white', className)}
+          className={clsx('text-foreground *:size-6', className)}
           {...props}
         />
       </TooltipTrigger>
@@ -102,8 +102,8 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
   socialLinks?: ReactNode
 } & ComponentProps<'footer'>) {
   return (
-    <footer className={clsx(className)} {...props}>
-      <div className="bg-brand-950/2.5 text-brand-950 py-16 dark:bg-white/5 dark:text-white">
+    <footer className={clsx('dark', className)} {...props}>
+      <div className="border-border bg-background text-foreground border-t py-16">
         <Container>
           <div className="flex flex-col gap-16">
             <div className="grid grid-cols-1 gap-x-6 gap-y-16 text-sm/7 lg:grid-cols-2">
@@ -113,8 +113,8 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
               </nav>
             </div>
             <div className="flex flex-col gap-6 text-sm/7 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-              <div className="text-brand-600 dark:text-brand-500">{fineprint}</div>
-              <div className="text-brand-600 dark:text-brand-500">{attribution}</div>
+              <div className="text-muted-foreground">{fineprint}</div>
+              <div className="text-muted-foreground">{attribution}</div>
               {socialLinks && <div className="flex items-center gap-4 sm:gap-8">{socialLinks}</div>}
             </div>
           </div>

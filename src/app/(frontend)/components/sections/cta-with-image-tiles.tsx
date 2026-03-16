@@ -11,16 +11,16 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="flex flex-col justify-center lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
             <Subheading>Über StarkGemacht</Subheading>
-            <p className="text-brand-800 dark:text-brand-200 mt-6 text-xl/8">
+            <p className="mt-6 text-xl/8">
               StarkGemacht ist aus den Erfahrungen der Jahre 2020 und 2021 entstanden, als soziale
               Nähe und gemeinschaftliches Erleben für viele Menschen schwieriger wurden.
             </p>
-            <p className="text-brand-700 dark:text-brand-300 mt-6 text-base/7">
+            <p className="text-muted-foreground mt-6 text-base/7">
               2022 gründeten Eva Kathrein und Jasmin Bösch den Verein „StarkGemacht“, um das
               Miteinander zu stärken und Menschen aus unterschiedlichen Lebensrealitäten zu
               verbinden.
             </p>
-            <p className="text-brand-700 dark:text-brand-300 mt-6 text-base/7">
+            <p className="text-muted-foreground mt-6 text-base/7">
               Mit Kursen, Workshops und Projekten rund um Selbstschutz, Gesundheit, Nachhaltigkeit
               und Begegnung schaffen wir Räume für persönliches Wachstum und gelebte Gemeinschaft.
             </p>

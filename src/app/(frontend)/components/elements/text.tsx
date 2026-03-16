@@ -12,7 +12,7 @@ export function Text({
       className={clsx(
         size === 'md' && 'text-base/7',
         size === 'lg' && 'text-lg/8',
-        'text-brand-900/80 dark:text-brand-200',
+        'text-muted-foreground',
         className,
       )}
       {...props}

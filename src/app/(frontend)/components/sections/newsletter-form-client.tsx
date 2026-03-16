@@ -55,8 +55,8 @@ export function NewsletterFormClient({
       {...props}
     >
       <p>{headline}</p>
-      <div className="text-brand-700 dark:text-brand-400 flex flex-col gap-4">{subheadline}</div>
-      <div className="border-brand-950/20 has-[input:focus]:border-brand-950 flex items-center border-b py-2 dark:border-white/20 dark:has-[input:focus]:border-white">
+      <div className="text-muted-foreground flex flex-col gap-4">{subheadline}</div>
+      <div className="border-border has-[input:focus]:border-ring flex items-center border-b py-2">
         <Input
           type="email"
           placeholder="Email"
@@ -67,7 +67,7 @@ export function NewsletterFormClient({
           autoComplete="email"
           aria-label="Email"
           disabled={isSubmitting}
-          className="text-brand-950 h-auto flex-1 rounded-none border-0 px-0 py-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:opacity-50 dark:text-white"
+          className="text-foreground h-auto flex-1 rounded-none border-0 px-0 py-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 disabled:opacity-50"
         />
         <Button
           type="submit"

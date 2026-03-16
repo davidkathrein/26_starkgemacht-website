@@ -54,7 +54,7 @@ export default async function TeamImageShortParagraph() {
             <h2 className="font-display text-brand-950 text-3xl/9 font-medium tracking-[-0.03em] text-pretty sm:text-[2.5rem]/10 dark:text-white">
               Unser Team
             </h2>
-            <p className="text-brand-700 dark:text-brand-400 mt-6 text-base/7 text-pretty">
+            <p className="mt-6 text-base/7 text-pretty">
               Wir sind eine engagierte Gemeinschaft, die mit Herzblut daran arbeitet, Menschen zu
               stärken und das Miteinander zu fördern. Für Gemeinwohl, Natur und einen nachhaltigen,
               zukunftsorientierten Lebensstil.

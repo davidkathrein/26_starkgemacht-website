@@ -81,14 +81,14 @@ export function ImageWithCaption({
 
   if (captionVariant === 'overlay' && caption) {
     return (
-      <figure className={cn('relative overflow-hidden rounded-lg', className)}>
+      <figure className={cn('relative overflow-hidden rounded-2xl border border-border/70 bg-card', className)}>
         <Image
           src={url}
           alt={alt}
           width={finalWidth}
           height={finalHeight}
           priority={priority}
-          className="bg-brand-200 dark:bg-brand-800 h-full w-full object-cover"
+          className="bg-muted h-full w-full object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
         <figcaption>
@@ -108,13 +108,13 @@ export function ImageWithCaption({
         width={finalWidth}
         height={finalHeight}
         priority={priority}
-        className="bg-brand-200 dark:bg-brand-800 w-full rounded-xl object-cover"
+        className="bg-muted w-full rounded-2xl border border-border/70 object-cover"
       />
       {caption && captionVariant === 'below' && (
-        <figcaption className="text-brand-600 dark:text-brand-500 mt-4 flex gap-x-2 text-sm/6">
+        <figcaption className="text-muted-foreground mt-4 flex gap-x-2 text-sm/6">
           <BadgeInfoIcon
             aria-hidden="true"
-            className="text-brand-400 dark:text-brand-600 mt-0.5 size-5 flex-none"
+            className="text-muted-foreground/70 mt-0.5 size-5 flex-none"
           />
           {caption}
         </figcaption>

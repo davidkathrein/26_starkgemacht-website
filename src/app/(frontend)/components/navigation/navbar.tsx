@@ -29,7 +29,7 @@ export function Navbar() {
       }
       logo={
         <NavbarLogo href="/#hero">
-          <Logo className="text-brand-700 dark:text-brand-400 h-8 w-32" />
+          <Logo className="text-primary h-8 w-32" />
         </NavbarLogo>
       }
       actions={

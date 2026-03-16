@@ -21,11 +21,11 @@ export function AnnouncementBadge({
       {...props}
       data-variant={variant}
       className={clsx(
-        'group relative inline-flex max-w-full gap-x-3 overflow-hidden rounded-md px-3.5 py-2 text-sm/6 max-sm:flex-col sm:items-center sm:rounded-full sm:px-3 sm:py-0.5',
+        'group relative inline-flex max-w-full gap-x-3 overflow-hidden rounded-md border px-3.5 py-2 text-sm/6 shadow-sm max-sm:flex-col sm:items-center sm:rounded-full sm:px-3 sm:py-0.5',
         variant === 'normal' &&
-          'bg-brand-950/5 text-brand-950 hover:bg-brand-950/10 dark:bg-white/5 dark:text-white dark:inset-ring-1 dark:inset-ring-white/5 dark:hover:bg-white/10',
+          'border-border bg-card text-card-foreground hover:bg-accent hover:text-accent-foreground',
         variant === 'overlay' &&
-          'bg-brand-950/15 hover:bg-brand-950/20 dark:bg-brand-950/20 dark:hover:bg-brand-950/25 text-white',
+          'border-primary/20 bg-primary/90 text-primary-foreground hover:bg-primary',
         className,
       )}
     >
@@ -33,14 +33,14 @@ export function AnnouncementBadge({
       <span
         className={clsx(
           'h-3 w-px max-sm:hidden',
-          variant === 'normal' && 'bg-brand-950/20 dark:bg-white/10',
+          variant === 'normal' && 'bg-border',
           variant === 'overlay' && 'bg-white/20',
         )}
       />
       <span
         className={clsx(
           'inline-flex shrink-0 items-center gap-2 font-semibold',
-          variant === 'normal' && 'text-brand-950 dark:text-white',
+          variant === 'normal' && 'text-foreground',
         )}
       >
         {cta} <ChevronIcon className="shrink-0" />

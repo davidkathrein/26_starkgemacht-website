@@ -14,7 +14,7 @@ export function NavbarLink({
     <a
       href={href}
       className={clsx(
-        'group text-brand-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
+        'group text-foreground inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7',
         className,
       )}
       {...props}
@@ -74,7 +74,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
     <>
       <header
         className={clsx(
-          'bg-brand-100/75 dark:bg-brand-950/75 fixed top-0 right-0 left-0 z-10 backdrop-blur-md',
+          'fixed top-0 right-0 left-0 z-10 border-b border-border/60 bg-background/85 backdrop-blur-md',
           className,
         )}
         {...props}

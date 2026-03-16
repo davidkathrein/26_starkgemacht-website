@@ -30,7 +30,7 @@ export default async function BlogOverviewPage() {
   const posts = postsResult.docs
 
   return (
-    <div className="bg-brand-50 dark:bg-brand-950 min-h-full w-full px-6 py-24 lg:px-8">
+    <div className="bg-background min-h-full w-full px-6 py-24 lg:px-8">
       <Container>
         <div className="mx-auto lg:mx-0">
           <Heading>Alle Blog Beiträge</Heading>

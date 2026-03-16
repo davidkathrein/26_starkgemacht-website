@@ -19,10 +19,10 @@ export function BlogCategoryFilter({
 }: Props) {
   const badgeClass = (isActive: boolean) =>
     clsx(
-      'cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors',
+      'cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors',
       isActive
-        ? 'bg-brand-800 text-white dark:bg-brand-200 dark:text-brand-900'
-        : 'bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700',
+        ? 'border-primary bg-primary text-primary-foreground'
+        : 'border-border/70 bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground',
     )
 
   return (

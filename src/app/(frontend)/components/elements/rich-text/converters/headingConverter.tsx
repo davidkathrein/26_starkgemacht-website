@@ -15,7 +15,7 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
       return (
         <h2
           id={id}
-          className="font-display text-brand-950 text-3xl font-semibold tracking-tight text-balance dark:text-white"
+          className="text-foreground font-display text-3xl font-semibold tracking-tight text-balance"
         >
           {text}
         </h2>
@@ -23,14 +23,14 @@ export const headingConverter: JSXConverters<SerializedHeadingNode> = {
     } else if (node.tag === 'h3') {
       const text = nodesToJSX({ nodes: node.children })
       return (
-        <h3 className="font-display text-brand-950 text-2xl font-semibold tracking-tight text-balance dark:text-white">
+        <h3 className="text-foreground font-display text-2xl font-semibold tracking-tight text-balance">
           {text}
         </h3>
       )
     } else if (node.tag === 'h4') {
       const text = nodesToJSX({ nodes: node.children })
       return (
-        <h4 className="font-display text-brand-950 text-xl font-semibold tracking-tight text-balance dark:text-white">
+        <h4 className="text-foreground font-display text-xl font-semibold tracking-tight text-balance">
           {text}
         </h4>
       )

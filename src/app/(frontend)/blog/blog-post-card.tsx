@@ -62,7 +62,7 @@ export function BlogPostCard({
             : 'flex items-center gap-x-4 text-xs'
         }
       >
-        <time dateTime={publishedDate.toISOString()} className="text-brand-600 dark:text-brand-500">
+        <time dateTime={publishedDate.toISOString()} className="text-muted-foreground">
           {formattedDate}
         </time>
         <div className="flex flex-wrap items-center gap-y-2">
@@ -76,7 +76,7 @@ export function BlogPostCard({
                   <Badge
                     key={index}
                     variant="secondary"
-                    className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 relative z-10 cursor-pointer rounded-full px-3 py-1.5 font-medium transition-colors"
+                    className="relative z-10 cursor-pointer rounded-full border border-border/70 bg-secondary px-3 py-1.5 font-medium text-secondary-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                     onClick={() => onCategoryClick(slug)}
                     role="button"
                     tabIndex={0}
@@ -89,7 +89,7 @@ export function BlogPostCard({
                 <Link key={index} href={`/blog?category=${encodeURIComponent(slug)}`}>
                   <Badge
                     variant="secondary"
-                    className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 relative z-10 cursor-pointer rounded-full px-3 py-1.5 font-medium transition-colors"
+                    className="relative z-10 cursor-pointer rounded-full border border-border/70 bg-secondary px-3 py-1.5 font-medium text-secondary-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
                   >
                     {c.name}
                   </Badge>
@@ -104,7 +104,7 @@ export function BlogPostCard({
               return categoryItem ? (
                 <Badge
                   variant="secondary"
-                  className="bg-brand-100 text-brand-700 dark:bg-brand-800 dark:text-brand-300 relative z-10 rounded-full px-3 py-1.5 font-medium"
+                  className="relative z-10 rounded-full border border-border/70 bg-secondary px-3 py-1.5 font-medium text-secondary-foreground"
                 >
                   {categoryItem.name}
                 </Badge>
@@ -113,14 +113,14 @@ export function BlogPostCard({
         </div>
       </div>
       <div className="group relative">
-        <TitleTag className="font-display text-brand-800 group-hover:text-brand-600 dark:group-hover:text-brand-200 mt-3 text-lg/6 font-semibold md:text-xl/7 dark:text-white">
+        <TitleTag className="text-foreground font-display mt-3 text-lg/6 font-semibold group-hover:text-primary md:text-xl/7">
           <Link href={`/blog/${post.slug}`}>
             <span className="absolute inset-0" />
             {post.title}
           </Link>
         </TitleTag>
         {post.excerpt && (
-          <p className="text-brand-600 dark:text-brand-300 mt-4 line-clamp-3 text-sm/6">
+          <p className="text-muted-foreground mt-4 line-clamp-3 text-sm/6">
             {post.excerpt}
           </p>
         )}
@@ -139,9 +139,7 @@ export function BlogPostCard({
             fallbackId={author.id}
             size="default"
           />
-          <span className="text-brand-800 text-sm font-semibold dark:text-white">
-            {author.name}
-          </span>
+          <span className="text-foreground text-sm font-semibold">{author.name}</span>
         </div>
       )}
     </article>
