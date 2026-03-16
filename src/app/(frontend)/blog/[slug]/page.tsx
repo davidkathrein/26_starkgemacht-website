@@ -55,6 +55,26 @@ async function getBlogPostBySlug(slug: string) {
   return posts.docs[0] as Blog | undefined
 }
 
+async function resolveTeamAuthor(author: Blog['author']): Promise<Team | null> {
+  if (author && typeof author !== 'number') {
+    return author as Team
+  }
+
+  if (typeof author !== 'number') {
+    return null
+  }
+
+  const payload = await getPayload({ config })
+
+  const teamMember = await payload.findByID({
+    collection: 'team',
+    id: author,
+    depth: 1,
+  })
+
+  return teamMember as Team
+}
+
 async function getSimilarBlogPosts(post: Blog, limit = 3) {
   const payload = await getPayload({ config })
   const categoryIds = (post.categories || [])
@@ -92,7 +112,13 @@ async function getSimilarBlogPosts(post: Blog, limit = 3) {
   })
 
   if (relatedPosts.docs.length >= limit || categoryIds.length > 0) {
-    return relatedPosts.docs as Blog[]
+    const docs = relatedPosts.docs as Blog[]
+    return Promise.all(
+      docs.map(async (doc) => ({
+        ...doc,
+        author: await resolveTeamAuthor(doc.author),
+      })),
+    ) as Promise<Blog[]>
   }
 
   const fallbackPosts = await payload.find({
@@ -108,7 +134,13 @@ async function getSimilarBlogPosts(post: Blog, limit = 3) {
     },
   })
 
-  return fallbackPosts.docs as Blog[]
+  const docs = fallbackPosts.docs as Blog[]
+  return Promise.all(
+    docs.map(async (doc) => ({
+      ...doc,
+      author: await resolveTeamAuthor(doc.author),
+    })),
+  ) as Promise<Blog[]>
 }
 
 export async function generateMetadata({
@@ -192,7 +224,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
     year: 'numeric',
   })
 
-  const author = typeof post.author !== 'number' ? (post.author as Team) : null
+  const author = await resolveTeamAuthor(post.author)
 
   // Get categories
   const categories = post.categories || []
@@ -235,26 +267,27 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </Text>
           )}
 
-          {/* Author byline */}
-          {author && (
-            <div className="text-brand-600 dark:text-brand-300 mt-6 flex items-center gap-x-3 text-sm">
-              <Avatar
-                media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
-                alt={author.name}
-                fallbackId={author.id}
-                size="default"
-              />
-              <span className="text-brand-800 font-semibold dark:text-white">{author.name}</span>
-              {author.role && (
-                <>
-                  <span className="text-brand-400 dark:text-brand-500">·</span>
-                  <span>{author.role}</span>
-                </>
-              )}
-              <span className="text-brand-400 dark:text-brand-500">·</span>
-              <span>{readTimeMinutes} Min. Lesezeit</span>
-            </div>
-          )}
+          <div className="text-brand-600 dark:text-brand-300 mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+            {author && (
+              <>
+                <Avatar
+                  media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
+                  alt={author.name}
+                  fallbackId={author.id}
+                  size="default"
+                />
+                <span className="text-brand-800 font-semibold dark:text-white">{author.name}</span>
+                {author.role && (
+                  <>
+                    <span className="text-brand-400 dark:text-brand-500">·</span>
+                    <span>{author.role}</span>
+                  </>
+                )}
+                <span className="text-brand-400 dark:text-brand-500">·</span>
+              </>
+            )}
+            <span>{readTimeMinutes} Min. Lesezeit</span>
+          </div>
 
           {featuredImage && <ImageWithCaption media={featuredImage} className="mt-10" />}
 
@@ -376,6 +409,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     slug: similarPost.slug,
                     title: similarPost.title,
                     excerpt: similarPost.excerpt,
+                    content: similarPost.content,
                     publishedAt: similarPost.publishedAt,
                     createdAt: similarPost.createdAt,
                     featuredImage: similarPost.featuredImage,

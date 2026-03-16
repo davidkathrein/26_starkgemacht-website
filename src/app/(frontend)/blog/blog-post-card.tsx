@@ -3,12 +3,21 @@
 import Link from 'next/link'
 import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-with-caption'
 import { Avatar } from '@/app/(frontend)/components/elements/avatar'
+import { estimateReadTimeMinutes } from '@/app/(frontend)/utils/readTime'
 import { Badge } from '@/components/ui/badge'
 import type { Blog, Team } from '@/payload-types'
 
 type PostWithRelations = Pick<
   Blog,
-  'id' | 'slug' | 'title' | 'excerpt' | 'publishedAt' | 'createdAt' | 'featuredImage' | 'categories'
+  | 'id'
+  | 'slug'
+  | 'title'
+  | 'excerpt'
+  | 'content'
+  | 'publishedAt'
+  | 'createdAt'
+  | 'featuredImage'
+  | 'categories'
 > & {
   author: number | Team
 }
@@ -41,6 +50,7 @@ export function BlogPostCard({
     month: 'long',
     year: 'numeric',
   })
+  const readTimeMinutes = estimateReadTimeMinutes(post.content)
 
   const TitleTag = headingLevel
 
@@ -125,23 +135,26 @@ export function BlogPostCard({
           </p>
         )}
       </div>
-      {author && (
-        <div
-          className={
-            headingLevel === 'h2'
-              ? 'relative mt-6 flex items-center gap-x-4 justify-self-end md:mt-auto md:pt-6'
-              : 'relative mt-8 flex items-center gap-x-4 justify-self-end'
-          }
-        >
+      <div
+        className={
+          headingLevel === 'h2'
+            ? 'relative mt-6 flex items-center gap-x-4 md:mt-auto md:pt-6'
+            : 'relative mt-8 flex items-center gap-x-4'
+        }
+      >
+        {author && (
           <Avatar
             media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
             alt={author.name}
             fallbackId={author.id}
             size="default"
           />
-          <span className="text-foreground text-sm font-semibold">{author.name}</span>
+        )}
+        <div className="min-w-0">
+          {author && <p className="text-foreground truncate text-sm font-semibold">{author.name}</p>}
+          <p className="text-muted-foreground text-xs/5">{readTimeMinutes} Min. Lesezeit</p>
         </div>
-      )}
+      </div>
     </article>
   )
 }
