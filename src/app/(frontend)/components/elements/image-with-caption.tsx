@@ -4,6 +4,9 @@ import { cn } from '@/app/(frontend)/utils/cn'
 import type { Media } from '@/payload-types'
 
 type CaptionVariant = 'below' | 'overlay'
+const DEBUG_IMAGE_TRANSFORMS =
+  process.env.NEXT_PUBLIC_DEBUG_IMAGE_TRANSFORMS === 'true' ||
+  process.env.DEBUG_IMAGE_TRANSFORMS === 'true'
 
 /** Use a specific image size variant when available (e.g. 'aspect16x9' for 16:9 crop, 'aspect4x3' for 4:3 crop). */
 export type ImageSizeVariant = 'aspect16x9' | 'aspect4x3' | 'square' | 'aspect3x4'
@@ -48,7 +51,31 @@ export function ImageWithCaption({
   const finalWidth = width ?? sizeVariant?.width ?? media.width ?? 1200
   const finalHeight = height ?? sizeVariant?.height ?? media.height ?? 675
 
+  if (DEBUG_IMAGE_TRANSFORMS) {
+    console.info('[image-with-caption] Rendering image', {
+      alt,
+      requestedSizeVariant: imageSize ?? null,
+      resolvedToVariant: sizeVariant ? imageSize : null,
+      fellBackToOriginalUrl: !sizeVariant,
+      originalUrl: media.url ?? null,
+      resolvedUrl: url ?? null,
+      originalWidth: media.width ?? null,
+      originalHeight: media.height ?? null,
+      variantWidth: sizeVariant?.width ?? null,
+      variantHeight: sizeVariant?.height ?? null,
+      finalWidth,
+      finalHeight,
+      captionVariant,
+      className: className ?? null,
+    })
+  }
+
   if (!url) {
+    if (DEBUG_IMAGE_TRANSFORMS) {
+      console.warn('[image-with-caption] Skipping render because no URL was available', {
+        requestedSizeVariant: imageSize ?? null,
+      })
+    }
     return null
   }
 

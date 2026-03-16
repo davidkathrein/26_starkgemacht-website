@@ -31,7 +31,7 @@ export function BlogPostCard({
   headingLevel = 'h2',
   categoriesVariant = 'links',
   imageSize = 'aspect4x3',
-  imageClassName = 'mb-6 aspect-4/3 w-full',
+  imageClassName = 'mb-5 aspect-4/3 w-full md:mb-4',
   onCategoryClick,
 }: BlogPostCardProps) {
   const author = typeof post.author !== 'number' ? post.author : null
@@ -45,7 +45,7 @@ export function BlogPostCard({
   const TitleTag = headingLevel
 
   return (
-    <article className="flex flex-col items-start">
+    <article className="flex h-full flex-col items-start">
       <Link href={`/blog/${post.slug}`} className="block w-full">
         <ImageWithCaption
           media={post.featuredImage}
@@ -113,14 +113,14 @@ export function BlogPostCard({
         </div>
       </div>
       <div className="group relative">
-        <TitleTag className="font-display mt-3 text-lg/6 font-semibold text-olive-800 group-hover:text-olive-600 dark:text-white dark:group-hover:text-olive-200">
+        <TitleTag className="font-display mt-3 text-lg/6 font-semibold text-olive-800 group-hover:text-olive-600 md:text-xl/7 dark:text-white dark:group-hover:text-olive-200">
           <Link href={`/blog/${post.slug}`}>
             <span className="absolute inset-0" />
             {post.title}
           </Link>
         </TitleTag>
         {post.excerpt && (
-          <p className="mt-5 line-clamp-3 text-sm/6 text-olive-600 dark:text-olive-300">
+          <p className="mt-4 line-clamp-3 text-sm/6 text-olive-600 dark:text-olive-300">
             {post.excerpt}
           </p>
         )}
@@ -129,7 +129,7 @@ export function BlogPostCard({
         <div
           className={
             headingLevel === 'h2'
-              ? 'relative mt-6 flex items-center gap-x-4 justify-self-end'
+              ? 'relative mt-6 flex items-center gap-x-4 justify-self-end md:mt-auto md:pt-6'
               : 'relative mt-8 flex items-center gap-x-4 justify-self-end'
           }
         >

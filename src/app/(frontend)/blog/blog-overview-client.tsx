@@ -47,7 +47,7 @@ export function BlogOverviewClient({ posts, categories, className }: Props) {
         className={className}
       />
 
-      <div className="border-olive-950/20 mx-auto mt-12 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-12 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 dark:border-white/20">
+      <div className="border-olive-950/20 mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-14 border-t pt-10 md:max-w-5xl md:grid-cols-2 lg:mx-0 lg:max-w-none xl:grid-cols-3 dark:border-white/20">
         {filteredPosts.length === 0 ? (
           <p className="text-olive-600 dark:text-olive-400 col-span-full py-12 text-center">
             {selectedSlug
