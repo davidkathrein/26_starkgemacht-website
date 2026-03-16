@@ -278,14 +278,6 @@ export interface Team {
           | ({
               relationTo: 'media';
               value: number | Media;
-            } | null)
-          | ({
-              relationTo: 'team';
-              value: number | Team;
-            } | null)
-          | ({
-              relationTo: 'category';
-              value: number | Category;
             } | null);
         /**
          * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
