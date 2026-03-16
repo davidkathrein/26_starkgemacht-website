@@ -34,8 +34,8 @@ export function FooterLink({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <li className={clsx('text-muted-foreground', className)}>
-      <Link href={href} {...props} />
+    <li>
+      <Link href={href} className={clsx('text-muted-foreground', className)} {...props} />
     </li>
   )
 }
@@ -56,7 +56,7 @@ export function SocialLink({
           href={href}
           target="_blank"
           aria-label={name}
-          className={clsx('text-foreground *:size-6', className)}
+          className={clsx('*:size-6', className)}
           {...props}
         />
       </TooltipTrigger>

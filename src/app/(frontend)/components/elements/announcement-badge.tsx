@@ -40,7 +40,6 @@ export function AnnouncementBadge({
       <span
         className={clsx(
           'inline-flex shrink-0 items-center gap-2 font-semibold',
-          variant === 'normal' && 'text-foreground',
         )}
       >
         {cta} <ChevronIcon className="shrink-0" />

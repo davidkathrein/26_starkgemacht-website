@@ -25,7 +25,7 @@ export function FeatureThreeColumnWithDemos({
         {demo}
       </div>
       <div className="p-6 sm:p-10 lg:p-6">
-        <h3 className="text-foreground text-base/8 font-medium">{headline}</h3>
+        <h3 className="text-base/8 font-medium">{headline}</h3>
         <div className="text-muted-foreground mt-2 flex flex-col gap-4 text-sm/7">
           {subheadline}
         </div>
