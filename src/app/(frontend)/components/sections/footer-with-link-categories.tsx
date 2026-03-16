@@ -24,7 +24,7 @@ export function FooterLink({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <li className={clsx('text-olive-700 dark:text-olive-400', className)}>
+    <li className={clsx('text-brand-700 dark:text-brand-400', className)}>
       <Link href={href} {...props} />
     </li>
   )
@@ -41,12 +41,12 @@ export function FooterWithLinkCategories({
 } & ComponentProps<'footer'>) {
   return (
     <footer className={clsx('pt-16', className)} {...props}>
-      <div className="bg-olive-950/2.5 text-olive-950 py-16 dark:bg-white/5 dark:text-white">
+      <div className="bg-brand-950/2.5 text-brand-950 py-16 dark:bg-white/5 dark:text-white">
         <Container className="flex flex-col gap-16">
           <nav className="grid grid-cols-2 gap-6 text-sm/7 sm:has-[>:last-child:nth-child(3)]:grid-cols-3 sm:has-[>:nth-child(5)]:grid-cols-3 md:has-[>:last-child:nth-child(4)]:grid-cols-4 lg:has-[>:nth-child(5)]:grid-cols-5">
             {links}
           </nav>
-          <div className="text-olive-600 dark:text-olive-500 text-sm/7">{fineprint}</div>
+          <div className="text-brand-600 dark:text-brand-500 text-sm/7">{fineprint}</div>
         </Container>
       </div>
     </footer>

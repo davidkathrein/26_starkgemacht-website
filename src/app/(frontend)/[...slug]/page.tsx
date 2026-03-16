@@ -101,7 +101,7 @@ export default async function DynamicRootPage({ params }: { params: Promise<{ sl
 
           <RichText
             data={page.content}
-            className="mt-10 max-w-2xl space-y-6 text-base/7 text-olive-600 dark:text-olive-300"
+            className="text-brand-600 dark:text-brand-300 mt-10 max-w-2xl space-y-6 text-base/7"
           />
         </div>
       </Container>

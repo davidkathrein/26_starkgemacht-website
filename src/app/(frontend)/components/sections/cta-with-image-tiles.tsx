@@ -6,29 +6,28 @@ import Link from 'next/link'
 
 export default function CTAWithImageTiles({ id }: { id?: string }) {
   return (
-    <section className="overflow-hidden bg-olive-50 py-32 dark:bg-olive-950" id={id}>
+    <section className="bg-brand-50 dark:bg-brand-950 overflow-hidden py-32" id={id}>
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="flex flex-col justify-center lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
-            <Subheading>Über StarkGemacht 🍀💚</Subheading>
-            <p className="mt-6 text-xl/8 text-olive-800 dark:text-olive-200">
-              Entstanden aus der Pandemiezeit 2020/2021, als soziale Kontakte für viele zur
-              Herausforderung wurden – besonders für Singles, Senior:innen, Zugezogene, Familien und
-              junge Menschen.
+            <Subheading>Über StarkGemacht</Subheading>
+            <p className="text-brand-800 dark:text-brand-200 mt-6 text-xl/8">
+              StarkGemacht ist aus den Erfahrungen der Jahre 2020 und 2021 entstanden, als soziale
+              Nähe und gemeinschaftliches Erleben für viele Menschen schwieriger wurden.
             </p>
-            <p className="mt-6 text-base/7 text-olive-700 dark:text-olive-300">
+            <p className="text-brand-700 dark:text-brand-300 mt-6 text-base/7">
               2022 gründeten Eva Kathrein und Jasmin Bösch den Verein „StarkGemacht“, um das
-              Sozialleben wieder zu beleben und Menschen aus allen Bevölkerungsgruppen zu stärken.
+              Miteinander zu stärken und Menschen aus unterschiedlichen Lebensrealitäten zu
+              verbinden.
             </p>
-            <p className="mt-6 text-base/7 text-olive-700 dark:text-olive-300">
-              Wir fördern mentale und körperliche Stärke, Sicherheit, Begegnung und einen gesunden,
-              nachhaltigen Lebensstil – durch Selbstverteidigung, Workshops, Kochkurse und
-              gemeinschaftliche Projekte.
+            <p className="text-brand-700 dark:text-brand-300 mt-6 text-base/7">
+              Mit Kursen, Workshops und Projekten rund um Selbstschutz, Gesundheit, Nachhaltigkeit
+              und Begegnung schaffen wir Räume für persönliches Wachstum und gelebte Gemeinschaft.
             </p>
             <div className="mt-10 flex">
               <Button size="lg" asChild>
                 <Link href="#angebot">
-                  Unsere Angebote entdecken <ArrowNarrowRightIcon />
+                  Angebote ansehen <ArrowNarrowRightIcon />
                 </Link>
               </Button>
             </div>
@@ -40,7 +39,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                 src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_1686.jpeg"
                 width={1152}
                 height={1200}
-                className="aspect-video w-full rounded-2xl bg-olive-100 object-cover object-left md:aspect-7/7 md:w-148 md:max-w-none dark:bg-olive-900"
+                className="bg-brand-100 dark:bg-brand-900 aspect-video w-full rounded-2xl object-cover object-left md:aspect-7/7 md:w-148 md:max-w-none"
               />
             </div>
             <div className="contents lg:col-span-2 lg:col-end-2 lg:ml-auto lg:flex lg:w-148 lg:items-start lg:justify-end lg:gap-x-8">
@@ -50,7 +49,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9731.jpeg"
                   width={768}
                   height={604}
-                  className="aspect-video w-full rounded-2xl bg-olive-100 object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none md:flex-none dark:bg-olive-900"
+                  className="bg-brand-100 dark:bg-brand-900 aspect-video w-full rounded-2xl object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none md:flex-none"
                 />
               </div>
               <div className="w-full md:flex md:w-96 md:flex-auto md:justify-end lg:w-auto lg:flex-none">
@@ -59,7 +58,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_9738.jpeg"
                   width={1152}
                   height={842}
-                  className="aspect-video w-full rounded-2xl bg-olive-100 object-cover md:aspect-7/5 md:w-148 md:max-w-none md:flex-none dark:bg-olive-900"
+                  className="bg-brand-100 dark:bg-brand-900 aspect-video w-full rounded-2xl object-cover md:aspect-7/5 md:w-148 md:max-w-none md:flex-none"
                 />
               </div>
               <div className="md:w-0 md:flex-auto lg:w-auto lg:flex-none">
@@ -68,7 +67,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
                   src="https://yp4yhupjx5bpamyq.public.blob.vercel-storage.com/IMG_4216.jpeg"
                   width={768}
                   height={604}
-                  className="aspect-video w-full rounded-2xl bg-olive-100 object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none dark:bg-olive-900"
+                  className="bg-brand-100 dark:bg-brand-900 aspect-video w-full rounded-2xl object-cover md:aspect-4/3 md:w-[24rem] md:max-w-none"
                 />
               </div>
             </div>

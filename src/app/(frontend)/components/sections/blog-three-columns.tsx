@@ -26,7 +26,7 @@ export default async function BlogThreeColumns({ id }: { id?: string }) {
   }
 
   return (
-    <section className="bg-olive-50 py-24 sm:py-32 dark:bg-olive-900" id={id}>
+    <section className="bg-brand-50 dark:bg-brand-900 py-24 sm:py-32" id={id}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <Subheading>Aktuelle Blog Beiträge</Subheading>
@@ -38,7 +38,7 @@ export default async function BlogThreeColumns({ id }: { id?: string }) {
             <Link href="/blog">Alle Blog Beiträge</Link>
           </Button>
         </div>
-        <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-olive-950/20 pt-8 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3 dark:border-white/20">
+        <div className="border-brand-950/20 mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t pt-8 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3 dark:border-white/20">
           {posts.map((post) => (
             <BlogPostCard
               key={post.id}

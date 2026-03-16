@@ -43,20 +43,20 @@ export default async function HomePage() {
           headline="StarkGemacht: Menschen stärken, Gemeinschaft fördern, Zukunft gestalten."
           subheadline={
             <p>
-              Von Selbstverteidigung über Kochkurse bis zu Nachhaltigkeits-Workshops – wir bringen
-              verschiedene Gesellschaftsgruppen zusammen und fördern einen gesunden, selbstbewussten
-              Lebensstil.
+              Mit Workshops, Kursen und Projekten rund um Selbstschutz, Gesundheit und
+              Nachhaltigkeit bringen wir Menschen zusammen und stärken Selbstvertrauen, Gemeinschaft
+              und Lebensfreude.
             </p>
           }
           cta={
             <div className="flex items-center gap-4">
               <Button size="lg" asChild>
-                <NextLink href="#angebot">Unsere Angebote entdecken</NextLink>
+                <NextLink href="#angebot">Angebote entdecken</NextLink>
               </Button>
 
               <Button variant="ghost" size="lg" asChild>
                 <NextLink href="#uber">
-                  Mehr über uns <ArrowNarrowRightIcon />
+                  Mehr über StarkGemacht <ArrowNarrowRightIcon />
                 </NextLink>
               </Button>
             </div>
@@ -75,7 +75,7 @@ export default async function HomePage() {
             <FeaturesTwoColumnWithDemos
               id="angebot"
               eyebrow="Unsere Angebote"
-              headline="Workshops, Kurse und Projekte"
+              headline="Workshops, Kurse und Veranstaltungen"
               subheadline={<p>Lade Veranstaltungen...</p>}
               features={<></>}
             />
@@ -224,7 +224,7 @@ export default async function HomePage() {
           <Faq
             id="faq-2"
             question="Wie kann ich mich für eine Veranstaltung anmelden?"
-            answer="Schau dir unsere aktuellen Veranstaltungen an und klicke auf ‘Jetzt anmelden’. Du wirst dann zu unserem Buchungssystem weitergeleitet, wo du dich direkt registrieren kannst."
+            answer="Schau dir unsere aktuellen Veranstaltungen an und klicke auf „Tickets sichern“. Du wirst dann direkt zu unserem Buchungssystem weitergeleitet. Falls keine Online-Buchung verfügbar ist, kannst du uns jederzeit kontaktieren."
           />
           <Faq
             id="faq-3"
@@ -245,14 +245,14 @@ export default async function HomePage() {
           headline="Bereit, gemeinsam stark zu werden?"
           subheadline={
             <p>
-              Werde Teil unserer Gemeinschaft und entdecke Workshops, Kurse und Veranstaltungen, die
-              dich stärken, inspirieren und mit anderen Menschen verbinden.
+              Entdecke Angebote, die dich stärken, inspirieren und mit anderen Menschen in
+              Verbindung bringen.
             </p>
           }
           cta={
             <div className="flex items-center gap-4">
               <Button size="lg" asChild>
-                <NextLink href="#angebot">Zu den Angeboten</NextLink>
+                <NextLink href="#angebot">Angebote ansehen</NextLink>
               </Button>
 
               <Tooltip>
@@ -290,9 +290,8 @@ async function EventsFeatureSection() {
           <p>Aktuell sind keine Veranstaltungen verfügbar. Neue Events folgen in Kürze!</p>
         ) : (
           <p>
-            Von Selbstverteidigung über vegane Kochkurse bis zu nachhaltigen DIY-Workshops –
-            entdecke unsere vielfältigen Angebote für mehr Selbstbewusstsein, Gesundheit und
-            Gemeinschaft.
+            Entdecke aktuelle Workshops, Kurse und Veranstaltungen, die Selbstvertrauen,
+            Gesundheit, Nachhaltigkeit und gemeinschaftliches Erleben in den Mittelpunkt stellen.
           </p>
         )
       }
@@ -357,9 +356,9 @@ async function EventsFeatureSection() {
                 headline={event.name}
                 subheadline={
                   <div>
-                    <p className="mb-2 text-sm font-medium text-olive-600 dark:text-olive-300">
+                    <p className="text-brand-600 dark:text-brand-300 mb-2 text-sm font-medium">
                       {(event.isFree || event.minPrice !== null) && (
-                        <span className="mb-2 font-semibold text-olive-800 dark:text-olive-200">
+                        <span className="text-brand-800 dark:text-brand-200 mb-2 font-semibold">
                           {getPriceDisplay({
                             isFree: event.isFree,
                             minPrice: event.minPrice,
@@ -379,18 +378,18 @@ async function EventsFeatureSection() {
                   <div className="flex gap-2">
                     {event.checkoutUrl ? (
                       <Button asChild>
-                        <NextLink href={'/angebot/' + event.slug} rel="noopener noreferrer">
+                        <NextLink href={'/angebot/' + event.slug}>
                           Mehr erfahren
                         </NextLink>
                       </Button>
                     ) : undefined}
                     <Button variant="ghost" asChild>
                       <NextLink
-                        href={event.checkoutUrl ?? '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                        href={event.checkoutUrl ?? 'mailto:kontakt@starkgemacht.com'}
+                        target={event.checkoutUrl ? '_blank' : undefined}
+                        rel={event.checkoutUrl ? 'noopener noreferrer' : undefined}
                       >
-                        Tickets sichern
+                        {event.checkoutUrl ? 'Tickets sichern' : 'Jetzt kontaktieren'}
                       </NextLink>
                     </Button>
                   </div>

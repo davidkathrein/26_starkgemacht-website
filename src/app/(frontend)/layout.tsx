@@ -31,7 +31,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
 
   return (
     <html lang="de" className={`h-full ${familjenGrotesk.variable} ${inter.variable}`}>
-      <body className="flex min-h-full flex-col bg-olive-50 dark:bg-olive-950">
+      <body className="bg-brand-50 dark:bg-brand-950 flex min-h-full flex-col">
         <TooltipProvider>
           <Navbar />
           <main className="flex grow flex-col">{children}</main>

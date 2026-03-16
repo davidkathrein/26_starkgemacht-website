@@ -155,7 +155,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 >
                   <Badge
                     variant="secondary"
-                    className="relative z-10 cursor-pointer rounded-full bg-olive-100 px-3 py-1.5 font-medium text-olive-700 transition-colors hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700"
+                    className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 relative z-10 cursor-pointer rounded-full px-3 py-1.5 font-medium transition-colors"
                   >
                     {category.name}
                   </Badge>
@@ -174,17 +174,17 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
           {/* Author byline */}
           {author && (
-            <div className="mt-6 flex items-center gap-x-3 text-sm text-olive-600 dark:text-olive-300">
+            <div className="text-brand-600 dark:text-brand-300 mt-6 flex items-center gap-x-3 text-sm">
               <Avatar
                 media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
                 alt={author.name}
                 fallbackId={author.id}
                 size="default"
               />
-              <span className="font-semibold text-olive-800 dark:text-white">{author.name}</span>
+              <span className="text-brand-800 font-semibold dark:text-white">{author.name}</span>
               {author.role && (
                 <>
-                  <span className="text-olive-400 dark:text-olive-500">·</span>
+                  <span className="text-brand-400 dark:text-brand-500">·</span>
                   <span>{author.role}</span>
                 </>
               )}
@@ -196,7 +196,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {post.content && (
             <RichText
               data={post.content}
-              className="mt-10 max-w-2xl space-y-6 text-base/7 text-olive-600 dark:text-olive-300"
+              className="text-brand-600 dark:text-brand-300 mt-10 max-w-2xl space-y-6 text-base/7"
             />
           )}
 
@@ -213,7 +213,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   >
                     <Badge
                       variant="secondary"
-                      className="cursor-pointer rounded-full bg-olive-100 px-3 py-1 text-sm font-medium text-olive-700 transition-colors hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700"
+                      className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 cursor-pointer rounded-full px-3 py-1 text-sm font-medium transition-colors"
                     >
                       {cat.name}
                     </Badge>
@@ -226,11 +226,11 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {/* Author card – full team member info */}
           {author && (
             <Card
-              className="mt-16 border-olive-950/10 bg-olive-50/80 dark:border-white/10 dark:bg-olive-900/80"
+              className="border-brand-950/10 bg-brand-50/80 dark:bg-brand-900/80 mt-16 dark:border-white/10"
               aria-label="Über den Autor"
             >
               <CardHeader>
-                <CardTitle className="font-display text-lg font-semibold text-olive-950 dark:text-white">
+                <CardTitle className="font-display text-brand-950 text-lg font-semibold dark:text-white">
                   Über den Autor
                 </CardTitle>
               </CardHeader>
@@ -245,9 +245,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 </div>
                 <div className="min-w-0 flex-1 space-y-4">
                   <div>
-                    <p className="font-semibold text-olive-800 dark:text-white">{author.name}</p>
+                    <p className="text-brand-800 font-semibold dark:text-white">{author.name}</p>
                     {author.role && (
-                      <p className="mt-0.5 text-base/7 text-olive-600 dark:text-olive-300">
+                      <p className="text-brand-600 dark:text-brand-300 mt-0.5 text-base/7">
                         {author.role}
                       </p>
                     )}
@@ -256,7 +256,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     typeof author.bio === 'object' &&
                     author.bio !== null &&
                     'root' in author.bio && (
-                      <div className="text-base/7 text-olive-600 dark:text-olive-400 [&_p]:mb-3 [&_p:last-child]:mb-0">
+                      <div className="text-brand-600 dark:text-brand-400 text-base/7 [&_p]:mb-3 [&_p:last-child]:mb-0">
                         <RichText data={author.bio} className="[&_p]:mb-3 [&_p:last-child]:mb-0" />
                       </div>
                     )}
@@ -274,7 +274,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                               <TooltipTrigger asChild>
                                 <Link
                                   href={href}
-                                  className="text-olive-600 transition-colors hover:text-olive-800 dark:text-olive-400 dark:hover:text-olive-200"
+                                  className="text-brand-600 hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-200 transition-colors"
                                   target={
                                     shouldOpenLinkInNewTab(href, link.newTab) ? '_blank' : undefined
                                   }

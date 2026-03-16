@@ -14,13 +14,10 @@ export function Navbar() {
       links={
         <>
           <Button variant="link" className="max-sm:hidden">
-            <Link href="/#uber">Unser Angebot</Link>
+            <Link href="/#uber">Über uns</Link>
           </Button>
           <Button variant="link" className="max-sm:hidden">
-            <Link href="/#uber">Über Uns</Link>
-          </Button>
-          <Button variant="link" className="max-sm:hidden">
-            <Link href="/#angebot">Angebot</Link>
+            <Link href="/#angebot">Angebote</Link>
           </Button>
           <Button variant="link" className="max-sm:hidden">
             <Link href="/blog">Blog</Link>
@@ -32,7 +29,7 @@ export function Navbar() {
       }
       logo={
         <NavbarLogo href="/#hero">
-          <Logo className="h-8 w-32 text-olive-700 dark:text-olive-400" />
+          <Logo className="text-brand-700 dark:text-brand-400 h-8 w-32" />
         </NavbarLogo>
       }
       actions={
@@ -48,7 +45,7 @@ export function Navbar() {
             </TooltipContent>
           </Tooltip>
           <Button asChild>
-            <Link href="/#angebot">Unser Angebot</Link>
+            <Link href="/#angebot">Angebote entdecken</Link>
           </Button>
         </>
       }

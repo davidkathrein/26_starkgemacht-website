@@ -38,38 +38,38 @@ export function Plan({
   return (
     <Card
       className={clsx(
-        'border-olive-950/10 bg-olive-950/2.5 flex h-full flex-col justify-between gap-6 shadow-none dark:border-white/10 dark:bg-white/5',
+        'border-brand-950/10 bg-brand-950/2.5 flex h-full flex-col justify-between gap-6 shadow-none dark:border-white/10 dark:bg-white/5',
         className,
       )}
     >
       <div className="self-stretch">
         <CardHeader className="p-6 pt-6">
           <div className="flex items-center justify-between gap-4">
-            <CardTitle className="font-display text-olive-950 text-2xl/8 tracking-tight dark:text-white">
+            <CardTitle className="font-display text-brand-950 text-2xl/8 tracking-tight dark:text-white">
               {name}
             </CardTitle>
             {badge && (
-              <Badge className="bg-olive-950/10 text-olive-950 order-last dark:bg-white/10 dark:text-white">
+              <Badge className="bg-brand-950/10 text-brand-950 order-last dark:bg-white/10 dark:text-white">
                 {badge}
               </Badge>
             )}
           </div>
           <p className="mt-1 inline-flex gap-1 text-base/7">
-            <span className="text-olive-950 dark:text-white">{price}</span>
-            {period && <span className="text-olive-500 dark:text-olive-500">{period}</span>}
+            <span className="text-brand-950 dark:text-white">{price}</span>
+            {period && <span className="text-brand-500 dark:text-brand-500">{period}</span>}
           </p>
-          <CardDescription className="text-olive-700 dark:text-olive-400 mt-4 flex flex-col gap-4 text-sm/6">
+          <CardDescription className="text-brand-700 dark:text-brand-400 mt-4 flex flex-col gap-4 text-sm/6">
             {subheadline}
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6 pt-0">
-          <ul className="text-olive-700 dark:text-olive-400 mt-4 space-y-2 text-sm/6">
-          {features.map((feature, index) => (
-            <li key={index} className="flex gap-4">
-              <CheckmarkIcon className="stroke-olive-950 h-lh shrink-0 dark:stroke-white" />
-              <p>{feature}</p>
-            </li>
-          ))}
+          <ul className="text-brand-700 dark:text-brand-400 mt-4 space-y-2 text-sm/6">
+            {features.map((feature, index) => (
+              <li key={index} className="flex gap-4">
+                <CheckmarkIcon className="stroke-brand-950 h-lh shrink-0 dark:stroke-white" />
+                <p>{feature}</p>
+              </li>
+            ))}
           </ul>
         </CardContent>
       </div>
@@ -111,12 +111,12 @@ export function PricingHeroMultiTier<T extends string>({
             <Text size="lg" className="flex max-w-xl flex-col gap-4 text-center">
               {subheadline}
             </Text>
-            <TabsList className="bg-olive-950/5 h-auto rounded-full p-1 dark:bg-white/5">
+            <TabsList className="bg-brand-950/5 h-auto rounded-full p-1 dark:bg-white/5">
               {options.map((option) => (
                 <TabsTrigger
                   key={option}
                   value={option}
-                  className="text-olive-950 rounded-full px-4 py-1 text-sm/7 font-medium data-[state=active]:bg-olive-950 data-[state=active]:text-white data-[state=active]:shadow-none dark:text-white dark:data-[state=active]:bg-white/10 dark:data-[state=active]:text-white"
+                  className="text-brand-950 data-[state=active]:bg-brand-950 rounded-full px-4 py-1 text-sm/7 font-medium data-[state=active]:text-white data-[state=active]:shadow-none dark:text-white dark:data-[state=active]:bg-white/10 dark:data-[state=active]:text-white"
                 >
                   {option}
                 </TabsTrigger>

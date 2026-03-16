@@ -27,13 +27,13 @@ export function Faq({
     <AccordionItem
       value={value}
       id={id}
-      className="border-olive-950/10 dark:border-white/10"
+      className="border-brand-950/10 dark:border-white/10"
       {...props}
     >
-      <AccordionTrigger className="py-4 text-left text-base/7 text-olive-950 hover:no-underline dark:text-white">
+      <AccordionTrigger className="text-brand-950 py-4 text-left text-base/7 hover:no-underline dark:text-white">
         {question}
       </AccordionTrigger>
-      <AccordionContent className="-mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7 text-olive-700 dark:text-olive-400">
+      <AccordionContent className="text-brand-700 dark:text-brand-400 -mt-2 flex flex-col gap-2 pr-12 pb-4 text-sm/7">
         {answer}
       </AccordionContent>
     </AccordionItem>

@@ -21,8 +21,8 @@ export function BlogCategoryFilter({
     clsx(
       'cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-colors',
       isActive
-        ? 'bg-olive-800 text-white dark:bg-olive-200 dark:text-olive-900'
-        : 'bg-olive-100 text-olive-700 hover:bg-olive-200 dark:bg-olive-800 dark:text-olive-300 dark:hover:bg-olive-700',
+        ? 'bg-brand-800 text-white dark:bg-brand-200 dark:text-brand-900'
+        : 'bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700',
     )
 
   return (

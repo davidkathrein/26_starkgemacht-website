@@ -34,7 +34,7 @@ export function FooterLink({
   ...props
 }: { href: string } & Omit<ComponentProps<'a'>, 'href'>) {
   return (
-    <li className={clsx('text-olive-700 dark:text-olive-400', className)}>
+    <li className={clsx('text-brand-700 dark:text-brand-400', className)}>
       <Link href={href} {...props} />
     </li>
   )
@@ -56,7 +56,7 @@ export function SocialLink({
           href={href}
           target="_blank"
           aria-label={name}
-          className={clsx('text-olive-950 *:size-6 dark:text-white', className)}
+          className={clsx('text-brand-950 *:size-6 dark:text-white', className)}
           {...props}
         />
       </TooltipTrigger>
@@ -103,7 +103,7 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
 } & ComponentProps<'footer'>) {
   return (
     <footer className={clsx(className)} {...props}>
-      <div className="bg-olive-950/2.5 py-16 text-olive-950 dark:bg-white/5 dark:text-white">
+      <div className="bg-brand-950/2.5 text-brand-950 py-16 dark:bg-white/5 dark:text-white">
         <Container>
           <div className="flex flex-col gap-16">
             <div className="grid grid-cols-1 gap-x-6 gap-y-16 text-sm/7 lg:grid-cols-2">
@@ -112,9 +112,9 @@ export function FooterWithNewsletterFormCategoriesAndSocialIcons({
                 {links}
               </nav>
             </div>
-            <div className="flex items-center justify-between gap-10 text-sm/7">
-              <div className="text-olive-600 dark:text-olive-500">{fineprint}</div>
-              <div className="text-olive-600 dark:text-olive-500">{attribution}</div>
+            <div className="flex flex-col gap-6 text-sm/7 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+              <div className="text-brand-600 dark:text-brand-500">{fineprint}</div>
+              <div className="text-brand-600 dark:text-brand-500">{attribution}</div>
               {socialLinks && <div className="flex items-center gap-4 sm:gap-8">{socialLinks}</div>}
             </div>
           </div>

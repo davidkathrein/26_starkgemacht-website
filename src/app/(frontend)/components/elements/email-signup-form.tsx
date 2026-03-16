@@ -29,7 +29,7 @@ export function EmailSignupForm({
       <Input
         className={clsx(
           'min-w-0 flex-1 border-0 bg-transparent px-3 text-sm/7 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 dark:text-white',
-          variant === 'normal' && 'text-olive-950',
+          variant === 'normal' && 'text-brand-950',
           variant === 'overlay' && 'text-white placeholder:text-white/60',
         )}
         type="email"

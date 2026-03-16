@@ -13,7 +13,7 @@ export function NavbarLink({
     <Link
       href={href}
       className={clsx(
-        'group text-olive-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
+        'group text-brand-950 inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7 dark:text-white',
         className,
       )}
       {...props}
@@ -58,7 +58,7 @@ export function NavbarWithLogoActionsAndLeftAlignedLinks({
 } & ComponentProps<'header'>) {
   return (
     <header
-      className={clsx('bg-olive-100 dark:bg-olive-950 sticky top-0 z-10', className)}
+      className={clsx('bg-brand-100 dark:bg-brand-950 sticky top-0 z-10', className)}
       {...props}
     >
       <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>

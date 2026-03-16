@@ -4,7 +4,7 @@ import type { ComponentProps } from 'react'
 export function Eyebrow({ children, className, ...props }: ComponentProps<'div'>) {
   return (
     <div
-      className={clsx('text-olive-700 dark:text-olive-400 text-sm/7 font-semibold', className)}
+      className={clsx('text-brand-700 dark:text-brand-400 text-sm/7 font-semibold', className)}
       {...props}
     >
       {children}

@@ -25,7 +25,7 @@ export function PricingSingleTierTwoColumn({
   return (
     <section className={clsx('py-16', className)} {...props}>
       <Container>
-        <div className="bg-olive-950/2.5 grid grid-cols-1 gap-x-2 rounded-xl p-2 lg:grid-cols-2 dark:bg-white/5">
+        <div className="bg-brand-950/2.5 grid grid-cols-1 gap-x-2 rounded-xl p-2 lg:grid-cols-2 dark:bg-white/5">
           <div className="flex flex-col items-start justify-between gap-10 p-6 sm:p-10">
             <div className="flex flex-col gap-6">
               <Subheading>{headline}</Subheading>
@@ -33,9 +33,9 @@ export function PricingSingleTierTwoColumn({
             </div>
             {cta}
           </div>
-          <div className="bg-olive-100 dark:bg-olive-950 rounded-sm p-6 sm:p-10">
+          <div className="bg-brand-100 dark:bg-brand-950 rounded-sm p-6 sm:p-10">
             <div className="flex items-baseline gap-2">
-              <p className="text-olive-950 text-[5rem]/24 font-light tracking-tight sm:text-8xl/32 dark:text-white">
+              <p className="text-brand-950 text-[5rem]/24 font-light tracking-tight sm:text-8xl/32 dark:text-white">
                 {price}
               </p>
               <Text size="lg">{period}</Text>
@@ -43,10 +43,10 @@ export function PricingSingleTierTwoColumn({
             <ul className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-1">
               {features.map((feature, index) => (
                 <li key={index} className="flex gap-3 text-sm/5">
-                  <span className="bg-olive-950 dark:bg-olive-700 flex size-5 shrink-0 items-center justify-center rounded-xs">
+                  <span className="bg-brand-950 dark:bg-brand-700 flex size-5 shrink-0 items-center justify-center rounded-xs">
                     <CheckmarkIcon className="size-3 stroke-white" />
                   </span>
-                  <p className="text-olive-700 dark:text-olive-400">{feature}</p>
+                  <p className="text-brand-700 dark:text-brand-400">{feature}</p>
                 </li>
               ))}
             </ul>

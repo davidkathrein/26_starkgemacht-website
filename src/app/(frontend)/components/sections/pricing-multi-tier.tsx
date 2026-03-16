@@ -24,31 +24,31 @@ export function Plan({
   return (
     <div
       className={clsx(
-        'bg-olive-950/2.5 flex flex-col justify-between gap-6 rounded-xl p-6 sm:items-start dark:bg-white/5',
+        'bg-brand-950/2.5 flex flex-col justify-between gap-6 rounded-xl p-6 sm:items-start dark:bg-white/5',
         className,
       )}
     >
       <div className="self-stretch">
         <div className="flex items-center justify-between">
           {badge && (
-            <div className="bg-olive-950/10 text-olive-950 order-last inline-flex rounded-full px-2 text-xs/6 font-medium dark:bg-white/10 dark:text-white">
+            <div className="bg-brand-950/10 text-brand-950 order-last inline-flex rounded-full px-2 text-xs/6 font-medium dark:bg-white/10 dark:text-white">
               {badge}
             </div>
           )}
 
-          <h3 className="text-olive-950 text-2xl/8 tracking-tight dark:text-white">{name}</h3>
+          <h3 className="text-brand-950 text-2xl/8 tracking-tight dark:text-white">{name}</h3>
         </div>
         <p className="mt-1 inline-flex gap-1 text-base/7">
-          <span className="text-olive-950 dark:text-white">{price}</span>
-          {period && <span className="text-olive-500 dark:text-olive-500">{period}</span>}
+          <span className="text-brand-950 dark:text-white">{price}</span>
+          {period && <span className="text-brand-500 dark:text-brand-500">{period}</span>}
         </p>
-        <div className="text-olive-700 dark:text-olive-400 mt-4 flex flex-col gap-4 text-sm/6">
+        <div className="text-brand-700 dark:text-brand-400 mt-4 flex flex-col gap-4 text-sm/6">
           {subheadline}
         </div>
-        <ul className="text-olive-700 dark:text-olive-400 mt-4 space-y-2 text-sm/6">
+        <ul className="text-brand-700 dark:text-brand-400 mt-4 space-y-2 text-sm/6">
           {features.map((feature, index) => (
             <li key={index} className="flex gap-4">
-              <CheckmarkIcon className="stroke-olive-950 h-lh shrink-0 dark:stroke-white" />
+              <CheckmarkIcon className="stroke-brand-950 h-lh shrink-0 dark:stroke-white" />
               <p>{feature}</p>
             </li>
           ))}

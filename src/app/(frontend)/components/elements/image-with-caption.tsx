@@ -88,7 +88,7 @@ export function ImageWithCaption({
           width={finalWidth}
           height={finalHeight}
           priority={priority}
-          className="bg-olive-200 dark:bg-olive-800 h-full w-full object-cover"
+          className="bg-brand-200 dark:bg-brand-800 h-full w-full object-cover"
         />
         <div className="absolute inset-x-0 bottom-0 h-20 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
         <figcaption>
@@ -108,13 +108,13 @@ export function ImageWithCaption({
         width={finalWidth}
         height={finalHeight}
         priority={priority}
-        className="bg-olive-200 dark:bg-olive-800 w-full rounded-xl object-cover"
+        className="bg-brand-200 dark:bg-brand-800 w-full rounded-xl object-cover"
       />
       {caption && captionVariant === 'below' && (
-        <figcaption className="text-olive-600 dark:text-olive-500 mt-4 flex gap-x-2 text-sm/6">
+        <figcaption className="text-brand-600 dark:text-brand-500 mt-4 flex gap-x-2 text-sm/6">
           <BadgeInfoIcon
             aria-hidden="true"
-            className="text-olive-400 dark:text-olive-600 mt-0.5 size-5 flex-none"
+            className="text-brand-400 dark:text-brand-600 mt-0.5 size-5 flex-none"
           />
           {caption}
         </figcaption>
