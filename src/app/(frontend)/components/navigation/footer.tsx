@@ -6,6 +6,7 @@ import {
   NewsletterForm,
   SocialLink,
 } from '@/app/(frontend)/components/sections/footer-with-newsletter-form-categories-and-social-icons'
+import { FooterFaqAndCta } from '@/app/(frontend)/components/sections/footer-faq-and-cta'
 import { FacebookIcon } from '@/app/(frontend)/components/icons/social/facebook-icon'
 import { InstagramIcon } from '@/app/(frontend)/components/icons/social/instagram-icon'
 import { Mail } from 'lucide-react'
@@ -83,64 +84,67 @@ export async function Footer() {
   const footerData = await resolveFooterData()
 
   return (
-    <FooterWithNewsletterFormCategoriesAndSocialIcons
-      id="footer"
-      cta={
-        footerData.hideNewsletter ? null : (
-          <NewsletterForm
-            headline={footerData.newsletterHeadline}
-            subheadline={<p>{footerData.newsletterSubheadline}</p>}
-          />
-        )
-      }
-      links={
-        <>
-          {footerData.groups.map((group) => (
-            <FooterCategory key={group.title} title={group.title}>
-              {group.links.map((link) => (
-                <FooterLink
-                  key={`${group.title}-${link.href}-${link.label}`}
-                  href={link.href}
-                  target={shouldOpenLinkInNewTab(link.href, link.newTab) ? '_blank' : undefined}
-                  rel={
-                    shouldOpenLinkInNewTab(link.href, link.newTab)
-                      ? 'noopener noreferrer'
-                      : undefined
-                  }
-                >
-                  {link.label}
-                </FooterLink>
-              ))}
-            </FooterCategory>
-          ))}
-        </>
-      }
-      fineprint={footerData.fineprint}
-      attribution={
-        <span>
-          Website von{' '}
-          <Link
-            className="cursor-pointer underline"
-            target="_blank"
-            href="https://davidkathrein.at"
-          >
-            David Kathrein
-          </Link>
-        </span>
-      }
-      socialLinks={
-        <>
-          <SocialLink href="mailto:kontakt@starkgemacht.com" name="E-Mail">
-            <Mail className="size-6" />
-          </SocialLink>
-          <SocialLink href="https://www.facebook.com/StarkGemachtVerein/" name="Facebook">
-            <FacebookIcon />
-          </SocialLink>
-          <SocialLink href="https://www.instagram.com/starkgemachtverein/" name="Instagram">
-            <InstagramIcon />
-          </SocialLink>
-        </>
-      }
-    />
+    <>
+      <FooterFaqAndCta />
+      <FooterWithNewsletterFormCategoriesAndSocialIcons
+        id="footer"
+        cta={
+          footerData.hideNewsletter ? null : (
+            <NewsletterForm
+              headline={footerData.newsletterHeadline}
+              subheadline={<p>{footerData.newsletterSubheadline}</p>}
+            />
+          )
+        }
+        links={
+          <>
+            {footerData.groups.map((group) => (
+              <FooterCategory key={group.title} title={group.title}>
+                {group.links.map((link) => (
+                  <FooterLink
+                    key={`${group.title}-${link.href}-${link.label}`}
+                    href={link.href}
+                    target={shouldOpenLinkInNewTab(link.href, link.newTab) ? '_blank' : undefined}
+                    rel={
+                      shouldOpenLinkInNewTab(link.href, link.newTab)
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
+                  >
+                    {link.label}
+                  </FooterLink>
+                ))}
+              </FooterCategory>
+            ))}
+          </>
+        }
+        fineprint={footerData.fineprint}
+        attribution={
+          <span>
+            Website von{' '}
+            <Link
+              className="cursor-pointer underline"
+              target="_blank"
+              href="https://davidkathrein.at"
+            >
+              David Kathrein
+            </Link>
+          </span>
+        }
+        socialLinks={
+          <>
+            <SocialLink href="mailto:kontakt@starkgemacht.com" name="E-Mail">
+              <Mail className="size-6" />
+            </SocialLink>
+            <SocialLink href="https://www.facebook.com/StarkGemachtVerein/" name="Facebook">
+              <FacebookIcon />
+            </SocialLink>
+            <SocialLink href="https://www.instagram.com/starkgemachtverein/" name="Instagram">
+              <InstagramIcon />
+            </SocialLink>
+          </>
+        }
+      />
+    </>
   )
 }

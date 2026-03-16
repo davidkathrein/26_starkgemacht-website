@@ -14,6 +14,12 @@ import { getPriceDisplay } from '../../utils/preis'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { withSiteName } from '@/lib/seo'
+import Image from 'next/image'
+import { Wallpaper } from '@/app/(frontend)/components/elements/wallpaper'
+import {
+  Feature,
+  FeaturesTwoColumnWithDemos,
+} from '@/app/(frontend)/components/sections/features-two-column-with-demos'
 
 import type { Metadata } from 'next'
 
@@ -35,6 +41,24 @@ async function getEventBySlug(slugString: string) {
   })
 
   return events.docs[0] as Event | undefined
+}
+
+async function getMoreEvents(currentSlug: string) {
+  const payload = await getPayload({ config })
+
+  const events = await payload.find({
+    collection: 'event',
+    where: {
+      slug: {
+        not_equals: currentSlug,
+      },
+    },
+    limit: 4,
+    depth: 2,
+    sort: 'startsAtIso',
+  })
+
+  return events.docs as Event[]
 }
 
 export async function generateMetadata({
@@ -94,6 +118,8 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   if (!event) {
     notFound()
   }
+
+  const moreEvents = await getMoreEvents(slugString)
 
   // Get custom image with caption or fallback to event.image
   const customImage = typeof event.customImage !== 'number' ? event.customImage : null
@@ -157,6 +183,8 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
     </div>
   )
 
+  const wallpapers = ['purple', 'blue', 'green', 'brown'] as const
+
   return (
     <div className="px-6 py-32 lg:px-8">
       <Container>
@@ -191,8 +219,6 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
 
           {event.venueName && (
             <>
-              {CtaButton}
-
               <Separator />
 
               <section className="border-brand-950/10 via-brand-50/80 to-brand-100/70 dark:from-brand-900 dark:via-brand-900 dark:to-brand-950 mt-12 overflow-hidden rounded-[1.75rem] border bg-linear-to-br from-white p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10">
@@ -208,6 +234,20 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                       <h3 className="font-display text-brand-900 mt-4 text-2xl font-semibold tracking-tight sm:text-3xl dark:text-white">
                         {event.venueName}
                       </h3>
+
+                      {event.checkoutUrl && (
+                        <div className="mt-8">
+                          <Button asChild size="lg">
+                            <Link
+                              href={event.checkoutUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Jetzt Tickets sichern <MoveRight size={14} />
+                            </Link>
+                          </Button>
+                        </div>
+                      )}
                     </div>
 
                     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
@@ -241,11 +281,123 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                   </div>
                 </div>
               </section>
-
-              {CtaButton}
             </>
           )}
         </div>
+
+        {moreEvents.length > 0 && (
+          <div className="mt-24">
+            <FeaturesTwoColumnWithDemos
+              eyebrow="Weitere Angebote"
+              headline="Das könnte dich auch interessieren"
+              subheadline={
+                <p>
+                  Weitere Workshops, Kurse und Veranstaltungen von StarkGemacht, die gut zu diesem
+                  Angebot passen.
+                </p>
+              }
+              features={
+                <>
+                  {moreEvents.map((relatedEvent, index) => {
+                    const imageUrl =
+                      typeof relatedEvent.image === 'string' ? relatedEvent.image : undefined
+                    const wallpaper = wallpapers[index % wallpapers.length]
+                    const relatedStartDate = new Date(relatedEvent.startsAtIso)
+                    const formattedStartDate = relatedStartDate.toLocaleDateString('de-DE', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })
+
+                    let dateDisplay = formattedStartDate
+                    if (relatedEvent.endsAtIso) {
+                      const endDate = new Date(relatedEvent.endsAtIso)
+                      const formattedEndDate = endDate.toLocaleDateString('de-DE', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })
+
+                      if (formattedStartDate !== formattedEndDate) {
+                        dateDisplay = `${formattedStartDate} bis ${formattedEndDate}`
+                      }
+                    }
+
+                    return (
+                      <Feature
+                        key={relatedEvent.id}
+                        link={`/angebot/${relatedEvent.slug}`}
+                        demo={
+                          <Link href={`/angebot/${relatedEvent.slug}`} className="w-full">
+                            {relatedEvent.customImage &&
+                            typeof relatedEvent.customImage === 'object' &&
+                            'url' in relatedEvent.customImage &&
+                            relatedEvent.customImage.url ? (
+                              <ImageWithCaption
+                                media={relatedEvent.customImage}
+                                captionVariant="overlay"
+                                width={1800}
+                                height={1012}
+                                className="aspect-video w-full"
+                              />
+                            ) : imageUrl ? (
+                              <Image
+                                src={imageUrl}
+                                alt={relatedEvent.name}
+                                className="aspect-video w-full rounded-lg object-cover"
+                                width={1800}
+                                height={1012}
+                              />
+                            ) : (
+                              <Wallpaper
+                                color={wallpaper}
+                                className="aspect-video w-full object-cover"
+                              />
+                            )}
+                          </Link>
+                        }
+                        headline={relatedEvent.name}
+                        subheadline={
+                          <div>
+                            <p className="mb-2 text-sm font-medium text-muted-foreground">
+                              {(relatedEvent.isFree || relatedEvent.minPrice !== null) && (
+                                <span className="font-semibold text-foreground">
+                                  {getPriceDisplay(relatedEvent)}
+                                </span>
+                              )}
+                              {' | '}
+                              {dateDisplay}
+                              {relatedEvent.venueName && ` | ${relatedEvent.venueName}`}
+                            </p>
+                            {relatedEvent.previewDescription && <p>{relatedEvent.previewDescription}</p>}
+                          </div>
+                        }
+                        cta={
+                          <div className="flex gap-2">
+                            <Button asChild>
+                              <Link href={`/angebot/${relatedEvent.slug}`}>Mehr erfahren</Link>
+                            </Button>
+                            {relatedEvent.checkoutUrl ? (
+                              <Button variant="ghost" asChild>
+                                <Link
+                                  href={relatedEvent.checkoutUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  Tickets sichern
+                                </Link>
+                              </Button>
+                            ) : null}
+                          </div>
+                        }
+                      />
+                    )
+                  })}
+                </>
+              }
+            />
+          </div>
+        )}
       </Container>
     </div>
   )
