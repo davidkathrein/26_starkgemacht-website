@@ -23,6 +23,7 @@ import {
   resolveLinkComponentHref,
   shouldOpenLinkInNewTab,
 } from '@/app/(frontend)/utils/linkComponent'
+import { estimateReadTimeMinutes } from '@/app/(frontend)/utils/readTime'
 
 const DEFAULT_DESCRIPTION =
   'Aktuelle Beiträge von StarkGemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
@@ -138,6 +139,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   // Get featured image
   const featuredImage = typeof post.featuredImage !== 'number' ? post.featuredImage : null
+  const readTimeMinutes = estimateReadTimeMinutes(post.content)
 
   return (
     <div className="px-6 py-32 lg:px-8">
@@ -145,6 +147,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center gap-x-4 text-xs">
             <Eyebrow>{formattedDate}</Eyebrow>
+            <span className="text-muted-foreground">·</span>
+            <span className="text-muted-foreground text-sm/6">
+              {readTimeMinutes} Min. Lesezeit
+            </span>
             {categories.map((cat) => {
               const category = cat.item && typeof cat.item !== 'number' ? cat.item : null
               return category ? (

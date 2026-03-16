@@ -74,7 +74,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
     <>
       <header
         className={clsx(
-          'fixed top-0 right-0 left-0 z-10 border-b border-border/60 bg-background/85 backdrop-blur-md',
+          'border-border/60 bg-background/85 fixed top-0 right-0 left-0 z-50 border-b backdrop-blur-md',
           className,
         )}
         {...props}

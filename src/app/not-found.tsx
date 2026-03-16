@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import React from 'react'
 import { Familjen_Grotesk, Inter } from 'next/font/google'
 import './(frontend)/styles.css'
@@ -5,6 +6,7 @@ import { Navbar } from './(frontend)/components/navigation/navbar'
 import Link from 'next/link'
 import Image from 'next/image'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import { withSiteName } from '@/lib/seo'
 
 const familjenGrotesk = Familjen_Grotesk({
   subsets: ['latin'],
@@ -20,9 +22,14 @@ const inter = Inter({
   display: 'swap',
 })
 
-export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+export const metadata: Metadata = {
+  title: withSiteName('Seite nicht gefunden'),
+  description:
+    'Die angeforderte Seite konnte nicht gefunden werden. Entdecke weitere Angebote, Blogbeiträge und Informationen von StarkGemacht.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 }
 
 export default async function RootLayout() {
