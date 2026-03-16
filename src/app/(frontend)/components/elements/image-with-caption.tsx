@@ -81,7 +81,12 @@ export function ImageWithCaption({
 
   if (captionVariant === 'overlay' && caption) {
     return (
-      <figure className={cn('relative overflow-hidden rounded-2xl border border-border/70 bg-card', className)}>
+      <figure
+        className={cn(
+          'border-border/70 bg-card relative overflow-hidden rounded-2xl border',
+          className,
+        )}
+      >
         <Image
           src={url}
           alt={alt}
@@ -108,7 +113,7 @@ export function ImageWithCaption({
         width={finalWidth}
         height={finalHeight}
         priority={priority}
-        className="bg-muted w-full rounded-2xl border border-border/70 object-cover"
+        className="bg-muted border-border/70 w-full rounded-2xl border object-cover"
       />
       {caption && captionVariant === 'below' && (
         <figcaption className="text-muted-foreground mt-4 flex gap-x-2 text-sm/6">
