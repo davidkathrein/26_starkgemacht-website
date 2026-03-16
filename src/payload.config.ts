@@ -27,6 +27,9 @@ import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
+const databaseURL = process.env.DATABASE_URL || ''
+const usePostgresSSL =
+  process.env.PGSSL === 'false' ? false : process.env.NODE_ENV === 'production'
 
 export default buildConfig({
   admin: {
@@ -71,7 +74,14 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URL || '',
+      connectionString: databaseURL,
+      ...(usePostgresSSL
+        ? {
+            ssl: {
+              rejectUnauthorized: false,
+            },
+          }
+        : {}),
     },
   }),
   sharp,
