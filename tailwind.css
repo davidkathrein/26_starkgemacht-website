@@ -23,6 +23,7 @@
 
 @layer base {
   html {
+    min-height: 100%;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--color-olive-100);
@@ -154,6 +155,7 @@
     cursor: pointer;
   }
   body {
+    min-height: 100%;
     @apply bg-background text-foreground;
   }
 }
