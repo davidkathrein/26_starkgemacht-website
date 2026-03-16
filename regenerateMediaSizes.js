@@ -5,6 +5,8 @@ import { getPayload } from 'payload'
 
 dotenv.config()
 
+const DEBUG_IMAGE_TRANSFORMS = process.env.DEBUG_IMAGE_TRANSFORMS === 'true'
+
 async function loadPayloadConfig() {
   const configPath = process.env.PAYLOAD_CONFIG_PATH
 
@@ -26,15 +28,6 @@ async function loadPayloadConfig() {
   return config
 }
 
-function toAbsoluteUrl(url) {
-  if (/^https?:\/\//i.test(url)) {
-    return url
-  }
-
-  const baseUrl = process.env.MEDIA_SOURCE_BASE_URL || 'http://localhost:3000'
-  return new URL(url, baseUrl).toString()
-}
-
 async function regenerateMediaSizes() {
   try {
     const config = await loadPayloadConfig()
@@ -53,6 +46,19 @@ async function regenerateMediaSizes() {
       const label = mediaDoc.alt || mediaDoc.id
 
       try {
+        if (DEBUG_IMAGE_TRANSFORMS) {
+          console.info('[media-regenerate] Starting media update', {
+            id: mediaDoc.id,
+            label,
+            filename: mediaDoc.filename,
+            url: mediaDoc.url,
+            mimeType: mediaDoc.mimeType,
+            focalX: mediaDoc.focalX ?? null,
+            focalY: mediaDoc.focalY ?? null,
+            existingSizes: Object.keys(mediaDoc.sizes || {}),
+          })
+        }
+
         if (!mediaDoc.filename) {
           console.warn(`Skipping media ${label}: missing filename`)
           skipped += 1
@@ -72,7 +78,12 @@ async function regenerateMediaSizes() {
           continue
         }
 
-        const sourceUrl = toAbsoluteUrl(mediaDoc.url)
+        const sourceUrl = /^https?:\/\//i.test(mediaDoc.url)
+          ? mediaDoc.url
+          : new URL(
+              mediaDoc.url,
+              process.env.MEDIA_SOURCE_BASE_URL || 'http://localhost:3000',
+            ).toString()
         const res = await fetch(sourceUrl, { method: 'GET' })
         if (!res.ok) {
           console.warn(
@@ -83,6 +94,18 @@ async function regenerateMediaSizes() {
         }
 
         const sourceBuffer = Buffer.from(await res.arrayBuffer())
+        const focalX = typeof mediaDoc.focalX === 'number' ? mediaDoc.focalX : 50
+        const focalY = typeof mediaDoc.focalY === 'number' ? mediaDoc.focalY : 50
+
+        if (DEBUG_IMAGE_TRANSFORMS) {
+          console.info('[media-regenerate] Re-uploading media source with uploadEdits', {
+            id: mediaDoc.id,
+            sourceUrl,
+            bytes: sourceBuffer.length,
+            focalX,
+            focalY,
+          })
+        }
 
         await payload.update({
           collection: 'media',
@@ -93,6 +116,18 @@ async function regenerateMediaSizes() {
           data: {
             alt: mediaDoc.alt || 'Image',
             caption: mediaDoc.caption || undefined,
+            focalX,
+            focalY,
+          },
+          req: {
+            query: {
+              uploadEdits: {
+                focalPoint: {
+                  x: focalX,
+                  y: focalY,
+                },
+              },
+            },
           },
           file: {
             data: sourceBuffer,
@@ -102,6 +137,13 @@ async function regenerateMediaSizes() {
           },
           overwriteExistingFiles: true,
         })
+
+        if (DEBUG_IMAGE_TRANSFORMS) {
+          console.info('[media-regenerate] Media update completed', {
+            id: mediaDoc.id,
+            label,
+          })
+        }
 
         console.log(`Media ${label} updated`)
         updated += 1

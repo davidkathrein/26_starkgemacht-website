@@ -8,6 +8,8 @@ type ImageFormatOptions = {
   options?: Record<string, unknown>
 }
 
+const DEBUG_IMAGE_TRANSFORMS = process.env.DEBUG_IMAGE_TRANSFORMS === 'true'
+
 function normalizeFocalPoint(value: unknown): number | null {
   if (typeof value !== 'number' || Number.isNaN(value)) return null
   if (value >= 0 && value <= 1) return value
@@ -117,11 +119,35 @@ export async function regenerateMissingImageSizes({
   const focalPointChanged =
     nextFocalX !== normalizeFocalPoint(originalDoc?.focalX) ||
     nextFocalY !== normalizeFocalPoint(originalDoc?.focalY)
+
+  if (DEBUG_IMAGE_TRANSFORMS) {
+    req.payload.logger.info({
+      msg: 'Regenerate media sizes: evaluating image',
+      filename,
+      url,
+      mimeType,
+      forceRegenerate,
+      nextFocalX,
+      nextFocalY,
+      originalFocalX: normalizeFocalPoint(originalDoc?.focalX),
+      originalFocalY: normalizeFocalPoint(originalDoc?.focalY),
+      focalPointChanged,
+      existingSizes: Object.keys(((originalDoc ?? data)?.sizes as Record<string, unknown>) ?? {}),
+      configuredSizes: imageSizes.map((size) => size.name),
+    })
+  }
+
   if (
     !forceRegenerate &&
     !focalPointChanged &&
     !needsSizeGeneration(originalDoc ?? data, imageSizes)
   ) {
+    if (DEBUG_IMAGE_TRANSFORMS) {
+      req.payload.logger.info({
+        msg: 'Regenerate media sizes: skipping image because nothing changed',
+        filename,
+      })
+    }
     return
   }
 
@@ -160,8 +186,18 @@ export async function regenerateMissingImageSizes({
   const baseName = filename.replace(/\.[^.]+$/, '')
   const ext = filename.split('.').pop() ?? 'jpg'
   const defaultMime = mimeType ?? 'image/jpeg'
-  const focalX = normalizeFocalPoint(doc?.focalX)
-  const focalY = normalizeFocalPoint(doc?.focalY)
+  const focalX = nextFocalX ?? normalizeFocalPoint(doc?.focalX)
+  const focalY = nextFocalY ?? normalizeFocalPoint(doc?.focalY)
+
+  if (DEBUG_IMAGE_TRANSFORMS) {
+    req.payload.logger.info({
+      msg: 'Regenerate media sizes: starting size generation',
+      filename,
+      focalX,
+      focalY,
+      sizeCount: imageSizes.length,
+    })
+  }
 
   const generatedSizes: Record<
     string,
@@ -202,13 +238,52 @@ export async function regenerateMissingImageSizes({
           const left = clamp(Math.round(focusX - width / 2), 0, Math.max(0, resizedWidth - width))
           const top = clamp(Math.round(focusY - height / 2), 0, Math.max(0, resizedHeight - height))
 
+          if (DEBUG_IMAGE_TRANSFORMS) {
+            req.payload.logger.info({
+              msg: 'Regenerate media sizes: focal crop computed',
+              filename,
+              sizeName: name,
+              sourceWidth,
+              sourceHeight,
+              targetWidth: width,
+              targetHeight: height,
+              resizedWidth,
+              resizedHeight,
+              focalX,
+              focalY,
+              left,
+              top,
+            })
+          }
+
           pipeline = pipeline
             .resize(resizedWidth, resizedHeight, { fit: 'fill' })
             .extract({ left, top, width, height })
         } else {
+          if (DEBUG_IMAGE_TRANSFORMS) {
+            req.payload.logger.info({
+              msg: 'Regenerate media sizes: missing metadata, falling back to cover crop',
+              filename,
+              sizeName: name,
+              targetWidth: width,
+              targetHeight: height,
+              position,
+            })
+          }
           pipeline = pipeline.resize(width, height, { fit: 'cover', position })
         }
       } else {
+        if (DEBUG_IMAGE_TRANSFORMS) {
+          req.payload.logger.info({
+            msg: 'Regenerate media sizes: using non-focal resize',
+            filename,
+            sizeName: name,
+            targetWidth: width,
+            targetHeight: height,
+            position,
+            shouldUseFocalCrop,
+          })
+        }
         pipeline = pipeline.resize(width, height, { fit: 'cover', position })
       }
 
@@ -246,6 +321,19 @@ export async function regenerateMissingImageSizes({
         mimeType: outputMime,
         filesize: resizedBuffer.length,
       }
+
+      if (DEBUG_IMAGE_TRANSFORMS) {
+        req.payload.logger.info({
+          msg: 'Regenerate media sizes: generated size',
+          filename,
+          sizeName: name,
+          outputFilename: finalFilename,
+          outputWidth: meta.width ?? width,
+          outputHeight: meta.height ?? height,
+          outputMime,
+          bytes: resizedBuffer.length,
+        })
+      }
     } catch (err) {
       req.payload.logger.warn(
         `Regenerate media sizes: failed to generate size ${name}: ${err instanceof Error ? err.message : String(err)}`,
@@ -254,6 +342,13 @@ export async function regenerateMissingImageSizes({
   }
 
   if (Object.keys(generatedSizes).length > 0) {
+    if (DEBUG_IMAGE_TRANSFORMS) {
+      req.payload.logger.info({
+        msg: 'Regenerate media sizes: writing generated sizes back to document',
+        filename,
+        generatedSizeNames: Object.keys(generatedSizes),
+      })
+    }
     data.sizes = {
       ...((data.sizes as Record<string, unknown>) ?? {}),
       ...generatedSizes,
