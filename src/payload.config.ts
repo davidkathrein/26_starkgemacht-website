@@ -27,8 +27,6 @@ import { Footer } from './globals/Footer'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const databaseURL = process.env.STORAGE_POSTGRES_URL || ''
-const supabaseCACert = process.env.SUPABASE_CA_CERT || ''
 
 export default buildConfig({
   admin: {
@@ -73,10 +71,12 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: databaseURL,
-      ssl: {
-        rejectUnauthorized: false,
-      },
+      host: process.env.DATABASE_HOST!,
+      port: parseInt(process.env.DATABASE_PORT!),
+      user: process.env.DATABASE_USER!,
+      password: process.env.DATABASE_PASSWORD!,
+      database: process.env.DATABASE_NAME!,
+      ssl: { ca: process.env.DATABASE_CA! },
     },
   }),
   sharp,
