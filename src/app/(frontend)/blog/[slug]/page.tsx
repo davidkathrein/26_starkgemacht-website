@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation'
 import type { Blog, Team } from '@/payload-types'
 import { XIcon } from '@/app/(frontend)/components/icons/social/x-icon'
 import { SiFacebook, SiInstagram } from 'react-icons/si'
-import { Linkedin } from 'lucide-react'
+import { ArrowUpRight, Linkedin } from 'lucide-react'
 import { Mail, Globe2 } from 'lucide-react'
 import { Avatar } from '@/app/(frontend)/components/elements/avatar'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -19,11 +19,14 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { withSiteName } from '@/lib/seo'
+import { BlogPostCard } from '@/app/(frontend)/blog/blog-post-card'
+import { SharePostButton } from '@/app/(frontend)/blog/share-post-button'
 import {
   resolveLinkComponentHref,
   shouldOpenLinkInNewTab,
 } from '@/app/(frontend)/utils/linkComponent'
 import { estimateReadTimeMinutes } from '@/app/(frontend)/utils/readTime'
+import { Button } from '@/components/ui/button'
 
 const DEFAULT_DESCRIPTION =
   'Aktuelle Beiträge von StarkGemacht: Impulse, Geschichten und Wissen rund um Selbstverteidigung, Gesundheit und Gemeinschaft.'
@@ -39,6 +42,7 @@ async function getBlogPostBySlug(slug: string) {
 
   const posts = await payload.find({
     collection: 'blog',
+    overrideAccess: false,
     where: {
       slug: {
         equals: slug,
@@ -49,6 +53,62 @@ async function getBlogPostBySlug(slug: string) {
   })
 
   return posts.docs[0] as Blog | undefined
+}
+
+async function getSimilarBlogPosts(post: Blog, limit = 3) {
+  const payload = await getPayload({ config })
+  const categoryIds = (post.categories || [])
+    .map((category) => {
+      const item = category.item
+      if (!item) return null
+      return typeof item === 'number' ? item : item.id
+    })
+    .filter((id): id is number => typeof id === 'number')
+
+  const relatedPosts = await payload.find({
+    collection: 'blog',
+    overrideAccess: false,
+    depth: 2,
+    limit,
+    sort: '-publishedAt',
+    where: {
+      and: [
+        {
+          id: {
+            not_equals: post.id,
+          },
+        },
+        ...(categoryIds.length > 0
+          ? [
+              {
+                'categories.item': {
+                  in: categoryIds,
+                },
+              },
+            ]
+          : []),
+      ],
+    },
+  })
+
+  if (relatedPosts.docs.length >= limit || categoryIds.length > 0) {
+    return relatedPosts.docs as Blog[]
+  }
+
+  const fallbackPosts = await payload.find({
+    collection: 'blog',
+    overrideAccess: false,
+    depth: 2,
+    limit,
+    sort: '-publishedAt',
+    where: {
+      id: {
+        not_equals: post.id,
+      },
+    },
+  })
+
+  return fallbackPosts.docs as Blog[]
 }
 
 export async function generateMetadata({
@@ -140,6 +200,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   // Get featured image
   const featuredImage = typeof post.featuredImage !== 'number' ? post.featuredImage : null
   const readTimeMinutes = estimateReadTimeMinutes(post.content)
+  const similarPosts = await getSimilarBlogPosts(post)
 
   return (
     <div className="px-6 py-32 lg:px-8">
@@ -147,10 +208,6 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center gap-x-4 text-xs">
             <Eyebrow>{formattedDate}</Eyebrow>
-            <span className="text-muted-foreground">·</span>
-            <span className="text-muted-foreground text-sm/6">
-              {readTimeMinutes} Min. Lesezeit
-            </span>
             {categories.map((cat) => {
               const category = cat.item && typeof cat.item !== 'number' ? cat.item : null
               return category ? (
@@ -194,6 +251,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                   <span>{author.role}</span>
                 </>
               )}
+              <span className="text-brand-400 dark:text-brand-500">·</span>
+              <span>{readTimeMinutes} Min. Lesezeit</span>
             </div>
           )}
 
@@ -206,28 +265,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             />
           )}
 
-          {/* Tags */}
-          {categories && categories.length > 0 && (
-            <div className="mt-10 flex flex-wrap gap-2">
-              {categories.map((categoryItem, index) => {
-                const cat = typeof categoryItem.item !== 'number' ? categoryItem.item : null
-                return cat ? (
-                  <a
-                    key={index}
-                    href={`/blog?category=${encodeURIComponent(cat.slug)}`}
-                    className="inline-block"
-                  >
-                    <Badge
-                      variant="secondary"
-                      className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 cursor-pointer rounded-full px-3 py-1 text-sm font-medium transition-colors"
-                    >
-                      {cat.name}
-                    </Badge>
-                  </a>
-                ) : null
-              })}
-            </div>
-          )}
+          <SharePostButton title={post.title} />
 
           {/* Author card – full team member info */}
           {author && (
@@ -308,6 +346,51 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             </Card>
           )}
         </div>
+
+        {similarPosts.length > 0 && (
+          <section className="mt-20" aria-labelledby="similar-posts-heading">
+            <div className="mb-8 flex flex-col gap-5 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-3xl">
+                <h2
+                  id="similar-posts-heading"
+                  className="font-display text-foreground text-2xl font-semibold tracking-[-0.03em] sm:text-3xl"
+                >
+                  Ähnliche Beiträge
+                </h2>
+                <Text className="mt-2">
+                  Weitere Artikel, die thematisch zu diesem Beitrag passen.
+                </Text>
+              </div>
+              <Button variant="ghost" asChild className="w-fit">
+                <Link href="/blog">
+                  Alle Beiträge ansehen <ArrowUpRight />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid gap-10 md:grid-cols-2 xl:grid-cols-3">
+              {similarPosts.map((similarPost) => (
+                <BlogPostCard
+                  key={similarPost.id}
+                  post={{
+                    id: similarPost.id,
+                    slug: similarPost.slug,
+                    title: similarPost.title,
+                    excerpt: similarPost.excerpt,
+                    publishedAt: similarPost.publishedAt,
+                    createdAt: similarPost.createdAt,
+                    featuredImage: similarPost.featuredImage,
+                    categories: similarPost.categories,
+                    author: similarPost.author,
+                  }}
+                  headingLevel="h3"
+                  categoriesVariant="first-only"
+                  imageSize="aspect16x9"
+                  imageClassName="mb-5 aspect-16/9 w-full"
+                />
+              ))}
+            </div>
+          </section>
+        )}
       </Container>
     </div>
   )
