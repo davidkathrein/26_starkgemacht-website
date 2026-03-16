@@ -91,6 +91,9 @@ export function resolveLinkComponentHref(link: LinkLike): string | null {
 }
 
 export function resolveLinkComponentLabel(link: LinkLike): string | null {
+  const rawLabel = link.label?.trim()
+  if (rawLabel) return rawLabel
+
   const linkType = link.linkType ?? 'url'
 
   if (linkType === 'doc') {
@@ -98,8 +101,7 @@ export function resolveLinkComponentLabel(link: LinkLike): string | null {
     if (localDocLabel) return localDocLabel
   }
 
-  const rawLabel = link.label?.trim()
-  return rawLabel || null
+  return null
 }
 
 export function shouldOpenLinkInNewTab(href: string, explicitNewTab?: boolean | null): boolean {

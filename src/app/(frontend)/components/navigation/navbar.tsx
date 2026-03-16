@@ -22,7 +22,7 @@ export function Navbar() {
           <Button variant="link" className="max-sm:hidden">
             <Link href="/blog">Blog</Link>
           </Button>
-          <Button variant="link" className="sm:hidden">
+          <Button variant="link" className="text-primary sm:hidden">
             <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
           </Button>
         </>
@@ -36,7 +36,7 @@ export function Navbar() {
         <>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button variant="ghost" asChild className="max-sm:hidden">
+              <Button variant="ghost" asChild className="text-primary max-sm:hidden">
                 <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
               </Button>
             </TooltipTrigger>

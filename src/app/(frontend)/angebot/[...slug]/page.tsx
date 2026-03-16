@@ -14,12 +14,7 @@ import { getPriceDisplay } from '../../utils/preis'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { withSiteName } from '@/lib/seo'
-import Image from 'next/image'
-import { Wallpaper } from '@/app/(frontend)/components/elements/wallpaper'
-import {
-  Feature,
-  FeaturesTwoColumnWithDemos,
-} from '@/app/(frontend)/components/sections/features-two-column-with-demos'
+import { EventsTwoColumnSection } from '@/app/(frontend)/components/sections/events-two-column-section'
 
 import type { Metadata } from 'next'
 
@@ -183,8 +178,6 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
     </div>
   )
 
-  const wallpapers = ['purple', 'blue', 'green', 'brown'] as const
-
   return (
     <div className="px-6 py-32 lg:px-8">
       <Container>
@@ -287,7 +280,8 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
 
         {moreEvents.length > 0 && (
           <div className="mt-24">
-            <FeaturesTwoColumnWithDemos
+            <EventsTwoColumnSection
+              events={moreEvents}
               eyebrow="Weitere Angebote"
               headline="Das könnte dich auch interessieren"
               subheadline={
@@ -295,105 +289,6 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                   Weitere Workshops, Kurse und Veranstaltungen von StarkGemacht, die gut zu diesem
                   Angebot passen.
                 </p>
-              }
-              features={
-                <>
-                  {moreEvents.map((relatedEvent, index) => {
-                    const imageUrl =
-                      typeof relatedEvent.image === 'string' ? relatedEvent.image : undefined
-                    const wallpaper = wallpapers[index % wallpapers.length]
-                    const relatedStartDate = new Date(relatedEvent.startsAtIso)
-                    const formattedStartDate = relatedStartDate.toLocaleDateString('de-DE', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })
-
-                    let dateDisplay = formattedStartDate
-                    if (relatedEvent.endsAtIso) {
-                      const endDate = new Date(relatedEvent.endsAtIso)
-                      const formattedEndDate = endDate.toLocaleDateString('de-DE', {
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                      })
-
-                      if (formattedStartDate !== formattedEndDate) {
-                        dateDisplay = `${formattedStartDate} bis ${formattedEndDate}`
-                      }
-                    }
-
-                    return (
-                      <Feature
-                        key={relatedEvent.id}
-                        link={`/angebot/${relatedEvent.slug}`}
-                        demo={
-                          <Link href={`/angebot/${relatedEvent.slug}`} className="w-full">
-                            {relatedEvent.customImage &&
-                            typeof relatedEvent.customImage === 'object' &&
-                            'url' in relatedEvent.customImage &&
-                            relatedEvent.customImage.url ? (
-                              <ImageWithCaption
-                                media={relatedEvent.customImage}
-                                captionVariant="overlay"
-                                width={1800}
-                                height={1012}
-                                className="aspect-video w-full"
-                              />
-                            ) : imageUrl ? (
-                              <Image
-                                src={imageUrl}
-                                alt={relatedEvent.name}
-                                className="aspect-video w-full rounded-lg object-cover"
-                                width={1800}
-                                height={1012}
-                              />
-                            ) : (
-                              <Wallpaper
-                                color={wallpaper}
-                                className="aspect-video w-full object-cover"
-                              />
-                            )}
-                          </Link>
-                        }
-                        headline={relatedEvent.name}
-                        subheadline={
-                          <div>
-                            <p className="mb-2 text-sm font-medium text-muted-foreground">
-                              {(relatedEvent.isFree || relatedEvent.minPrice !== null) && (
-                                <span className="font-semibold text-foreground">
-                                  {getPriceDisplay(relatedEvent)}
-                                </span>
-                              )}
-                              {' | '}
-                              {dateDisplay}
-                              {relatedEvent.venueName && ` | ${relatedEvent.venueName}`}
-                            </p>
-                            {relatedEvent.previewDescription && <p>{relatedEvent.previewDescription}</p>}
-                          </div>
-                        }
-                        cta={
-                          <div className="flex gap-2">
-                            <Button asChild>
-                              <Link href={`/angebot/${relatedEvent.slug}`}>Mehr erfahren</Link>
-                            </Button>
-                            {relatedEvent.checkoutUrl ? (
-                              <Button variant="ghost" asChild>
-                                <Link
-                                  href={relatedEvent.checkoutUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  Tickets sichern
-                                </Link>
-                              </Button>
-                            ) : null}
-                          </div>
-                        }
-                      />
-                    )
-                  })}
-                </>
               }
             />
           </div>
