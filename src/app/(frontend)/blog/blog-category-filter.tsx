@@ -21,8 +21,8 @@ export function BlogCategoryFilter({
     clsx(
       'cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors',
       isActive
-        ? 'border-primary bg-primary text-primary-foreground'
-        : 'border-border/70 bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground',
+        ? 'border-primary bg-primary text-primary-foreground hover:bg-primary/95 hover:text-primary-foreground'
+        : 'border-border/60 bg-background/70 text-muted-foreground hover:bg-secondary hover:text-foreground',
     )
 
   return (

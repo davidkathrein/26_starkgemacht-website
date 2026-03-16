@@ -2,8 +2,6 @@ import { getPayload } from 'payload'
 import config from '@payload-config'
 import { Suspense } from 'react'
 import { Container } from '@/app/(frontend)/components/elements/container'
-import { Heading } from '@/app/(frontend)/components/elements/heading'
-import { Text } from '@/app/(frontend)/components/elements/text'
 import type { Category } from '@/payload-types'
 import { BlogOverviewClient } from '@/app/(frontend)/blog/blog-overview-client'
 
@@ -33,14 +31,8 @@ export default async function BlogOverviewPage() {
     <div className="bg-background min-h-full w-full px-6 py-24 lg:px-8">
       <Container>
         <div className="mx-auto lg:mx-0">
-          <Heading>Alle Blog Beiträge</Heading>
-          <Text size="lg" className="mt-4">
-            Neues aus unserem Verein, inspirierende Geschichten und praktische Tipps für ein
-            starkes, selbstbestimmtes Leben.
-          </Text>
-
           <Suspense fallback={<div className="mt-8">Lade Beiträge...</div>}>
-            <BlogOverviewClient posts={posts} categories={categories} className="mt-8" />
+            <BlogOverviewClient posts={posts} categories={categories} />
           </Suspense>
         </div>
       </Container>
