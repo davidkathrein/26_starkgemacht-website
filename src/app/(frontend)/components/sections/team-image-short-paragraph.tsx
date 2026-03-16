@@ -83,7 +83,7 @@ export default async function TeamImageShortParagraph() {
                     src={imageUrl}
                     width={1024}
                     height={683}
-                    className="aspect-3/2 w-full rounded-2xl object-cover outline-1 -outline-offset-1 outline-black/5 dark:outline-white/10"
+                    className="aspect-3/2 w-full max-w-lg rounded-2xl object-cover outline-1 -outline-offset-1 outline-black/5 dark:outline-white/10"
                   />
                 )}
                 <h3 className="text-brand-950 mt-6 text-lg/8 font-semibold dark:text-white">
