@@ -66,13 +66,11 @@ export const Media: CollectionConfig = {
         name: 'aspect16x9',
         width: 1280,
         height: 720,
-        withoutEnlargement: true,
       },
       {
         name: 'aspect4x3',
         width: 1280,
         height: 960,
-        withoutEnlargement: true,
       },
       {
         name: 'square',
@@ -84,7 +82,6 @@ export const Media: CollectionConfig = {
         name: 'aspect3x4',
         width: 1280,
         height: 1707,
-        withoutEnlargement: true,
       },
       {
         name: 'seoPreview',
@@ -97,7 +94,6 @@ export const Media: CollectionConfig = {
             progressive: true,
           },
         },
-        withoutEnlargement: true,
       },
     ],
     pasteURL: {

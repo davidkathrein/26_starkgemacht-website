@@ -28,8 +28,37 @@ import { Footer } from './globals/Footer'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 const databaseURL = process.env.DATABASE_URL || ''
+const databaseHost = process.env.DATABASE_HOST
+const databasePort = process.env.DATABASE_PORT
+const databaseUser = process.env.DATABASE_USER
+const databasePassword = process.env.DATABASE_PASSWORD
+const databaseName = process.env.DATABASE_NAME
+const databaseCA = process.env.DATABASE_CA
 const usePostgresSSL =
   process.env.PGSSL === 'false' ? false : process.env.NODE_ENV === 'production'
+const postgresSSLConfig = usePostgresSSL
+  ? databaseCA
+    ? {
+        ca: databaseCA,
+      }
+    : {
+        rejectUnauthorized: false,
+      }
+  : undefined
+const postgresPoolConfig =
+  databaseHost && databasePort && databaseUser && databasePassword && databaseName
+    ? {
+        host: databaseHost,
+        port: Number.parseInt(databasePort, 10),
+        user: databaseUser,
+        password: databasePassword,
+        database: databaseName,
+        ...(postgresSSLConfig ? { ssl: postgresSSLConfig } : {}),
+      }
+    : {
+        connectionString: databaseURL,
+        ...(postgresSSLConfig ? { ssl: postgresSSLConfig } : {}),
+      }
 
 export default buildConfig({
   admin: {
@@ -73,16 +102,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    pool: {
-      connectionString: databaseURL,
-      ...(usePostgresSSL
-        ? {
-            ssl: {
-              rejectUnauthorized: false,
-            },
-          }
-        : {}),
-    },
+    pool: postgresPoolConfig,
   }),
   sharp,
 })

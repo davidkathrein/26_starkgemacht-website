@@ -1,12 +1,7 @@
 import type { PayloadRequest } from 'payload'
 import type { SanitizedCollectionConfig } from 'payload'
 
-type ImageSizeConfig = {
-  name: string
-  width?: number
-  height?: number
-  position?: string | number
-}
+type ImageSizeConfig = { name: string; width?: number; height?: number; position?: string | number }
 
 type ImageFormatOptions = {
   format?: string
@@ -14,12 +9,9 @@ type ImageFormatOptions = {
 }
 
 function normalizeFocalPoint(value: unknown): number | null {
-  const numeric =
-    typeof value === 'number' ? value : typeof value === 'string' ? Number(value) : null
-
-  if (numeric == null || Number.isNaN(numeric)) return null
-  if (numeric >= 0 && numeric <= 1) return numeric
-  if (numeric >= 0 && numeric <= 100) return numeric / 100
+  if (typeof value !== 'number' || Number.isNaN(value)) return null
+  if (value >= 0 && value <= 1) return value
+  if (value >= 0 && value <= 100) return value / 100
   return null
 }
 
@@ -85,11 +77,9 @@ function needsSizeGeneration(
 ): boolean {
   if (!imageSizes?.length) return false
   const existing = doc.sizes ?? {}
-
   for (const size of imageSizes) {
     if (!existing[size.name]) return true
   }
-
   return false
 }
 
@@ -112,34 +102,32 @@ export async function regenerateMissingImageSizes({
   const { imageSizes } = uploadConfig
   if (!imageSizes?.length) return
 
-  const sourceDoc = originalDoc ?? data
-  const url = (sourceDoc?.url ?? data?.url) as string | undefined
-  const filename = (sourceDoc?.filename ?? data?.filename) as string | undefined
-  const mimeType = (sourceDoc?.mimeType ?? data?.mimeType) as string | undefined
+  const doc = originalDoc ?? data
+  const url = (doc?.url ?? data?.url) as string | undefined
+  const filename = (doc?.filename ?? data?.filename) as string | undefined
+  const mimeType = (doc?.mimeType ?? data?.mimeType) as string | undefined
 
   if (!url || !filename || !isImageMimeType(mimeType)) {
     req.payload.logger.warn('Regenerate media sizes: missing url/filename or non-image mime type')
     return
   }
 
-  const previousFocalX = normalizeFocalPoint(originalDoc?.focalX)
-  const previousFocalY = normalizeFocalPoint(originalDoc?.focalY)
-  const nextFocalX = normalizeFocalPoint(data?.focalX ?? sourceDoc?.focalX)
-  const nextFocalY = normalizeFocalPoint(data?.focalY ?? sourceDoc?.focalY)
-
-  const focalPointChanged = nextFocalX !== previousFocalX || nextFocalY !== previousFocalY
-
+  const nextFocalX = normalizeFocalPoint(data?.focalX)
+  const nextFocalY = normalizeFocalPoint(data?.focalY)
+  const focalPointChanged =
+    nextFocalX !== normalizeFocalPoint(originalDoc?.focalX) ||
+    nextFocalY !== normalizeFocalPoint(originalDoc?.focalY)
   if (
     !forceRegenerate &&
     !focalPointChanged &&
-    !needsSizeGeneration(sourceDoc ?? data, imageSizes)
+    !needsSizeGeneration(originalDoc ?? data, imageSizes)
   ) {
     return
   }
 
   const handleUpload = (uploadConfig as Record<string, unknown>).handleUpload as
     | ((args: {
-        data: { prefix?: string; filename?: string }
+        data: { prefix?: string }
         file: { buffer: Buffer; filename: string; mimeType: string }
       }) => Promise<{ filename?: string }>)
     | undefined
@@ -153,21 +141,16 @@ export async function regenerateMissingImageSizes({
   }
 
   let imageBuffer: Buffer
-
   try {
     const res = await fetch(url, { method: 'GET' })
-
     if (!res.ok) {
       req.payload.logger.warn(`Regenerate media sizes: failed to fetch ${url} (${res.status})`)
       return
     }
-
     imageBuffer = Buffer.from(await res.arrayBuffer())
   } catch (err) {
     req.payload.logger.warn(
-      `Regenerate media sizes: fetch error for ${url}: ${
-        err instanceof Error ? err.message : String(err)
-      }`,
+      `Regenerate media sizes: fetch error for ${url}: ${err instanceof Error ? err.message : String(err)}`,
     )
     return
   }
@@ -177,9 +160,8 @@ export async function regenerateMissingImageSizes({
   const baseName = filename.replace(/\.[^.]+$/, '')
   const ext = filename.split('.').pop() ?? 'jpg'
   const defaultMime = mimeType ?? 'image/jpeg'
-
-  const focalX = nextFocalX
-  const focalY = nextFocalY
+  const focalX = normalizeFocalPoint(doc?.focalX)
+  const focalY = normalizeFocalPoint(doc?.focalY)
 
   const generatedSizes: Record<
     string,
@@ -192,10 +174,6 @@ export async function regenerateMissingImageSizes({
     }
   > = {}
 
-  const sourceMetadata = await sharp(imageBuffer).metadata()
-  const sourceWidth = sourceMetadata.width
-  const sourceHeight = sourceMetadata.height
-
   for (const sizeConfig of imageSizes) {
     const name = sizeConfig.name
     const width = sizeConfig.width ?? 1280
@@ -203,29 +181,33 @@ export async function regenerateMissingImageSizes({
     const position = sizeConfig.position != null ? String(sizeConfig.position) : 'centre'
     const formatOptions = (sizeConfig as { formatOptions?: ImageFormatOptions }).formatOptions
     const targetFormat = formatOptions?.format?.toLowerCase()
-    const shouldUseFocalCrop =
-      sizeConfig.position == null &&
-      focalX != null &&
-      focalY != null &&
-      sourceWidth != null &&
-      sourceHeight != null
+    const shouldUseFocalCrop = sizeConfig.position == null && focalX != null && focalY != null
 
     try {
       let pipeline = sharp(imageBuffer).rotate()
 
       if (shouldUseFocalCrop) {
-        const scale = Math.max(width / sourceWidth, height / sourceHeight)
-        const resizedWidth = Math.max(width, Math.round(sourceWidth * scale))
-        const resizedHeight = Math.max(height, Math.round(sourceHeight * scale))
+        const metadata = await sharp(imageBuffer).metadata()
+        const sourceWidth = metadata.width
+        const sourceHeight = metadata.height
 
-        const focusX = focalX * resizedWidth
-        const focusY = focalY * resizedHeight
-        const left = clamp(Math.round(focusX - width / 2), 0, Math.max(0, resizedWidth - width))
-        const top = clamp(Math.round(focusY - height / 2), 0, Math.max(0, resizedHeight - height))
+        if (sourceWidth && sourceHeight) {
+          // Emulate "cover" but center the crop around Payload's focal point.
+          const scale = Math.max(width / sourceWidth, height / sourceHeight)
+          const resizedWidth = Math.max(width, Math.round(sourceWidth * scale))
+          const resizedHeight = Math.max(height, Math.round(sourceHeight * scale))
 
-        pipeline = pipeline
-          .resize(resizedWidth, resizedHeight, { fit: 'fill' })
-          .extract({ left, top, width, height })
+          const focusX = focalX * resizedWidth
+          const focusY = focalY * resizedHeight
+          const left = clamp(Math.round(focusX - width / 2), 0, Math.max(0, resizedWidth - width))
+          const top = clamp(Math.round(focusY - height / 2), 0, Math.max(0, resizedHeight - height))
+
+          pipeline = pipeline
+            .resize(resizedWidth, resizedHeight, { fit: 'fill' })
+            .extract({ left, top, width, height })
+        } else {
+          pipeline = pipeline.resize(width, height, { fit: 'cover', position })
+        }
       } else {
         pipeline = pipeline.resize(width, height, { fit: 'cover', position })
       }
@@ -266,9 +248,7 @@ export async function regenerateMissingImageSizes({
       }
     } catch (err) {
       req.payload.logger.warn(
-        `Regenerate media sizes: failed to generate size ${name}: ${
-          err instanceof Error ? err.message : String(err)
-        }`,
+        `Regenerate media sizes: failed to generate size ${name}: ${err instanceof Error ? err.message : String(err)}`,
       )
     }
   }
