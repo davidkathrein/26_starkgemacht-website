@@ -329,7 +329,7 @@ async function EventsFeatureSection() {
                 key={event.ticketTailorId}
                 link={'/angebot/' + event.slug}
                 demo={
-                  <Link href={'/angebot/' + event.slug}>
+                  <Link href={'/angebot/' + event.slug} className="w-full">
                     {event.customImage &&
                     typeof event.customImage === 'object' &&
                     'url' in event.customImage &&
