@@ -52,9 +52,27 @@ async function getMoreEvents(currentSlug: string) {
           },
         },
         {
-          startsAtIso: {
-            greater_than_equal: now,
-          },
+          or: [
+            {
+              endsAtIso: {
+                greater_than_equal: now,
+              },
+            },
+            {
+              and: [
+                {
+                  endsAtIso: {
+                    exists: false,
+                  },
+                },
+                {
+                  startsAtIso: {
+                    greater_than_equal: now,
+                  },
+                },
+              ],
+            },
+          ],
         },
       ],
     },
