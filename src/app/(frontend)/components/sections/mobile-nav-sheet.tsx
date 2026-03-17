@@ -1,13 +1,27 @@
 'use client'
 
-import type { ReactNode } from 'react'
+import { useState, type MouseEvent, type ReactNode } from 'react'
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 
 export function MobileNavSheet({ children }: { children: ReactNode }) {
+  const [open, setOpen] = useState(false)
+
+  const handleNavClick = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target
+
+    if (!(target instanceof Element)) {
+      return
+    }
+
+    if (target.closest('a')) {
+      setOpen(false)
+    }
+  }
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           variant="ghost"
@@ -25,7 +39,9 @@ export function MobileNavSheet({ children }: { children: ReactNode }) {
         <SheetHeader className="sr-only">
           <SheetTitle>Navigation</SheetTitle>
         </SheetHeader>
-        <nav className="mt-10 flex flex-col gap-6">{children}</nav>
+        <nav className="mt-10 flex flex-col gap-6" onClickCapture={handleNavClick}>
+          {children}
+        </nav>
       </SheetContent>
     </Sheet>
   )
