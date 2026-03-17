@@ -120,15 +120,13 @@ export function NavbarWithLinksActionsAndCenteredLogo({
         </NavbarLink>
       ))}
       {secondaryCta && (
-        <Button variant="ghost" asChild size="lg" className="mt-2 w-full justify-start px-0 sm:w-fit">
-          <SmartLink
-            href={secondaryCta.href}
-            target={secondaryCta.newTab ? '_blank' : undefined}
-            rel={secondaryCta.newTab ? 'noopener noreferrer' : undefined}
-          >
-            {secondaryCta.label}
-          </SmartLink>
-        </Button>
+        <NavbarLink
+          href={secondaryCta.href}
+          target={secondaryCta.newTab ? '_blank' : undefined}
+          rel={secondaryCta.newTab ? 'noopener noreferrer' : undefined}
+        >
+          {secondaryCta.label}
+        </NavbarLink>
       )}
       {cta && (
         <Button asChild size="lg" className="mt-2 w-full sm:w-fit">
