@@ -145,7 +145,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   const moreEvents = await getMoreEvents(slugString)
   const priceDisplay = getPriceDisplay(event)
   const showContactCta = priceDisplay === 'Keine Preisangabe'
-  const ctaHref = showContactCta ? 'mailto:kontakt@starkgemacht.com' : event.checkoutUrl ?? '#'
+  const ctaHref = showContactCta ? 'mailto:kontakt@starkgemacht.com' : (event.checkoutUrl ?? '#')
   const ctaLabel = showContactCta ? 'Jetzt kontaktieren' : 'Jetzt Tickets sichern'
   const ctaTarget = showContactCta ? undefined : '_blank'
   const ctaRel = showContactCta ? undefined : 'noopener noreferrer'
@@ -230,15 +230,17 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           {event.content && (
             <RichText
               data={event.content}
-              className="text-brand-600 dark:text-brand-300 mt-10 max-w-2xl space-y-6 text-base/7"
+              className="text-brand-600 dark:text-brand-300 mt-10 max-w-2xl text-base/7 [&_p]:mb-5 [&_p:last-child]:mb-0"
             />
           )}
 
           {event.venueName && (
             <>
-              <Separator />
+              <div className="my-12">
+                <Separator />
+              </div>
 
-              <section className="border-brand-950/10 via-brand-50/80 to-brand-100/70 dark:from-brand-900 dark:via-brand-900 dark:to-brand-950 mt-12 overflow-hidden rounded-[1.75rem] border bg-linear-to-br from-white p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10">
+              <section className="border-brand-950/10 via-brand-50/80 to-brand-100/70 dark:from-brand-900 dark:via-brand-900 dark:to-brand-950 overflow-hidden rounded-[1.75rem] border bg-linear-to-br from-white p-1 shadow-[0_24px_70px_-48px_rgba(39,48,28,0.55)] dark:border-white/10">
                 <div className="dark:bg-brand-950/70 relative overflow-hidden rounded-[calc(1.75rem-1px)] bg-white/80 px-6 py-6 backdrop-blur-sm sm:px-8 sm:py-8">
                   <div className="bg-brand-200/50 dark:bg-brand-700/20 absolute -top-14 -right-14 h-32 w-32 rounded-full blur-3xl" />
                   <div className="relative grid gap-6 lg:grid-cols-[minmax(0,1fr)_15rem] lg:items-start">

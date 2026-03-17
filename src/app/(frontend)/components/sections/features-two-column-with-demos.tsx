@@ -20,16 +20,16 @@ export function Feature({
   return (
     <div
       className={clsx(
-        'rounded-3xl border border-border/80 bg-card p-2 text-card-foreground shadow-sm',
+        'border-border/80 bg-card text-card-foreground rounded-3xl border p-2 shadow-sm',
         className,
       )}
     >
-      <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-muted">
+      <div className="border-border/60 bg-muted relative overflow-hidden rounded-2xl border">
         {demo}
       </div>
       <div className="flex flex-col gap-4 p-4 sm:p-8 lg:p-6">
         <MaybeLink href={link}>
-          <h3 className="text-base/8 font-medium">{headline}</h3>
+          <h3 className="text-base/normal font-medium">{headline}</h3>
           <div className="text-muted-foreground mt-2 flex flex-col gap-4 text-sm/7">
             {subheadline}
           </div>
@@ -42,11 +42,17 @@ export function Feature({
 
 export function FeaturesTwoColumnWithDemos({
   features,
+  featuresClassName,
   ...props
-}: { features: ReactNode } & Omit<ComponentProps<typeof Section>, 'children'>) {
+}: {
+  features: ReactNode
+  featuresClassName?: string
+} & Omit<ComponentProps<typeof Section>, 'children'>) {
   return (
     <Section {...props}>
-      <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">{features}</div>
+      <div className={clsx('grid grid-cols-1 gap-2 lg:grid-cols-2', featuresClassName)}>
+        {features}
+      </div>
     </Section>
   )
 }

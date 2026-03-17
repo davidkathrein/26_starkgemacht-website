@@ -25,7 +25,7 @@ function EventFeaturesGrid({ events }: { events: Event[] }) {
   const wallpapers = ['purple', 'blue', 'green', 'brown'] as const
 
   return (
-    <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
+    <>
       {events.map((event, index) => {
         const imageUrl = typeof event.image === 'string' ? event.image : undefined
         const wallpaper = wallpapers[index % wallpapers.length]
@@ -83,9 +83,9 @@ function EventFeaturesGrid({ events }: { events: Event[] }) {
             headline={event.name}
             subheadline={
               <div>
-                <p className="mb-2 text-sm font-medium text-muted-foreground">
+                <p className="text-muted-foreground mt-2 mb-4 text-sm font-medium">
                   {(event.isFree || event.minPrice !== null) && (
-                    <span className="font-semibold text-foreground">{getPriceDisplay(event)}</span>
+                    <span className="text-foreground font-semibold">{getPriceDisplay(event)}</span>
                   )}
                   {' | '}
                   {dateDisplay}
@@ -107,9 +107,7 @@ function EventFeaturesGrid({ events }: { events: Event[] }) {
                   </Button>
                 ) : (
                   <Button variant="ghost" asChild>
-                    <SmartLink href="mailto:kontakt@starkgemacht.com">
-                      Jetzt kontaktieren
-                    </SmartLink>
+                    <SmartLink href="mailto:kontakt@starkgemacht.com">Jetzt kontaktieren</SmartLink>
                   </Button>
                 )}
               </div>
@@ -117,7 +115,7 @@ function EventFeaturesGrid({ events }: { events: Event[] }) {
           />
         )
       })}
-    </div>
+    </>
   )
 }
 
@@ -138,6 +136,7 @@ export function EventsTwoColumnSection({
       eyebrow={eyebrow}
       headline={headline}
       subheadline={subheadline}
+      featuresClassName="grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
       features={<EventFeaturesGrid events={events} />}
     />
   )
