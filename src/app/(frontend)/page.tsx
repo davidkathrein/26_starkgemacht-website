@@ -35,7 +35,7 @@ export default async function HomePage() {
             </p>
           }
           cta={
-            <div className="flex items-center gap-4">
+            <div className="flex items-center">
               <Button size="lg" asChild>
                 <NextLink href="#angebot">Angebote entdecken</NextLink>
               </Button>
@@ -91,8 +91,8 @@ async function EventsFeatureSection() {
           <p>Aktuell sind keine Veranstaltungen verfügbar. Neue Events folgen in Kürze!</p>
         ) : (
           <p>
-            Entdecke aktuelle Workshops, Kurse und Veranstaltungen, die Selbstvertrauen,
-            Gesundheit, Nachhaltigkeit und gemeinschaftliches Erleben in den Mittelpunkt stellen.
+            Entdecke aktuelle Workshops, Kurse und Veranstaltungen, die Selbstvertrauen, Gesundheit,
+            Nachhaltigkeit und gemeinschaftliches Erleben in den Mittelpunkt stellen.
           </p>
         )
       }

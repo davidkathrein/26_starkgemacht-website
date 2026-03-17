@@ -40,13 +40,23 @@ async function getEventBySlug(slugString: string) {
 
 async function getMoreEvents(currentSlug: string) {
   const payload = await getPayload({ config })
+  const now = new Date().toISOString()
 
   const events = await payload.find({
     collection: 'event',
     where: {
-      slug: {
-        not_equals: currentSlug,
-      },
+      and: [
+        {
+          slug: {
+            not_equals: currentSlug,
+          },
+        },
+        {
+          startsAtIso: {
+            greater_than_equal: now,
+          },
+        },
+      ],
     },
     limit: 4,
     depth: 2,
@@ -179,7 +189,7 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   )
 
   return (
-    <div className="px-6 py-32 lg:px-8">
+    <div className="py-32">
       <Container>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>

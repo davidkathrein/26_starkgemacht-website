@@ -27,7 +27,7 @@ export function Feature({
       <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-muted">
         {demo}
       </div>
-      <div className="flex flex-col gap-4 p-6 sm:p-10 lg:p-6">
+      <div className="flex flex-col gap-4 p-4 sm:p-8 lg:p-6">
         <MaybeLink href={link}>
           <h3 className="text-base/8 font-medium">{headline}</h3>
           <div className="text-muted-foreground mt-2 flex flex-col gap-4 text-sm/7">

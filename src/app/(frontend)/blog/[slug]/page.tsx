@@ -208,6 +208,16 @@ function getSocialIcon(platform: string) {
   }
 }
 
+function getAuthorCardLabel(author: Team) {
+  const geschlecht =
+    'geschlecht' in author && typeof author.geschlecht === 'string' ? author.geschlecht : null
+
+  if (geschlecht === 'weiblich') return 'Über die Autorin'
+  if (geschlecht === 'maennlich') return 'Über den Autor'
+
+  return 'Über die Autor:in'
+}
+
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const post = await getBlogPostBySlug(slug)
@@ -235,7 +245,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   const similarPosts = await getSimilarBlogPosts(post)
 
   return (
-    <div className="px-6 py-32 lg:px-8">
+    <div className="py-32">
       <Container>
         <div className="mx-auto max-w-3xl">
           <div className="flex items-center gap-x-4 text-xs">
@@ -304,30 +314,31 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           {author && (
             <Card
               className="border-brand-950/10 bg-brand-50/80 dark:bg-brand-900/80 mt-16 dark:border-white/10"
-              aria-label="Über den Autor"
+              aria-label={getAuthorCardLabel(author)}
             >
               <CardHeader>
                 <CardTitle className="font-display text-brand-950 text-lg font-semibold dark:text-white">
-                  Über den Autor
+                  {getAuthorCardLabel(author)}
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-6 sm:flex-row sm:gap-8">
-                <div className="shrink-0">
-                  <Avatar
-                    media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
-                    alt={author.name}
-                    fallbackId={author.id}
-                    size="xl"
-                  />
-                </div>
                 <div className="min-w-0 flex-1 space-y-4">
-                  <div>
-                    <p className="text-brand-800 font-semibold dark:text-white">{author.name}</p>
-                    {author.role && (
-                      <p className="text-brand-600 dark:text-brand-300 mt-0.5 text-base/7">
-                        {author.role}
-                      </p>
-                    )}
+                  <div className="flex items-end gap-2">
+                    <Avatar
+                      media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
+                      alt={author.name}
+                      fallbackId={author.id}
+                      size="lg"
+                      className="shrink-0"
+                    />
+                    <div>
+                      <p className="text-brand-800 font-semibold dark:text-white">{author.name}</p>
+                      {author.role && (
+                        <p className="text-brand-600 dark:text-brand-300 mt-0.5 text-base/7">
+                          {author.role}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   {author.bio &&
                     typeof author.bio === 'object' &&

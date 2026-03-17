@@ -14,7 +14,7 @@ export function NavbarLink({
     <a
       href={href}
       className={clsx(
-        'group text-foreground inline-flex items-center justify-between gap-2 text-3xl/10 font-medium lg:text-sm/7',
+        'group text-foreground inline-flex items-center justify-between gap-2 text-xl/7 font-medium sm:text-2xl/8 lg:text-sm/7',
         className,
       )}
       {...props}
@@ -61,12 +61,14 @@ export function NavbarLogo({
 
 export function NavbarWithLinksActionsAndCenteredLogo({
   links,
+  mobileLinks,
   logo,
   actions,
   className,
   ...props
 }: {
   links: ReactNode
+  mobileLinks?: ReactNode
   logo: ReactNode
   actions: ReactNode
 } & ComponentProps<'header'>) {
@@ -86,7 +88,7 @@ export function NavbarWithLinksActionsAndCenteredLogo({
             <div className="flex max-lg:hidden">{links}</div>
             <div className="flex flex-1 items-center justify-end gap-4">
               <div className="flex shrink-0 items-center gap-2">{actions}</div>
-              <MobileNavSheet>{links}</MobileNavSheet>
+              <MobileNavSheet>{mobileLinks ?? links}</MobileNavSheet>
             </div>
           </div>
         </nav>

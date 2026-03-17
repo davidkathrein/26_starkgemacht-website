@@ -81,6 +81,17 @@ export const TeamMember: CollectionConfig = {
       required: true,
     },
     {
+      name: 'geschlecht',
+      type: 'select',
+      required: true,
+      defaultValue: 'weiblich',
+      options: [
+        { label: 'Weiblich', value: 'weiblich' },
+        { label: 'Männlich', value: 'maennlich' },
+        { label: 'Divers', value: 'divers' },
+      ],
+    },
+    {
       name: 'photo',
       type: 'upload',
       relationTo: 'media',

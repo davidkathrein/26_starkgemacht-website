@@ -88,7 +88,7 @@ export default async function DynamicRootPage({ params }: { params: Promise<{ sl
   }
 
   return (
-    <div className="px-6 py-32 lg:px-8">
+    <div className="py-32">
       <Container>
         <div className="mx-auto max-w-3xl">
           <Heading>{page.title}</Heading>

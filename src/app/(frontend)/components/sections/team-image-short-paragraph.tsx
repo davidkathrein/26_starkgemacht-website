@@ -47,8 +47,8 @@ export default async function TeamImageShortParagraph() {
     sort: 'order',
   })
   return (
-    <div className="dark:bg-brand-950 py-24 md:py-32 lg:py-40">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-20 px-6 lg:px-8 xl:grid-cols-3">
+    <div className="dark:bg-brand-950 py-20 md:py-24 lg:py-28">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 lg:px-8 xl:grid-cols-3">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <div className="sticky top-32">
             <h2 className="font-display text-brand-950 text-3xl/9 font-medium tracking-[-0.03em] text-pretty sm:text-[2.5rem]/10 dark:text-white">
@@ -63,7 +63,7 @@ export default async function TeamImageShortParagraph() {
         </div>
         <ul
           role="list"
-          className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-20 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2"
+          className="mx-auto grid max-w-2xl grid-cols-1 gap-x-6 gap-y-14 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-8 xl:col-span-2"
         >
           {teamMembers.map((member) => {
             const imageUrl =

@@ -242,6 +242,7 @@ export interface Team {
   order: number;
   name: string;
   role: string;
+  geschlecht: 'weiblich' | 'maennlich' | 'divers';
   photo: number | Media;
   bio: {
     root: {
@@ -795,6 +796,7 @@ export interface TeamSelect<T extends boolean = true> {
   order?: T;
   name?: T;
   role?: T;
+  geschlecht?: T;
   photo?: T;
   bio?: T;
   links?:

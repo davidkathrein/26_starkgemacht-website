@@ -23,8 +23,8 @@ export function HeroLeftAlignedWithDemo({
 } & ComponentProps<'section'>) {
   return (
     <section className={clsx('py-16', className)} {...props}>
-      <Container className="flex flex-col gap-16">
-        <div className="flex flex-col gap-32">
+      <Container className="flex flex-col gap-12 sm:gap-14">
+        <div className="flex flex-col gap-20 sm:gap-24">
           <div className="flex flex-col items-start gap-6">
             {eyebrow}
             <Heading className="max-w-5xl">{headline}</Heading>

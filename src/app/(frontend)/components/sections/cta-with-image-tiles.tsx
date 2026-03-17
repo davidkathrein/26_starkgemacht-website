@@ -6,9 +6,9 @@ import Link from 'next/link'
 
 export default function CTAWithImageTiles({ id }: { id?: string }) {
   return (
-    <section className="bg-brand-50 dark:bg-brand-950 overflow-hidden py-32" id={id}>
+    <section className="bg-brand-50 dark:bg-brand-950 overflow-hidden py-20 sm:py-24" id={id}>
       <div className="mx-auto max-w-7xl px-6 lg:flex lg:px-8">
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-16 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-12 gap-y-12 lg:mx-0 lg:max-w-none lg:min-w-full lg:flex-none lg:gap-y-8">
           <div className="flex flex-col justify-center lg:col-end-1 lg:w-full lg:max-w-lg lg:pb-8">
             <Subheading>Über StarkGemacht</Subheading>
             <p className="mt-6 text-xl/8">
@@ -24,7 +24,7 @@ export default function CTAWithImageTiles({ id }: { id?: string }) {
               Mit Kursen, Workshops und Projekten rund um Selbstschutz, Gesundheit, Nachhaltigkeit
               und Begegnung schaffen wir Räume für persönliches Wachstum und gelebte Gemeinschaft.
             </p>
-            <div className="mt-10 flex">
+            <div className="mt-8 flex">
               <Button size="lg" asChild>
                 <Link href="#angebot">
                   Angebote ansehen <ArrowNarrowRightIcon />

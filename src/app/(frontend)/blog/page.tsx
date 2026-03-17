@@ -28,7 +28,7 @@ export default async function BlogOverviewPage() {
   const posts = postsResult.docs
 
   return (
-    <div className="bg-background min-h-full w-full px-6 py-24 lg:px-8">
+    <div className="bg-background min-h-full w-full py-24">
       <Container>
         <div className="mx-auto lg:mx-0">
           <Suspense fallback={<div className="mt-8">Lade Beiträge...</div>}>
