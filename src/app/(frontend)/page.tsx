@@ -42,7 +42,7 @@ export default async function HomePage() {
 
               <Button variant="ghost" size="lg" asChild>
                 <NextLink href="#uber">
-                  Mehr über StarkGemacht <ArrowNarrowRightIcon />
+                  Über StarkGemacht <ArrowNarrowRightIcon />
                 </NextLink>
               </Button>
             </div>
