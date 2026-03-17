@@ -392,7 +392,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
 
         {similarPosts.length > 0 && (
-          <section className="mt-20" aria-labelledby="similar-posts-heading">
+          <section className="mt-16 border-t pt-16" aria-labelledby="similar-posts-heading">
             <div className="mb-8 flex flex-col gap-5 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
                 <h2

@@ -47,7 +47,7 @@ export default async function TeamImageShortParagraph() {
     sort: 'order',
   })
   return (
-    <div className="dark:bg-brand-950 py-20 md:py-24 lg:py-28">
+    <div className="dark:bg-brand-950 py-20 md:py-24 lg:py-28" id='team'>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-14 px-6 lg:px-8 xl:grid-cols-3">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <div className="sticky top-32">

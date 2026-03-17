@@ -20,3 +20,5 @@ export function Link({
     />
   )
 }
+
+export { Link as SmartLink }

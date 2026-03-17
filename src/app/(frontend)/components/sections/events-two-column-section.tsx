@@ -2,7 +2,7 @@ import Image from 'next/image'
 import NextLink from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Wallpaper } from '@/app/(frontend)/components/elements/wallpaper'
-import { Link } from '@/app/(frontend)/components/elements/link'
+import { SmartLink } from '@/app/(frontend)/components/elements/link'
 import { ImageWithCaption } from '@/app/(frontend)/components/elements/image-with-caption'
 import { getPriceDisplay } from '@/app/(frontend)/utils/preis'
 import type { Event } from '@/payload-types'
@@ -59,7 +59,7 @@ export function EventsTwoColumnSection({ events, id, eyebrow, headline, subheadl
                 key={event.id}
                 link={`/angebot/${event.slug}`}
                 demo={
-                  <Link href={`/angebot/${event.slug}`} className="w-full">
+                  <SmartLink href={`/angebot/${event.slug}`} className="w-full">
                     {event.customImage &&
                     typeof event.customImage === 'object' &&
                     'url' in event.customImage &&
@@ -82,7 +82,7 @@ export function EventsTwoColumnSection({ events, id, eyebrow, headline, subheadl
                     ) : (
                       <Wallpaper color={wallpaper} className="aspect-video w-full object-cover" />
                     )}
-                  </Link>
+                  </SmartLink>
                 }
                 headline={event.name}
                 subheadline={
@@ -117,9 +117,9 @@ export function EventsTwoColumnSection({ events, id, eyebrow, headline, subheadl
                       </Button>
                     ) : (
                       <Button variant="ghost" asChild>
-                        <NextLink href="mailto:kontakt@starkgemacht.com">
+                        <SmartLink href="mailto:kontakt@starkgemacht.com">
                           Jetzt kontaktieren
-                        </NextLink>
+                        </SmartLink>
                       </Button>
                     )}
                   </div>

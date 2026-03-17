@@ -1,8 +1,9 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
-import { Link } from '../elements/link'
+import { SmartLink } from '../elements/link'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { MobileNavSheet } from './mobile-nav-sheet'
+import { Button } from '@/components/ui/button'
 
 export function NavbarLink({
   children,
@@ -38,6 +39,12 @@ export function NavbarLink({
   )
 }
 
+export type NavbarItem = {
+  label: string
+  href: string
+  newTab?: boolean
+}
+
 export function NavbarLogo({
   className,
   href,
@@ -46,7 +53,7 @@ export function NavbarLogo({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link
+        <SmartLink
           href={href}
           {...props}
           className={clsx('inline-flex items-stretch justify-center', className)}
@@ -60,18 +67,83 @@ export function NavbarLogo({
 }
 
 export function NavbarWithLinksActionsAndCenteredLogo({
-  links,
-  mobileLinks,
+  items,
+  secondaryCta,
+  cta,
   logo,
-  actions,
   className,
   ...props
 }: {
-  links: ReactNode
-  mobileLinks?: ReactNode
+  items: NavbarItem[]
+  secondaryCta?: NavbarItem | null
+  cta?: NavbarItem | null
   logo: ReactNode
-  actions: ReactNode
 } & ComponentProps<'header'>) {
+  const secondaryDesktopCta = secondaryCta ? (
+    <Button variant="ghost" asChild className="text-primary max-sm:hidden">
+      <SmartLink
+        href={secondaryCta.href}
+        target={secondaryCta.newTab ? '_blank' : undefined}
+        rel={secondaryCta.newTab ? 'noopener noreferrer' : undefined}
+      >
+        {secondaryCta.label}
+      </SmartLink>
+    </Button>
+  ) : null
+
+  const desktopLinks = (
+    <>
+      {items.map((item) => (
+        <Button key={`${item.href}-${item.label}`} variant="link" asChild>
+            <SmartLink
+              href={item.href}
+              target={item.newTab ? '_blank' : undefined}
+              rel={item.newTab ? 'noopener noreferrer' : undefined}
+            >
+              {item.label}
+            </SmartLink>
+        </Button>
+      ))}
+    </>
+  )
+
+  const mobileLinks = (
+    <>
+      {items.map((item) => (
+        <NavbarLink
+          key={`${item.href}-${item.label}`}
+          href={item.href}
+          target={item.newTab ? '_blank' : undefined}
+          rel={item.newTab ? 'noopener noreferrer' : undefined}
+        >
+          {item.label}
+        </NavbarLink>
+      ))}
+      {secondaryCta && (
+        <Button variant="ghost" asChild size="lg" className="mt-2 w-full justify-start px-0 sm:w-fit">
+          <SmartLink
+            href={secondaryCta.href}
+            target={secondaryCta.newTab ? '_blank' : undefined}
+            rel={secondaryCta.newTab ? 'noopener noreferrer' : undefined}
+          >
+            {secondaryCta.label}
+          </SmartLink>
+        </Button>
+      )}
+      {cta && (
+        <Button asChild size="lg" className="mt-2 w-full sm:w-fit">
+          <SmartLink
+            href={cta.href}
+            target={cta.newTab ? '_blank' : undefined}
+            rel={cta.newTab ? 'noopener noreferrer' : undefined}
+          >
+            {cta.label}
+          </SmartLink>
+        </Button>
+      )}
+    </>
+  )
+
   return (
     <>
       <header
@@ -85,10 +157,32 @@ export function NavbarWithLinksActionsAndCenteredLogo({
         <nav>
           <div className="mx-auto flex h-(--scroll-padding-top) max-w-7xl items-center gap-4 px-6 lg:px-10">
             <div className="flex flex-1 items-center">{logo}</div>
-            <div className="flex max-lg:hidden">{links}</div>
-            <div className="flex flex-1 items-center justify-end gap-4">
-              <div className="flex shrink-0 items-center gap-2">{actions}</div>
-              <MobileNavSheet>{mobileLinks ?? links}</MobileNavSheet>
+            <div className="flex max-lg:hidden">{desktopLinks}</div>
+            <div className="flex flex-1 items-center justify-end gap-2">
+              {secondaryCta && (
+                secondaryCta.href.startsWith('mailto:') ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>{secondaryDesktopCta}</TooltipTrigger>
+                    <TooltipContent>
+                      <p>Mailprogramm öffnen</p>
+                    </TooltipContent>
+                  </Tooltip>
+                ) : (
+                  secondaryDesktopCta
+                )
+              )}
+              {cta && (
+                <Button asChild className="max-[399px]:hidden">
+                  <SmartLink
+                    href={cta.href}
+                    target={cta.newTab ? '_blank' : undefined}
+                    rel={cta.newTab ? 'noopener noreferrer' : undefined}
+                  >
+                    {cta.label}
+                  </SmartLink>
+                </Button>
+              )}
+              <MobileNavSheet>{mobileLinks}</MobileNavSheet>
             </div>
           </div>
         </nav>

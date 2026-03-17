@@ -1,69 +1,92 @@
-import Link from 'next/link'
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import type { Navbar as NavbarGlobalDoc } from '@/payload-types'
 import {
-  NavbarLink,
   NavbarLogo,
   NavbarWithLinksActionsAndCenteredLogo,
+  type NavbarItem,
 } from '@/app/(frontend)/components/sections/navbar-with-links-actions-and-left-logo'
-import { Button } from '@/components/ui/button'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Logo } from '@/app/(frontend)/components/elements/logo'
+import {
+  resolveLinkComponentHref,
+  resolveLinkComponentLabel,
+  shouldOpenLinkInNewTab,
+} from '@/app/(frontend)/utils/linkComponent'
 
-export function Navbar() {
-  const desktopLinks = (
-    <>
-      <Button variant="link" className="max-sm:hidden">
-        <Link href="/#uber">Über uns</Link>
-      </Button>
-      <Button variant="link" className="max-sm:hidden">
-        <Link href="/#angebot">Angebote</Link>
-      </Button>
-      <Button variant="link" className="max-sm:hidden">
-        <Link href="/blog">Blog</Link>
-      </Button>
-      <Button variant="link" className="text-primary sm:hidden">
-        <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
-      </Button>
-    </>
-  )
+async function resolveNavbarData() {
+  const payload = await getPayload({ config })
 
-  const mobileLinks = (
-    <>
-      <NavbarLink href="/#uber">Über uns</NavbarLink>
-      <NavbarLink href="/#angebot">Angebote</NavbarLink>
-      <NavbarLink href="/blog">Blog</NavbarLink>
-      <NavbarLink href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</NavbarLink>
-      <Button asChild size="lg" className="mt-2 w-full sm:w-fit">
-        <Link href="/#angebot">Angebote entdecken</Link>
-      </Button>
-    </>
-  )
+  let navbar: NavbarGlobalDoc | null = null
+
+  try {
+    navbar = await payload.findGlobal({
+      slug: 'navbar',
+      depth: 2,
+      overrideAccess: false,
+    })
+  } catch {
+    navbar = null
+  }
+
+  const items =
+    navbar?.links
+      ?.map((link) => {
+        const label = resolveLinkComponentLabel(link)
+        const href = resolveLinkComponentHref(link)
+        if (!label || !href) return null
+
+        const item: NavbarItem = {
+          label,
+          href,
+          newTab: shouldOpenLinkInNewTab(href, link.newTab),
+        }
+        return item
+      })
+      .filter((item): item is NavbarItem => item !== null) ?? []
+
+  const buttonLabel = navbar?.button ? resolveLinkComponentLabel(navbar.button) : null
+  const buttonHref = navbar?.button ? resolveLinkComponentHref(navbar.button) : null
+  const button2Label = navbar?.button2 ? resolveLinkComponentLabel(navbar.button2) : null
+  const button2Href = navbar?.button2 ? resolveLinkComponentHref(navbar.button2) : null
+
+  const cta =
+    buttonLabel && buttonHref
+      ? {
+          label: buttonLabel,
+          href: buttonHref,
+          newTab: shouldOpenLinkInNewTab(buttonHref, navbar?.button?.newTab),
+        }
+      : null
+
+  const secondaryCta =
+    button2Label && button2Href
+      ? {
+          label: button2Label,
+          href: button2Href,
+          newTab: shouldOpenLinkInNewTab(button2Href, navbar?.button2?.newTab),
+        }
+      : null
+
+  return {
+    items,
+    secondaryCta,
+    cta,
+  }
+}
+
+export async function Navbar() {
+  const navbarData = await resolveNavbarData()
 
   return (
     <NavbarWithLinksActionsAndCenteredLogo
       id="navbar"
-      links={desktopLinks}
-      mobileLinks={mobileLinks}
+      items={navbarData.items}
+      secondaryCta={navbarData.secondaryCta}
+      cta={navbarData.cta}
       logo={
         <NavbarLogo href="/#hero">
           <Logo className="text-primary h-8 w-32" />
         </NavbarLogo>
-      }
-      actions={
-        <>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" asChild className="text-primary max-sm:hidden">
-                <Link href="mailto:kontakt@starkgemacht.com">kontakt(at)starkgemacht.com</Link>
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Mailprogramm öffnen</p>
-            </TooltipContent>
-          </Tooltip>
-          <Button asChild className="max-[399px]:hidden">
-            <Link href="/#angebot">Angebote entdecken</Link>
-          </Button>
-        </>
       }
     />
   )

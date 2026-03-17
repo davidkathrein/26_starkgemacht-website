@@ -101,9 +101,11 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     footer: Footer;
+    navbar: Navbar;
   };
   globalsSelect: {
     footer: FooterSelect<false> | FooterSelect<true>;
+    navbar: NavbarSelect<false> | NavbarSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1022,6 +1024,108 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navbar".
+ */
+export interface Navbar {
+  id: number;
+  /**
+   * Diese Links werden identisch in Desktop- und Mobile-Navigation verwendet.
+   */
+  links?:
+    | {
+        label: string;
+        linkType: 'url' | 'doc' | 'others';
+        url?: string | null;
+        doc?:
+          | ({
+              relationTo: 'pages';
+              value: number | Page;
+            } | null)
+          | ({
+              relationTo: 'blog';
+              value: number | Blog;
+            } | null)
+          | ({
+              relationTo: 'event';
+              value: number | Event;
+            } | null)
+          | ({
+              relationTo: 'media';
+              value: number | Media;
+            } | null);
+        /**
+         * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
+         */
+        internalPath?: string | null;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Hauptbutton in der Navbar. Wird als primärer CTA dargestellt.
+   */
+  button: {
+    label: string;
+    linkType: 'url' | 'doc' | 'others';
+    url?: string | null;
+    doc?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'blog';
+          value: number | Blog;
+        } | null)
+      | ({
+          relationTo: 'event';
+          value: number | Event;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: number | Media;
+        } | null);
+    /**
+     * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
+     */
+    internalPath?: string | null;
+    newTab?: boolean | null;
+  };
+  /**
+   * Zweiter Button in der Navbar. Wird als sekundärer, dezenter Button dargestellt.
+   */
+  button2: {
+    label: string;
+    linkType: 'url' | 'doc' | 'others';
+    url?: string | null;
+    doc?:
+      | ({
+          relationTo: 'pages';
+          value: number | Page;
+        } | null)
+      | ({
+          relationTo: 'blog';
+          value: number | Blog;
+        } | null)
+      | ({
+          relationTo: 'event';
+          value: number | Event;
+        } | null)
+      | ({
+          relationTo: 'media';
+          value: number | Media;
+        } | null);
+    /**
+     * Interner Pfad fuer statische Seiten, z. B. /blog oder /impressum.
+     */
+    internalPath?: string | null;
+    newTab?: boolean | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
@@ -1048,6 +1152,46 @@ export interface FooterSelect<T extends boolean = true> {
         headline?: T;
         subheadline?: T;
         hideNewsletter?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navbar_select".
+ */
+export interface NavbarSelect<T extends boolean = true> {
+  links?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        doc?: T;
+        internalPath?: T;
+        newTab?: T;
+        id?: T;
+      };
+  button?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        doc?: T;
+        internalPath?: T;
+        newTab?: T;
+      };
+  button2?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        doc?: T;
+        internalPath?: T;
+        newTab?: T;
       };
   updatedAt?: T;
   createdAt?: T;

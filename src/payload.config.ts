@@ -24,6 +24,7 @@ import { Category } from './collections/Category'
 import { Blog } from './collections/Blog'
 import { Page } from './collections/Page'
 import { Footer } from './globals/Footer'
+import { Navbar } from './globals/Navbar'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -36,7 +37,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, TeamMember, Event, Category, Blog, Page],
-  globals: [Footer],
+  globals: [Footer, Navbar],
   plugins: [
     vercelBlobStorage({
       enabled: true, // Optional, defaults to true
