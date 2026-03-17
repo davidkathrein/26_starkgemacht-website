@@ -143,6 +143,12 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
   }
 
   const moreEvents = await getMoreEvents(slugString)
+  const priceDisplay = getPriceDisplay(event)
+  const showContactCta = priceDisplay === 'Keine Preisangabe'
+  const ctaHref = showContactCta ? 'mailto:kontakt@starkgemacht.com' : event.checkoutUrl ?? '#'
+  const ctaLabel = showContactCta ? 'Jetzt kontaktieren' : 'Jetzt Tickets sichern'
+  const ctaTarget = showContactCta ? undefined : '_blank'
+  const ctaRel = showContactCta ? undefined : 'noopener noreferrer'
 
   // Get custom image with caption or fallback to event.image
   const customImage = typeof event.customImage !== 'number' ? event.customImage : null
@@ -196,22 +202,12 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
       : event.venueCountry
     : null
 
-  const CtaButton: React.ReactNode = event.checkoutUrl && (
-    <div className="mt-10 flex items-center gap-4">
-      <Button asChild size="lg">
-        <Link href={event.checkoutUrl} target="_blank" rel="noopener noreferrer">
-          Jetzt Tickets sichern <MoveRight size={14} />
-        </Link>
-      </Button>
-    </div>
-  )
-
   return (
     <div className="py-32">
       <Container>
         <div className="mx-auto max-w-3xl">
           <Eyebrow>
-            {getPriceDisplay(event)} | {formattedDate} um {formattedTime} Uhr{endDateDisplay}
+            {priceDisplay} | {formattedDate} um {formattedTime} Uhr{endDateDisplay}
             {event.venueName && ` | ${event.venueName}`}
           </Eyebrow>
 
@@ -224,8 +220,8 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
           )}
 
           <Button asChild className="mt-6" size="lg">
-            <Link href={event.checkoutUrl ?? '#'} rel="noopener noreferrer" target="_blank">
-              Jetzt Tickets sichern <MoveRight size={14} />
+            <Link href={ctaHref} rel={ctaRel} target={ctaTarget}>
+              {ctaLabel} <MoveRight size={14} />
             </Link>
           </Button>
 
@@ -256,15 +252,11 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
                         {event.venueName}
                       </h3>
 
-                      {event.checkoutUrl && (
+                      {(showContactCta || event.checkoutUrl) && (
                         <div className="mt-8">
                           <Button asChild size="lg">
-                            <Link
-                              href={event.checkoutUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Jetzt Tickets sichern <MoveRight size={14} />
+                            <Link href={ctaHref} target={ctaTarget} rel={ctaRel}>
+                              {ctaLabel} <MoveRight size={14} />
                             </Link>
                           </Button>
                         </div>

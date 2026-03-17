@@ -154,8 +154,10 @@ export function NavbarWithLinksActionsAndCenteredLogo({
         <style>{`:root { --scroll-padding-top: 5.25rem }`}</style>
         <nav>
           <div className="mx-auto flex h-(--scroll-padding-top) max-w-7xl items-center gap-4 px-6 lg:px-10">
-            <div className="flex flex-1 items-center">{logo}</div>
-            <div className="flex max-lg:hidden">{desktopLinks}</div>
+            <div className="flex items-center gap-8 lg:gap-10">
+              <div className="flex items-center">{logo}</div>
+              <div className="flex max-lg:hidden">{desktopLinks}</div>
+            </div>
             <div className="flex flex-1 items-center justify-end gap-2">
               {secondaryCta && (
                 secondaryCta.href.startsWith('mailto:') ? (
