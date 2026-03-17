@@ -246,153 +246,176 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
   return (
     <div className="py-32">
-      <Container>
-        <div className="mx-auto max-w-3xl">
-          <div className="flex items-center gap-x-4 text-xs">
-            <Eyebrow>{formattedDate}</Eyebrow>
-            {categories.map((cat) => {
-              const category = cat.item && typeof cat.item !== 'number' ? cat.item : null
-              return category ? (
-                <a
-                  key={cat.id}
-                  href={`/blog?category=${encodeURIComponent(category.slug)}`}
-                  className="inline-block"
-                >
-                  <Badge
-                    variant="secondary"
-                    className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 relative z-10 cursor-pointer rounded-full px-3 py-1.5 font-medium transition-colors"
+      <section>
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            <div className="flex items-center gap-x-4 text-xs">
+              <Eyebrow>{formattedDate}</Eyebrow>
+              {categories.map((cat) => {
+                const category = cat.item && typeof cat.item !== 'number' ? cat.item : null
+                return category ? (
+                  <a
+                    key={cat.id}
+                    href={`/blog?category=${encodeURIComponent(category.slug)}`}
+                    className="inline-block"
                   >
-                    {category.name}
-                  </Badge>
-                </a>
-              ) : null
-            })}
-          </div>
+                    <Badge
+                      variant="secondary"
+                      className="bg-brand-100 text-brand-700 hover:bg-brand-200 dark:bg-brand-800 dark:text-brand-300 dark:hover:bg-brand-700 relative z-10 cursor-pointer rounded-full px-3 py-1.5 font-medium transition-colors"
+                    >
+                      {category.name}
+                    </Badge>
+                  </a>
+                ) : null
+              })}
+            </div>
 
-          <Heading className="mt-4">{post.title}</Heading>
+            <Heading className="mt-4">{post.title}</Heading>
 
-          {post.excerpt && (
-            <Text size="lg" className="mt-6">
-              {post.excerpt}
-            </Text>
-          )}
-
-          <div className="text-brand-600 dark:text-brand-300 mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-            {author && (
-              <>
-                <Avatar
-                  media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
-                  alt={author.name}
-                  fallbackId={author.id}
-                  size="default"
-                />
-                <span className="text-brand-800 font-semibold dark:text-white">{author.name}</span>
-                {author.role && (
-                  <>
-                    <span className="text-brand-400 dark:text-brand-500">·</span>
-                    <span>{author.role}</span>
-                  </>
-                )}
-                <span className="text-brand-400 dark:text-brand-500">·</span>
-              </>
+            {post.excerpt && (
+              <Text size="lg" className="mt-6">
+                {post.excerpt}
+              </Text>
             )}
-            <span>{readTimeMinutes} Min. Lesezeit</span>
-          </div>
 
-          {featuredImage && <ImageWithCaption media={featuredImage} className="mt-10" />}
-
-          {post.content && (
-            <RichText
-              data={post.content}
-              className="text-brand-600 dark:text-brand-300 mt-10 max-w-2xl space-y-6 text-base/7"
-            />
-          )}
-
-          <SharePostButton title={post.title} />
-
-          {/* Author card – full team member info */}
-          {author && (
-            <Card
-              className="border-brand-950/10 bg-brand-50/80 dark:bg-brand-900/80 mt-16 dark:border-white/10"
-              aria-label={getAuthorCardLabel(author)}
-            >
-              <CardHeader>
-                <CardTitle className="font-display text-brand-950 text-lg font-semibold dark:text-white">
-                  {getAuthorCardLabel(author)}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-6 sm:flex-row sm:gap-8">
-                <div className="min-w-0 flex-1 space-y-4">
-                  <div className="flex items-end gap-2">
-                    <Avatar
-                      media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
-                      alt={author.name}
-                      fallbackId={author.id}
-                      size="lg"
-                      className="shrink-0"
-                    />
-                    <div>
-                      <p className="text-brand-800 font-semibold dark:text-white">{author.name}</p>
-                      {author.role && (
-                        <p className="text-brand-600 dark:text-brand-300 mt-0.5 text-base/7">
-                          {author.role}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  {author.bio &&
-                    typeof author.bio === 'object' &&
-                    author.bio !== null &&
-                    'root' in author.bio && (
-                      <div className="text-brand-600 dark:text-brand-400 text-base/7 [&_p]:mb-3 [&_p:last-child]:mb-0">
-                        <RichText data={author.bio} className="[&_p]:mb-3 [&_p:last-child]:mb-0" />
-                      </div>
-                    )}
-                  {author.links && author.links.length > 0 && (
-                    <ul role="list" className="flex flex-wrap gap-x-6 gap-y-2">
-                      {author.links.map((link, index) => {
-                        const href = resolveLinkComponentHref(link)
-                        if (!href) return null
-
-                        const IconComponent = getSocialIcon(link.platform)
-                        if (!IconComponent) return null
-                        return (
-                          <li key={link.id ?? index}>
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Link
-                                  href={href}
-                                  className="text-brand-600 hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-200 transition-colors"
-                                  target={
-                                    shouldOpenLinkInNewTab(href, link.newTab) ? '_blank' : undefined
-                                  }
-                                  rel={
-                                    shouldOpenLinkInNewTab(href, link.newTab)
-                                      ? 'noopener noreferrer'
-                                      : undefined
-                                  }
-                                >
-                                  <span className="sr-only">{link.platform}</span>
-                                  <IconComponent className="size-5" />
-                                </Link>
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p>{getLinkTooltip(link.platform, href)}</p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </li>
-                        )
-                      })}
-                    </ul>
+            <div className="text-brand-600 dark:text-brand-300 mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+              {author && (
+                <>
+                  <Avatar
+                    media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
+                    alt={author.name}
+                    fallbackId={author.id}
+                    size="default"
+                  />
+                  <span className="text-brand-800 font-semibold dark:text-white">{author.name}</span>
+                  {author.role && (
+                    <>
+                      <span className="text-brand-400 dark:text-brand-500">·</span>
+                      <span>{author.role}</span>
+                    </>
                   )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+                  <span className="text-brand-400 dark:text-brand-500">·</span>
+                </>
+              )}
+              <span>{readTimeMinutes} Min. Lesezeit</span>
+            </div>
+          </div>
+        </Container>
+      </section>
 
-        {similarPosts.length > 0 && (
-          <section className="mt-16 border-t pt-16" aria-labelledby="similar-posts-heading">
+      {featuredImage && (
+        <section className="pt-10">
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <ImageWithCaption media={featuredImage} />
+            </div>
+          </Container>
+        </section>
+      )}
+
+      <section className="pt-10">
+        <Container>
+          <div className="mx-auto max-w-3xl">
+            {post.content && (
+              <RichText
+                data={post.content}
+                className="text-brand-600 dark:text-brand-300 max-w-2xl space-y-6 text-base/7"
+              />
+            )}
+
+            <SharePostButton title={post.title} />
+          </div>
+        </Container>
+      </section>
+
+      {author && (
+        <section className="pt-16">
+          <Container>
+            <div className="mx-auto max-w-3xl">
+              <Card
+                className="border-brand-950/10 bg-brand-50/80 dark:bg-brand-900/80 dark:border-white/10"
+                aria-label={getAuthorCardLabel(author)}
+              >
+                <CardHeader>
+                  <CardTitle className="font-display text-brand-950 text-lg font-semibold dark:text-white">
+                    {getAuthorCardLabel(author)}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-6 sm:flex-row sm:gap-8">
+                  <div className="min-w-0 flex-1 space-y-4">
+                    <div className="flex items-end gap-2">
+                      <Avatar
+                        media={author.photo && typeof author.photo !== 'number' ? author.photo : null}
+                        alt={author.name}
+                        fallbackId={author.id}
+                        size="lg"
+                        className="shrink-0"
+                      />
+                      <div>
+                        <p className="text-brand-800 font-semibold dark:text-white">{author.name}</p>
+                        {author.role && (
+                          <p className="text-brand-600 dark:text-brand-300 mt-0.5 text-base/7">
+                            {author.role}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                    {author.bio &&
+                      typeof author.bio === 'object' &&
+                      author.bio !== null &&
+                      'root' in author.bio && (
+                        <div className="text-brand-600 dark:text-brand-400 text-base/7 [&_p]:mb-3 [&_p:last-child]:mb-0">
+                          <RichText data={author.bio} className="[&_p]:mb-3 [&_p:last-child]:mb-0" />
+                        </div>
+                      )}
+                    {author.links && author.links.length > 0 && (
+                      <ul role="list" className="flex flex-wrap gap-x-6 gap-y-2">
+                        {author.links.map((link, index) => {
+                          const href = resolveLinkComponentHref(link)
+                          if (!href) return null
+
+                          const IconComponent = getSocialIcon(link.platform)
+                          if (!IconComponent) return null
+                          return (
+                            <li key={link.id ?? index}>
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Link
+                                    href={href}
+                                    className="text-brand-600 hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-200 transition-colors"
+                                    target={
+                                      shouldOpenLinkInNewTab(href, link.newTab) ? '_blank' : undefined
+                                    }
+                                    rel={
+                                      shouldOpenLinkInNewTab(href, link.newTab)
+                                        ? 'noopener noreferrer'
+                                        : undefined
+                                    }
+                                  >
+                                    <span className="sr-only">{link.platform}</span>
+                                    <IconComponent className="size-5" />
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  <p>{getLinkTooltip(link.platform, href)}</p>
+                                </TooltipContent>
+                              </Tooltip>
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </Container>
+        </section>
+      )}
+
+      {similarPosts.length > 0 && (
+        <section className="mt-16 border-t pt-16" aria-labelledby="similar-posts-heading">
+          <Container>
             <div className="mb-8 flex flex-col gap-5 lg:mb-10 lg:flex-row lg:items-end lg:justify-between">
               <div className="max-w-3xl">
                 <h2
@@ -434,9 +457,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 />
               ))}
             </div>
-          </section>
-        )}
-      </Container>
+          </Container>
+        </section>
+      )}
     </div>
   )
 }

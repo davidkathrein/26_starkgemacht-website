@@ -299,19 +299,19 @@ export default async function AngebotPage({ params }: { params: Promise<{ slug: 
         </div>
 
         {moreEvents.length > 0 && (
-          <div className="mt-24">
-            <EventsTwoColumnSection
-              events={moreEvents}
-              eyebrow="Weitere Angebote"
-              headline="Das könnte dich auch interessieren"
-              subheadline={
-                <p>
-                  Weitere Workshops, Kurse und Veranstaltungen von StarkGemacht, die gut zu diesem
-                  Angebot passen.
-                </p>
-              }
-            />
-          </div>
+          <EventsTwoColumnSection
+            events={moreEvents}
+            className="mt-24"
+            withoutContainer
+            eyebrow="Weitere Angebote"
+            headline="Das könnte dich auch interessieren"
+            subheadline={
+              <p>
+                Weitere Workshops, Kurse und Veranstaltungen von StarkGemacht, die gut zu diesem
+                Angebot passen.
+              </p>
+            }
+          />
         )}
       </Container>
     </div>
