@@ -1,6 +1,7 @@
 import { clsx } from 'clsx/lite'
 import type { ComponentProps, ReactNode } from 'react'
 import { ChevronIcon } from '../icons/chevron-icon'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 export function AnnouncementBadge({
   text,
@@ -15,7 +16,7 @@ export function AnnouncementBadge({
   cta?: ReactNode
   variant?: 'normal' | 'overlay'
 } & Omit<ComponentProps<'a'>, 'href' | 'children'>) {
-  return (
+  const badge = (
     <a
       href={href}
       {...props}
@@ -45,5 +46,18 @@ export function AnnouncementBadge({
         {cta} <ChevronIcon className="shrink-0" />
       </span>
     </a>
+  )
+
+  if (!href.startsWith('mailto:')) {
+    return badge
+  }
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{badge}</TooltipTrigger>
+      <TooltipContent>
+        <p>Mailprogramm öffnen</p>
+      </TooltipContent>
+    </Tooltip>
   )
 }
